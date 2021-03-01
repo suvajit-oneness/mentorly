@@ -64,21 +64,35 @@ require 'admin.php';
 //Route::view('/admin', 'admin.dashboard.index');
 
 /*=======================web-site============================*/
-Route::get('/','Site\HomeController@index');
-Route::get('ad-list','Site\AdsController@index');
-Route::get('genre/{slug}','Site\ShowController@showsByGenre');
-Route::get('list/{slug}','Site\ShowController@showsByCategory');
-Route::get('details/{slug}','Site\ShowController@showDetails');
 
-Route::get('ask-for-otp','Site\AuthController@askForOtp');
-Route::post('mobile-no-submit','Site\AuthController@mobileNoSubmit');
-Route::get('enter-otp/{id}','Site\AuthController@enterOtp');
-Route::post('submit-otp','Site\AuthController@submitOtp');
-Route::get('logout', 'Site\AuthController@logout');
-Route::get('update-basic-data/{id}','Site\AuthController@updateBasicData');
-Route::post('submit-basic-data','Site\AuthController@submitBasicData');
-Route::get('subscribe','Site\PackageController@index');
+// Route::get('/','Site\HomeController@index');
+// Route::get('ad-list','Site\AdsController@index');
+// Route::get('genre/{slug}','Site\ShowController@showsByGenre');
+// Route::get('list/{slug}','Site\ShowController@showsByCategory');
+// Route::get('details/{slug}','Site\ShowController@showDetails');
 
-Route::post('/pay-per-click-submit', 'Site\ShowController@payPerClickSubmit')->name('site.show.payPerClickSubmit');
-Route::post('/store-package-information', 'Site\PackageController@storePackageInformation')->name('site.package.storepackageinfo');
+// Route::get('ask-for-otp','Site\AuthController@askForOtp');
+// Route::post('mobile-no-submit','Site\AuthController@mobileNoSubmit');
+// Route::get('enter-otp/{id}','Site\AuthController@enterOtp');
+// Route::post('submit-otp','Site\AuthController@submitOtp');
+// Route::get('logout', 'Site\AuthController@logout');
+// Route::get('update-basic-data/{id}','Site\AuthController@updateBasicData');
+// Route::post('submit-basic-data','Site\AuthController@submitBasicData');
+// Route::get('subscribe','Site\PackageController@index');
 
+// Route::post('/pay-per-click-submit', 'Site\ShowController@payPerClickSubmit')->name('site.show.payPerClickSubmit');
+// Route::post('/store-package-information', 'Site\PackageController@storePackageInformation')->name('site.package.storepackageinfo');
+
+
+// New Routes
+Route::get('/','Site\WebsiteController@index');
+Route::get('/login','Site\WebsiteController@showLoginForm');
+Route::post('/login','Site\WebsiteController@postLogin');
+
+Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
+Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');
+Route::post('registration/mentor_mentee','Site\WebsiteController@signUpMentorAndMentee')->name('registration.mentee_mentor');
+Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
+Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
+Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
+Route::get('logout','Site\WebsiteController@logout');

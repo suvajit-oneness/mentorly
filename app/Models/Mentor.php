@@ -42,7 +42,6 @@ class Mentor extends Model
     {
         // get the slug of the latest created post
         $max = static::whereTitle($this->title)->latest('id')->skip(1)->value('slug');
-
         if (is_numeric($max[-1])) {
             return preg_replace_callback('/(\d+)$/', function ($mathces) {
                 return $mathces[1] + 1;
