@@ -12,8 +12,9 @@ npm-debug.log
 yarn-error.log
 # /public/backend
 # /public/frontend
-/public/uploads
+/public/uploads/*
 /public/mix-manifest.json
 package.json
 composer.lock
 *.zip
+/public/banners/*
