@@ -73,7 +73,8 @@ class WebsiteController extends Controller
 
     public function findMentors(Request $req)
     {
-    	return view('website.findMentors');
+        $mentors = Mentor::get();
+    	return view('website.findMentors',compact('mentors'));
     }
 
     public function aboutUs(Request $req)

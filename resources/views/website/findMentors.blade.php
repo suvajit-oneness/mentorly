@@ -200,118 +200,35 @@
 
 			<div class="profile-holder">
 
-				<div class="profile-details-box">
-					<div class="profile-first">
-						<a href="#">
-							<img src="{{asset('design/images/mentor1.jpg')}}">
-						</a>
-					</div>
-					<div class="profile-middle">
-						<a href="#" class="profile-name">Gowoon S.</a>
-						<ul class="twolist">
-							<li class="company">Twitch</li>
-							<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
-						</ul>
-						<div class="inerview-taken">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
+				@foreach($mentors as $key => $mentor)
+					<div class="profile-details-box">
+						<div class="profile-first">
+							<a href="#">
+								<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
+							</a>
+						</div>
+						<div class="profile-middle">
+							<a href="#" class="profile-name">{{$mentor->name}}.</a>
+							<ul class="twolist">
+								<li class="company">Twitch</li>
+								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
+							</ul>
+							<div class="inerview-taken">
+								<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
+							</div>
+						</div>
+
+						<div class="profile-right">
+							<span class="price">
+								$1640 <span>/ hour</span>
+							</span>
+
+							<a href="#" class="prinery-btm blue-btm">Book mentor</a>
+
+							<a href="#" class="prinery-btm deepblue-btm">Message</a>
 						</div>
 					</div>
-
-					<div class="profile-right">
-						<span class="price">
-							$1640 <span>/ hour</span>
-						</span>
-
-						<a href="#" class="prinery-btm blue-btm">Book mentor</a>
-
-						<a href="#" class="prinery-btm deepblue-btm">Message</a>
-					</div>
-				</div>
-
-				<div class="profile-details-box">
-					<div class="profile-first">
-						<a href="#">
-							<img src="{{asset('design/images/mentor1.jpg')}}">
-						</a>
-					</div>
-					<div class="profile-middle">
-						<a href="#" class="profile-name">Gowoon S.</a>
-						<ul class="twolist">
-							<li class="company">Twitch</li>
-							<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
-						</ul>
-						<div class="inerview-taken">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
-						</div>
-					</div>
-
-					<div class="profile-right">
-						<span class="price">
-							$1640 <span>/ hour</span>
-						</span>
-
-						<a href="#" class="prinery-btm blue-btm">Book mentor</a>
-
-						<a href="#" class="prinery-btm deepblue-btm">Message</a>
-					</div>
-				</div>
-
-				<div class="profile-details-box">
-					<div class="profile-first">
-						<a href="#">
-							<img src="{{asset('design/images/mentor1.jpg')}}">
-						</a>
-					</div>
-					<div class="profile-middle">
-						<a href="#" class="profile-name">Gowoon S.</a>
-						<ul class="twolist">
-							<li class="company">Twitch</li>
-							<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
-						</ul>
-						<div class="inerview-taken">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
-						</div>
-					</div>
-
-					<div class="profile-right">
-						<span class="price">
-							$1640 <span>/ hour</span>
-						</span>
-
-						<a href="#" class="prinery-btm blue-btm">Book mentor</a>
-
-						<a href="#" class="prinery-btm deepblue-btm">Message</a>
-					</div>
-				</div>
-
-				<div class="profile-details-box">
-					<div class="profile-first">
-						<a href="#">
-							<img src="{{asset('design/images/mentor1.jpg')}}">
-						</a>
-					</div>
-					<div class="profile-middle">
-						<a href="#" class="profile-name">Gowoon S.</a>
-						<ul class="twolist">
-							<li class="company">Twitch</li>
-							<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
-						</ul>
-						<div class="inerview-taken">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
-						</div>
-					</div>
-
-					<div class="profile-right">
-						<span class="price">
-							$1640 <span>/ hour</span>
-						</span>
-
-						<a href="#" class="prinery-btm blue-btm">Book mentor</a>
-
-						<a href="#" class="prinery-btm deepblue-btm">Message</a>
-					</div>
-				</div>
-
+				@endforeach
 
 				<div class="pagination-place">
 					<ul class="pagination-list">
