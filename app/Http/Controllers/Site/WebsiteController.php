@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;use Hash;
-use App\Models\Mentor;
+use App\Models\Mentor;use Auth;
 
 class WebsiteController extends Controller
 {
@@ -16,6 +16,9 @@ class WebsiteController extends Controller
 
     public function showLoginForm(Request $req)
     {
+        if(Auth::user()){
+            return redirect('/');
+        }
     	return view('website.login');
     }
 
@@ -24,7 +27,19 @@ class WebsiteController extends Controller
     	$req->validate([
             'email' => 'required|email|string',
     		'password' => 'required|string',
-        ]); 
+        ]);
+        $mentor = Mentor::where('email',$req->email)->first();
+        if($mentor){
+            if(Hash::check($req->password,$mentor->password)){
+                auth()->login($mentor);
+                return back();
+            }else{
+                $errors['password'] = 'you have entered wrong password';
+            }
+        }else{
+            $errors['email'] = 'This Email is not registered with us';
+        }
+        return back()->withErrors($errors)->withInput($req->all());
     }
 
     public function signupFormMentee(Request $req)
