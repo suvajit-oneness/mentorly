@@ -44,7 +44,8 @@ class WebsiteController extends Controller
         }
         if($user){
             if(Hash::check($req->password,$user->password)){
-                auth()->login($user);
+                // dd($user);
+                Auth::guard('mentor')->login($user);
                 return back();
             }else{
                 $errors['password'] = 'you have entered wrong password';
