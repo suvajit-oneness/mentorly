@@ -57,6 +57,17 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
+
+        'mentor' => [
+            'driver' => 'session',
+            'provider' => 'mentors',
+        ],
+
+        'mentor-api' => [
+            'driver' => 'token',
+            'provider' => 'mentors',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -84,6 +95,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'mentors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Mentor::class,
         ]
 
         // 'users' => [
