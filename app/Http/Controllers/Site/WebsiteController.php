@@ -22,7 +22,7 @@ class WebsiteController extends Controller
     	return view('website.mentorLogin');
     }
 
-    public function showLoginFormForMentee($value='')
+    public function showLoginFormForMentee(Request $req)
     {
         if(Auth::user()){
             return redirect('/');
@@ -39,11 +39,11 @@ class WebsiteController extends Controller
         ]);
         if($req->loginType == 'mentor'){
             $user = Mentor::where('email',$req->email)->first();
-        }elseif(){
+        }elseif($req->loginType == 'mentee'){
             $user = User::where('email',$req->email)->first();
         }
         if($user){
-            if(Hash::check($req->password,$mentor->password)){
+            if(Hash::check($req->password,$user->password)){
                 auth()->login($user);
                 return back();
             }else{
@@ -118,6 +118,6 @@ class WebsiteController extends Controller
     public function logout(Request $req)
     {
     	Auth::logout();
-    	return redirect('/login');
+    	return redirect('/');
     }
 }

@@ -18,28 +18,28 @@ Route::get('command', function () {
     dd("Done");
 });
 
-Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
-	Route::get('profile', 'Site\ProfileController@index')->name('user.profile');
-    Route::post('profile', 'Site\ProfileController@profileUpdate')->name('user.updateprofile');
-    Route::get('checkout', 'Site\PackageController@index')->name('checkout');;
-    //Route::get('upgrade/{id}', 'Site\PackageController@upgrade');
-    Route::post('upgrade', 'Site\PackageController@upgrade')->name('adsUpgrade');
-    Route::post('package', 'Site\PackageController@packageUpdate')->name('user.updatepackage');
-    Route::get('logout', 'Site\ProfileController@logout')->name('user.logout');
-    Route::get('my-ads/{type}','Site\ProfileController@fetchUserAds')->name('user.myads');
+// Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
+// 	Route::get('profile', 'Site\ProfileController@index')->name('user.profile');
+//     Route::post('profile', 'Site\ProfileController@profileUpdate')->name('user.updateprofile');
+//     Route::get('checkout', 'Site\PackageController@index')->name('checkout');;
+//     //Route::get('upgrade/{id}', 'Site\PackageController@upgrade');
+//     Route::post('upgrade', 'Site\PackageController@upgrade')->name('adsUpgrade');
+//     Route::post('package', 'Site\PackageController@packageUpdate')->name('user.updatepackage');
+//     Route::get('logout', 'Site\ProfileController@logout')->name('user.logout');
+//     Route::get('my-ads/{type}','Site\ProfileController@fetchUserAds')->name('user.myads');
 
-    Route::get('post-ads','Site\AdsController@craeteAds')->name('user.post.ad');
-    Route::post('getCategoryFields', 'Site\AdsController@getCategoryFields')->name('user.customform.getCategoryFields');
-    Route::post('ad-submit','Site\AdsController@storeAds')->name('adsubmit');
+//     Route::get('post-ads','Site\AdsController@craeteAds')->name('user.post.ad');
+//     Route::post('getCategoryFields', 'Site\AdsController@getCategoryFields')->name('user.customform.getCategoryFields');
+//     Route::post('ad-submit','Site\AdsController@storeAds')->name('adsubmit');
     
-    Route::post('getCategoryFieldValues', 'Site\AdsController@getCategoryFieldValues')->name('ads.customform.getValues');
-    Route::post('getRateValues', 'Site\AdsController@getRateValues')->name('ads.customform.getRateValues');
-    Route::get('edit-ads/{id}','Site\AdsController@editAds');
-    Route::post('updateads','Site\AdsController@updateAds')->name('updateads');
-    Route::post('storeadmessage','Site\AdsController@storeAdMessage')->name('storeadmessage');
-    Route::post('storereportabuse','Site\AdsController@storeReportAbuse')->name('storereportabuse');
-    Route::get('update-free-package/{ad_id}/{id}','Site\PaymentController@updateFreePackage');
-});
+//     Route::post('getCategoryFieldValues', 'Site\AdsController@getCategoryFieldValues')->name('ads.customform.getValues');
+//     Route::post('getRateValues', 'Site\AdsController@getRateValues')->name('ads.customform.getRateValues');
+//     Route::get('edit-ads/{id}','Site\AdsController@editAds');
+//     Route::post('updateads','Site\AdsController@updateAds')->name('updateads');
+//     Route::post('storeadmessage','Site\AdsController@storeAdMessage')->name('storeadmessage');
+//     Route::post('storereportabuse','Site\AdsController@storeReportAbuse')->name('storereportabuse');
+//     Route::get('update-free-package/{ad_id}/{id}','Site\PaymentController@updateFreePackage');
+// });
     
     // Route::get('/',function(){
     //     return redirect('/login');
@@ -55,8 +55,8 @@ Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
     {
         return view('welcome');
     }); */
-Route::post ( '/stripe', 'Site\PaymentController@paymentProcess' )->name('paypost');
-Route::post ( '/upgradepayment', 'Site\PaymentController@upgradeProcess' )->name('upgradepayment');
+// Route::post ( '/stripe', 'Site\PaymentController@paymentProcess' )->name('paypost');
+// Route::post ( '/upgradepayment', 'Site\PaymentController@upgradeProcess' )->name('upgradepayment');
 
 Auth::routes(['verify' => true,'login'=>false]);
 
@@ -87,6 +87,7 @@ require 'admin.php';
 // New Routes
 Route::get('/','Site\WebsiteController@index');
 Route::get('/mentor/login','Site\WebsiteController@showLoginFormForMentor');
+Route::get('/mentee/login','Site\WebsiteController@showLoginFormForMentee');
 Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
 
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
