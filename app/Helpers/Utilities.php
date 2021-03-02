@@ -51,4 +51,16 @@ if (!function_exists('imageResizeAndSave')) {
             return $filename;
         } else { return false; }
     }
+
+    function get_guard(){
+        if(Auth::guard('admin')->check()){
+            return 'admin';
+        }elseif(Auth::guard('web')->check()){
+            return 'web';
+        }elseif(Auth::guard('mentor')->check()){
+            return 'mentor';
+        }else{
+            return '';
+        }
+    }
 }

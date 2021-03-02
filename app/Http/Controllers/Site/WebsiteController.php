@@ -44,9 +44,12 @@ class WebsiteController extends Controller
         }
         if($user){
             if(Hash::check($req->password,$user->password)){
-                // dd($user);
-                Auth::guard('mentor')->login($user);
-                return back();
+                if($req->loginType == 'mentor'){
+                    Auth::guard('mentor')->login($user);
+                }else{
+                    Auth::login($user);
+                }
+                return redirect('/');
             }else{
                 $errors['password'] = 'you have entered wrong password';
             }
@@ -118,7 +121,8 @@ class WebsiteController extends Controller
 
     public function logout(Request $req)
     {
-    	Auth::logout();
+    	$auth = $this->get_guard();
+        Auth::guard($auth)->logout();
     	return redirect('/');
     }
 }

@@ -18,12 +18,8 @@
                 <!-- <ul class="menu-btm">
                     <li><a href="#" class="prinery-btm blue-btm">Log In</a></li>
                 </ul> -->
-                @guest
-                    <ul class="menu-btm">
-                        <li><a href="{{url('mentor/login')}}" class="prinery-btm blue-btm">Mentor LogIn</a></li>
-                        <li><a href="{{url('mentee/login')}}" class="prinery-btm blue-btm">Mentee LogIn</a></li>
-                    </ul>
-                @else
+                
+                @if(get_guard() != '')
                     <ul class="headedr-two-list">
                         <li>
                             <a href="#">
@@ -55,7 +51,12 @@
                         <span></span>
                         <span></span>
                     </div>
-                @endguest
+                @else
+                    <ul class="menu-btm">
+                        <li><a href="{{url('mentor/login')}}" class="prinery-btm blue-btm">Mentor LogIn</a></li>
+                        <li><a href="{{url('mentee/login')}}" class="prinery-btm blue-btm">Mentee LogIn</a></li>
+                    </ul>
+                @endif
             </div>
         </div>
     </div>

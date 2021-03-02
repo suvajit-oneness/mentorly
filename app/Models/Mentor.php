@@ -3,28 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Mentor extends Model
+class Mentor extends Authenticatable
 {
     protected $table = 'mentors';
 
-	protected $fillable = [
-	   'name', 'mobile', 'email', 'otp', 'password', 'designation', 'image', 'about', 'country', 'city', 'address', 'industry_id', 'seniority_id', 'slug', 'is_verified', 'status', 'is_deleted'
-	];
+    protected $fillable = [
+       'name', 'mobile', 'email', 'otp', 'password', 'designation', 'image', 'about', 'country', 'city', 'address', 'industry_id', 'seniority_id', 'slug', 'is_verified', 'status', 'is_deleted'
+    ];
 
-	//hasOne relation with Industry Model
-	public function industry(){
-	    return $this->hasOne(Industry::class, 'id', 'industry_id');
-	}
+    //hasOne relation with Industry Model
+    public function industry(){
+        return $this->hasOne(Industry::class, 'id', 'industry_id');
+    }
 
-	//hasOne relation with Seniority Model
-	public function seniority(){
-	    return $this->hasOne(Seniority::class, 'id', 'seniority_id');
-	}
+    //hasOne relation with Seniority Model
+    public function seniority(){
+        return $this->hasOne(Seniority::class, 'id', 'seniority_id');
+    }
 
-	protected static function boot(){
+    protected static function boot(){
         parent::boot();
         static::created(function ($mentor) {
             $mentor->update(['slug' => $mentor->title]);
