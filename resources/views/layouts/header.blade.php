@@ -20,7 +20,8 @@
                 </ul> -->
                 @guest
                     <ul class="menu-btm">
-                        <li><a href="{{url('login')}}" class="prinery-btm blue-btm">Log In</a></li>
+                        <li><a href="{{url('mentor/login')}}" class="prinery-btm blue-btm">Mentor LogIn</a></li>
+                        <li><a href="{{url('mentee/login')}}" class="prinery-btm blue-btm">Mentee LogIn</a></li>
                     </ul>
                 @else
                     <ul class="headedr-two-list">

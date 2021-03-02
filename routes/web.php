@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
 Route::post ( '/stripe', 'Site\PaymentController@paymentProcess' )->name('paypost');
 Route::post ( '/upgradepayment', 'Site\PaymentController@upgradeProcess' )->name('upgradepayment');
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true,'login'=>false]);
 
 require 'admin.php';
 //Route::view('/admin', 'admin.dashboard.index');
@@ -86,8 +86,8 @@ require 'admin.php';
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');
-Route::get('/login','Site\WebsiteController@showLoginForm');
-Route::post('/login','Site\WebsiteController@postLogin');
+Route::get('/mentor/login','Site\WebsiteController@showLoginFormForMentor');
+Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
 
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
 Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');

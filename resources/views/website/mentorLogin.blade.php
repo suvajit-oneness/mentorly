@@ -13,8 +13,9 @@
 				</ul>
 			</div>
 
-			<form method="post" action="{{url('login')}}">
+			<form method="post" action="{{url('/mentor/mentee/login')}}">
 				@csrf
+				<input type="hidden" name="loginType" value="mentor">
 				<div class="form-wrapper">
 					<div class="form-group">
 					  	<input type="email" id="email" name="email" class="input-style" placeholder="Enter your email address" autocomplete="email" value="{{ old('email') }}">

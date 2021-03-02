@@ -25,7 +25,6 @@ class Mentor extends Model
 
 	protected static function boot(){
         parent::boot();
-
         static::created(function ($mentor) {
             $mentor->update(['slug' => $mentor->title]);
         });
@@ -48,7 +47,6 @@ class Mentor extends Model
                 return $mathces[1] + 1;
             }, $max);
         }
-
         return "{$slug}-2";
     }
 }

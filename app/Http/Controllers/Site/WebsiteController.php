@@ -14,24 +14,37 @@ class WebsiteController extends Controller
     	return view('welcome');
     }
 
-    public function showLoginForm(Request $req)
+    public function showLoginFormForMentor(Request $req)
     {
         if(Auth::user()){
             return redirect('/');
         }
-    	return view('website.login');
+    	return view('website.mentorLogin');
+    }
+
+    public function showLoginFormForMentee($value='')
+    {
+        if(Auth::user()){
+            return redirect('/');
+        }
+        return view('website.menteeLogin');
     }
 
     public function postLogin(Request $req)
     {
-    	$req->validate([
+        $req->validate([
+            'loginType' => 'required|in:mentee,mentor',
             'email' => 'required|email|string',
-    		'password' => 'required|string',
+            'password' => 'required|string',
         ]);
-        $mentor = Mentor::where('email',$req->email)->first();
-        if($mentor){
+        if($req->loginType == 'mentor'){
+            $user = Mentor::where('email',$req->email)->first();
+        }elseif(){
+            $user = User::where('email',$req->email)->first();
+        }
+        if($user){
             if(Hash::check($req->password,$mentor->password)){
-                auth()->login($mentor);
+                auth()->login($user);
                 return back();
             }else{
                 $errors['password'] = 'you have entered wrong password';
