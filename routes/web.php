@@ -90,6 +90,11 @@ Route::get('/mentor/login','Site\WebsiteController@showLoginFormForMentor');
 Route::get('/mentee/login','Site\WebsiteController@showLoginFormForMentee');
 Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
 
+
+// mentors Route
+Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');
+
+
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
 Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');
 Route::post('registration/mentor_mentee','Site\WebsiteController@signUpMentorAndMentee')->name('registration.mentee_mentor');

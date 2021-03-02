@@ -19,7 +19,7 @@
                     <li><a href="#" class="prinery-btm blue-btm">Log In</a></li>
                 </ul> -->
                 
-                @if(get_guard() != '')
+                @if(get_guard() != '' || get_guard != 'admin')
                     <ul class="headedr-two-list">
                         <li>
                             <a href="#">
@@ -41,7 +41,7 @@
                                 <li><a href="#">Messages</a></li>
                                 <li><a href="#">My Lessons</a></li>
                                 <li><a href="#">Invite a friend </a></li>
-                                <li><a href="#">Settings</a></li>
+                                <li><a href="{{route('mentor.mentee.setting')}}">Settings</a></li>
                                 <li><a href="{{url('logout')}}">Log out</a></li>
                             </ul>
                         </div>
