@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;use Hash;
+use Illuminate\Http\Request;use App\Models\TimeZone;
+use App\Models\User;use Hash;use App\Models\Review;
 use App\Models\Mentor;use Auth;
 
 class WebsiteController extends Controller
@@ -107,6 +107,14 @@ class WebsiteController extends Controller
     {
         $mentors = Mentor::get();
     	return view('website.findMentors',compact('mentors'));
+    }
+
+    public function mentorDetails(Request $req,$mentorId)
+    {
+        $mentor = Mentor::findorFail($mentorId);
+        $mentor->review = Review::where('mentor_id',$mentor->id)->where('is_deleted',0)->with('user')->get();
+        $timezone = TimeZone::get();
+        return view('mentor.details',compact('mentor','timezone'));
     }
 
     public function aboutUs(Request $req)

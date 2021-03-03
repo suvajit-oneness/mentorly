@@ -208,7 +208,7 @@
 							</a>
 						</div>
 						<div class="profile-middle">
-							<a href="#" class="profile-name">{{$mentor->name}}.</a>
+							<a href="{{route('mentor.details',$mentor->id)}}" class="profile-name">{{$mentor->name}}.</a>
 							<ul class="twolist">
 								<li class="company">Twitch</li>
 								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>

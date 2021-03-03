@@ -105,6 +105,7 @@ Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->nam
 Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');
 Route::post('registration/mentor_mentee','Site\WebsiteController@signUpMentorAndMentee')->name('registration.mentee_mentor');
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
+Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
