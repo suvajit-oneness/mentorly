@@ -89,11 +89,16 @@ Route::get('/','Site\WebsiteController@index');
 Route::get('/mentor/login','Site\WebsiteController@showLoginFormForMentor');
 Route::get('/mentee/login','Site\WebsiteController@showLoginFormForMentee');
 Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
-
+Route::get('forget/password/{userType}','Site\WebsiteController@showForgetPassword')->name('both.forget.password');
+Route::post('forget/password/{userType}','Site\WebsiteController@postForgetPassword')->name('both.forget.password.post');
 
 // mentors Route
 Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');
 Route::post('mentor/mentee/setting','Site\MentorController@settingAccountUpdate')->name('mentor.mentee.account_update');
+Route::get('mentor/mentee/email/setting','Site\MentorController@settingEmail')->name('mentor.email.setting');
+Route::post('mentor/mentee/email/setting','Site\MentorController@settingEmailUpdate')->name('mentor.email.update');
+Route::get('mentor/mentee/password/setting','Site\MentorController@settingPassword')->name('mentor.password.setting');
+Route::post('mentor/mentee/password/setting/{userType}','Site\MentorController@settingPasswordUpdate')->name('mentor.password.update');
 
 
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');

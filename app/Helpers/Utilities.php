@@ -21,6 +21,18 @@ if (!function_exists('sidebar_open')) {
     }
 }
 
+function sendMail($name,$email,$template){
+    $data = array(
+        'name' => $name,
+        'email' => $email,
+    );
+    Mail::send($template, $data, function($message)use ($data) {
+        $message->to($data['email'], $data['name'])->subject
+        ('Reset Password');
+        $message->from('email@email.com','Our Post Code');
+    });
+}
+
 if (!function_exists('imageResizeAndSave')) {
     function imageResizeAndSave($imageUrl, $type = 'categories', $filename)
     {
@@ -51,6 +63,7 @@ if (!function_exists('imageResizeAndSave')) {
             return $filename;
         } else { return false; }
     }
+}
 
     function get_guard()
     {
@@ -79,4 +92,3 @@ if (!function_exists('imageResizeAndSave')) {
     {
         return str_random(8);
     }
-}

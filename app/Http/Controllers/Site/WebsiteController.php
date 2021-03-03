@@ -119,6 +119,31 @@ class WebsiteController extends Controller
     	return view('website.contactUs');
     }
 
+    public function showForgetPassword($userType)
+    {
+        return view('website.forget_password',compact('userType'));
+    }
+
+    public function postForgetPassword(Request $req,$userType)
+    {
+        $req->validate([
+            'email' => 'required|email|string',
+        ]);
+        if($userType == 'mentor'){
+            $user = Mentor::where('email',$req->email)->first();
+        }
+        elseif($userType == 'mentee'){
+            $user = User::where('email',$req->email)->first();
+        }
+        if($user){
+            // sendMail($user->name,$user->email,'email/forgot_password');
+            $error['success'] = 'reset password mail has been sent';
+            return back()->withInput($req->all())->withErrors($error);            
+        }
+        $error['email'] = 'the email provided is not registered with us';
+        return back()->withInput($req->all())->withErrors($error);
+    }
+
     public function logout(Request $req)
     {
     	$auth = $this->get_guard();

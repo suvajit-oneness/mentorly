@@ -37,7 +37,7 @@
 					  	<label class="form-check-label-custom">
 					    	<input type="checkbox" class="form-check-input" value=""> Remember me<i></i>
 					  	</label>
-					 	<a href="#" class="text-link">Forgot your password?</a>
+					 	<a href="{{route('both.forget.password','mentee')}}" class="text-link">Forgot your password?</a>
 					</div>
 					<div class="form-group">
 					  	<input type="submit" class="button-style" id="" value="Log In">

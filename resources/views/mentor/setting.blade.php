@@ -6,8 +6,8 @@
 	<div class="setting-wrapper">
 		<ul class="setting-list">
 			<li><a href="{{route('mentor.mentee.setting')}}" class="active">Account</a></li>
-			<li><a href="#">Email</a></li>
-			<li><a href="#">Password </a></li>
+			<li><a href="{{route('mentor.email.setting')}}">Email</a></li>
+			<li><a href="{{route('mentor.password.setting')}}">Password </a></li>
 			<li><a href="#">Payment Methods</a></li>
 			<li><a href="#">Payment History</a></li>
 			<li><a href="#">Calendar</a></li>
