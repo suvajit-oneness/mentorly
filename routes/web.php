@@ -93,6 +93,7 @@ Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
 
 // mentors Route
 Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');
+Route::post('mentor/mentee/setting','Site\MentorController@settingAccountUpdate')->name('mentor.mentee.account_update');
 
 
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');

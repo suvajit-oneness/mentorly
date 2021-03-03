@@ -23,7 +23,22 @@
     <script src="{{asset('design/js/popper.min.js')}}"></script>
     <script src="{{asset('design/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('design/js/slick.min.js')}}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+
+        @if(Session::has('Success'))
+            swal('Success','{{Session::get('Success')}}');
+        @elseif(Session::has('Errors'))
+            swal('Error','{{Session::get('Errors')}}');
+        @endif
+
+        function isNumberKey(evt){  
+            if(evt.charCode >= 48 && evt.charCode <= 57){  
+                return true;  
+            }  
+            return false;  
+        }
+
         // logo slider
         $('.logo-slider').slick({
           centerMode: false,

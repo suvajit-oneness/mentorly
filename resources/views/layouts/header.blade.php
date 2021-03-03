@@ -19,7 +19,7 @@
                     <li><a href="#" class="prinery-btm blue-btm">Log In</a></li>
                 </ul> -->
                 
-                @if(get_guard() != '' || get_guard != 'admin')
+                @if(get_guard() != '' && get_guard() != 'admin')
                     <ul class="headedr-two-list">
                         <li>
                             <a href="#">

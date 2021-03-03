@@ -52,7 +52,8 @@ if (!function_exists('imageResizeAndSave')) {
         } else { return false; }
     }
 
-    function get_guard(){
+    function get_guard()
+    {
         if(Auth::guard('admin')->check()){
             return 'admin';
         }elseif(Auth::guard('web')->check()){
@@ -62,5 +63,20 @@ if (!function_exists('imageResizeAndSave')) {
         }else{
             return '';
         }
+    }
+
+    function emptyCheck($string)
+    {
+        return !empty($string) ? $string : '';
+    }
+
+    function uniqueString()
+    {
+        return uniqid().''.date('ymdhis').''.uniqid();
+    }
+
+    function randomPassword()
+    {
+        return str_random(8);
     }
 }
