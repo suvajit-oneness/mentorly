@@ -46,6 +46,12 @@
                     <i class="icon fa fa-circle-o"></i>All FAQs
                     </a>
                 </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.contactus.*']) }}"
+                    href="{{ route('admin.contactus.show') }}">
+                    <i class="icon fa fa-circle-o"></i>Contact Us
+                    </a>
+                </li>
             </ul>
         </li>
         <li>

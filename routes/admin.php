@@ -53,6 +53,9 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\FaqController@updateStatus')->name('admin.faq.updateStatus');
 		});
 
+		Route::get('contact-us','Admin\AdminController@contactUs')->name('admin.contactus.show');
+		Route::post('contact-us','Admin\AdminController@storeContactUs')->name('admin.contactus.store');
+
 		Route::group(['prefix'  =>   'news'], function() {
 			Route::get('/', 'Admin\NewsController@index')->name('admin.news.index');
 			Route::get('/create', 'Admin\NewsController@create')->name('admin.news.create');
@@ -94,8 +97,6 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 		});
-	
 	});
-
 });
 ?>
