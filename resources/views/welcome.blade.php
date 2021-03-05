@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title','Welcome')
 @section('content')
-<section class="banner" style="background: url('./images/banner-image.jpg') no-repeat center center; background-size: cover;">
+<section class="banner" style="background: url('./design/images/banner-image.jpg') no-repeat center center; background-size: cover;">
     <div class="container">
         <div class="banner-caption ">
             <h1>Get the job you always wanted with the best mentors.</h1>
@@ -104,7 +104,7 @@
                     <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
                     <a href="#" class="prinery-btm blue-btm">More Review</a>
                 </div>
-                <div class="profile-image" style="background: url(./images/mentor1.jpg) no-repeat center center; background-size: cover;"></div>
+                <div class="profile-image" style="background: url(./design/images/mentor1.jpg) no-repeat center center; background-size: cover;"></div>
             </div>
             <div class="inner">
                 <div class="prifile-content">
@@ -113,7 +113,7 @@
                     <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
                     <a href="#" class="prinery-btm blue-btm">More Review</a>
                 </div>
-                <div class="profile-image" style="background: url(./images/mentor2.jpg) no-repeat center center; background-size: cover;"></div>
+                <div class="profile-image" style="background: url(./design/images/mentor2.jpg) no-repeat center center; background-size: cover;"></div>
             </div>
             <div class="inner">
                 <div class="prifile-content">
@@ -122,7 +122,7 @@
                     <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
                     <a href="#" class="prinery-btm blue-btm">More Review</a>
                 </div>
-                <div class="profile-image" style="background: url(./images/mentor3.jpg) no-repeat center center; background-size: cover;"></div>
+                <div class="profile-image" style="background: url(./design/images/mentor3.jpg) no-repeat center center; background-size: cover;"></div>
             </div>
         </div>
     </div>
@@ -256,7 +256,7 @@
     </div>
 </section>
 
-<section class="footer-top" style="background: url('./images/footer-top.jpg') no-repeat center center; background-size: cover;">
+<section class="footer-top" style="background: url('./design/images/footer-top.jpg') no-repeat center center; background-size: cover;">
     <div class="container">
         <h4>Every year n people prepare to interview confidently on mentorly. Get fast results with professional mentors. Prepare to achieve your goals today. </h4>
         <a href="#" class="prinery-btm blue-btm">Get Started</a>

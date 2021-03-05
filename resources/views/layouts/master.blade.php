@@ -45,8 +45,8 @@
           centerPadding: '60px',
           slidesToShow: 5,
           arrows:true,
-          nextArrow: '<span class="next"><img src="images/next-arrow.png"></span>',
-          prevArrow: '<span class="pre"><img src="images/pre-arrow.png"></span>',
+          nextArrow: '<span class="next"><img src="design/images/next-arrow.png"></span>',
+          prevArrow: '<span class="pre"><img src="design/images/pre-arrow.png"></span>',
           responsive: [
             {
               breakpoint: 768,
@@ -77,8 +77,8 @@
           arrows:true,
           dots: true,
           speed: 300,
-          nextArrow: '<span class="next-arrow"><img src="images/next-arrow-white.png"></span>',
-          prevArrow: '<span class="pre-arrow"><img src="images/pre-arrow-white.png"></span>'
+          nextArrow: '<span class="next-arrow"><img src="design/images/next-arrow-white.png"></span>',
+          prevArrow: '<span class="pre-arrow"><img src="design/images/pre-arrow-white.png"></span>'
         });
 
         // accordian

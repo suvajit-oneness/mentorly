@@ -384,7 +384,7 @@ color: #fff;
 ===========================*/
 
 .skill-section {
-	background: url(../images/pattern.jpg) repeat center center;
+	background: url(../design/images/pattern.jpg) repeat center center;
 	padding: 76px 0;
 	text-align: center;
 }
@@ -413,7 +413,7 @@ color: #fff;
 	position: absolute;
 	left:0;
 	top:0;
-	background: url('../images/list-icon.png') no-repeat center center;
+	background: url('../design/images/list-icon.png') no-repeat center center;
 	width: 39px;
 	height: 39px;
 }
@@ -768,7 +768,7 @@ footer {
     font-size: 16px;
     font-family: GT Walsheim Pro;
     font-weight: 400;
-    background: url('../images/dropdown-arrow.png') no-repeat 98% center;
+    background: url('../design/images/dropdown-arrow.png') no-repeat 98% center;
     appearance: none;
 }
 .show-price {
@@ -780,7 +780,7 @@ content: "";
     position: absolute;
     top: 50%;
     right: 0;
-    background: url(../images/dropdown-arrow.png) no-repeat center center;
+    background: url(../design/images/dropdown-arrow.png) no-repeat center center;
     width: 12px;
     height: 6px;
     transform: translateY(-50%);
@@ -998,7 +998,7 @@ text-transform: capitalize;
     position: absolute;
     top: 50%;
     right: 0;
-    background: url(../images/dropdown-arrow.png) no-repeat center center;
+    background: url(../design/images/dropdown-arrow.png) no-repeat center center;
     width: 12px;
     height: 6px;
     transform: translateY(-50%);
@@ -1026,7 +1026,7 @@ text-transform: capitalize;
     font-size: 16px;
     font-family: GT Walsheim Pro;
     font-weight: 400;
-    background: #fff url(../images/dropdown-arrow.png) no-repeat 97% center;
+    background: #fff url(../design/images/dropdown-arrow.png) no-repeat 97% center;
     appearance: none;
     padding: 0 13px;
     border: 1px solid #dddbdb;
@@ -1647,7 +1647,7 @@ text-transform: capitalize;
     padding: 0 22px;
     font-family: GT Walsheim Pro;
     font-weight: 400;
-    background: url(../images/dropdown-arrow.png) no-repeat 98% center;
+    background: url(../design/images/dropdown-arrow.png) no-repeat 98% center;
     appearance: none;
 }
 
