@@ -100,6 +100,7 @@ Route::post('mentor/mentee/email/setting','Site\MentorController@settingEmailUpd
 Route::get('mentor/mentee/password/setting','Site\MentorController@settingPassword')->name('mentor.password.setting');
 Route::post('mentor/mentee/password/setting/{userType}','Site\MentorController@settingPasswordUpdate')->name('mentor.password.update');
 
+Route::post('message/submit/to_mentor','Site\MentorController@messageSubmitToMentor')->name('message.submit.to.mentor');
 
 Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
 Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');

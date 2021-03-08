@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use DB;
 class Mentor extends Authenticatable
 {
     protected $table = 'mentors';
@@ -48,5 +48,10 @@ class Mentor extends Authenticatable
             }, $max);
         }
         return "{$slug}-2";
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review','mentor_id','id')->select('reviews.*','users.name','users.email')->where('reviews.status',1)->where('reviews.is_deleted',0)->leftjoin('users','reviews.user_id','=','users.id');
     }
 }

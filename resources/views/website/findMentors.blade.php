@@ -22,10 +22,11 @@
 			</div>
 			<div class="grid-box">
 				<span>Seniority </span>
-				<select>
-					<option value="entrylevel">Entry Level</option>
-					<option value="midlevel">Mid Level</option>
-					<option value="seniorlevel">Senior Level</option>
+				<select name="seniority" id="senioritylevel">
+					<option hidden="" selected="" value="">Select Seniority</option>
+					@foreach($seniority as $senior)
+						<option value="{{$senior->id}}" @if(!empty($request) && $request['seniority'] == $senior->id){{('selected')}}@endif>{{$senior->title}}</option>
+					@endforeach
 				</select>
 			</div>
 			<div class="grid-box price-drropdown">
@@ -179,8 +180,8 @@
 
 		<div class="short-search-place">
 			<div class="short-by-holder">
-				<label>Short By: </label>
-				<select>
+				<label>Sort By: </label>
+				<select name="sort_by" id="sort_by">
 					<option value="relevance">Relevance</option>
 					<option value="popularity">Popularity</option>
 					<option value="highestfirst">Highest First</option>
@@ -211,7 +212,7 @@
 							<a href="{{route('mentor.details',$mentor->id)}}" class="profile-name">{{$mentor->name}}.</a>
 							<ul class="twolist">
 								<li class="company">Twitch</li>
-								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> 5  <a href="#">(60 reviews)</a></li>
+								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="#">({{count($mentor->reviews)}} Reviews)</a></li>
 							</ul>
 							<div class="inerview-taken">
 								<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
@@ -225,23 +226,16 @@
 
 							<a href="#" class="prinery-btm blue-btm">Book mentor</a>
 
-							<a href="#" class="prinery-btm deepblue-btm">Message</a>
+							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
 						</div>
 					</div>
 				@endforeach
 
-				<div class="pagination-place">
+				<!-- <div class="pagination-place">
 					<ul class="pagination-list">
-						<li><a href="#"><i class="fas fa-chevron-left"></i></a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">---</a></li>
-						<li><a href="#">8</a></li>
-						<li><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+						<li><a href="{{url('')}}">Next</a></li>
 					</ul>
-				</div>
+				</div> -->
 
 			</div>
 
@@ -329,15 +323,86 @@
 	</div>
 </section>
 
-<section class="footer-top" style="background: url('./images/footer-top.jpg') no-repeat center center; background-size: cover; ">
-	<div class="container">
-		<h4>Every year n people prepare to interview confidently on mentorly. Get fast results with professional mentors. Prepare to achieve your goals today. </h4>
-
-		<a href="#" class="prinery-btm blue-btm">Get Started</a>
-	</div>
-</section>
+<!-- Message Modal -->
+<div class="modal fade" id="messageToMentorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">Message to <span id="mentorName"></span></h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      		<div class="modal-body">
+      			<div class="form-group">
+      				<textarea placeholder="Your message" name="message" id="mentorMessage" class="form-control"></textarea>
+      				<span id="errorMessage" class="text-danger"></span>
+      			</div>
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        		<button type="button" id="modalMessageSendBtn" class="btn btn-primary">Send Message</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
 
 @section('script')
-	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		var seniorityLevel = 0;
+		$(document).on('change','select#senioritylevel',function(){
+			seniorityLevel = $('select#senioritylevel option:selected').val();
+			dataRetriving();
+		});
+
+		function dataRetriving()
+		{
+			var originalURL = '{{url()->current()}}?';
+			if(parseInt(seniorityLevel) > 0){
+				originalURL += 'seniority='+seniorityLevel;
+			}
+			window.location.href = originalURL;
+		}
+
+		var mentorId = 0;
+		$(document).on('click','.messageToMentor',function(){
+			var checkGuard = '{{get_guard()}}';$('#errorMessage').empty();
+			mentorId = parseInt($(this).attr('data-mentor'));
+			if(checkGuard == '' || checkGuard == 'admin'){
+				alert('you have to perform login before sending message');
+			}else if(checkGuard == 'mentor' && parseInt(mentorId) == parseInt('{{Auth::guard(get_guard())->user()->id}}')){
+				alert('you can not send message yourself');
+			}else{
+				var mentorName = $(this).attr('data-name');
+				$('#messageToMentorModal #mentorName').text('( '+mentorName+' )');
+				$('#messageToMentorModal #mentorMessage').val('');
+				$('#messageToMentorModal').modal('show');
+			}
+		});
+
+		$(document).on('click','#modalMessageSendBtn',function(){
+			var submitBtn = $(this);
+			$('#errorMessage').empty();
+			var message = $('#messageToMentorModal #mentorMessage').val();
+			if(message == ''){
+				$('#errorMessage').empty().append('Please type your message');
+			}else{
+				submitBtn.attr('disabled',true);
+				$.ajax({
+					url : '{{Route('message.submit.to.mentor')}}',
+					type: 'post',
+					data: {message:message,mentorId:mentorId,'_token':'{{csrf_token()}}'},
+					success:function(data){
+						if(data.error == true){
+							$('#messageToMentorModal #errorMessage').text(data.message);
+						}else{
+							$('#messageToMentorModal').modal('hide');
+						}
+						submitBtn.attr('disabled',false);
+					}
+				});
+			}
+		});
+	</script>
 @stop
 @endsection

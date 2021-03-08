@@ -259,14 +259,6 @@
 	</div>
 </section>
 
-<section class="footer-top" style="background: url('./design/images/footer-top.jpg') no-repeat center center; background-size: cover; ">
-	<div class="container">
-		<h4>Every year n people prepare to interview confidently on mentorly. Get fast results with professional mentors. Prepare to achieve your goals today. </h4>
-
-		<a href="#" class="prinery-btm blue-btm">Get Started</a>
-	</div>
-</section>
-
 @section('script')
 	<script type="text/javascript"></script>
 @stop

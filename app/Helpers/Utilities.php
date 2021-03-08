@@ -92,3 +92,15 @@ if (!function_exists('imageResizeAndSave')) {
     {
         return str_random(8);
     }
+
+    function avgRatingOfMentors($reviews){
+        $array = [];
+        foreach($reviews as $review){
+            array_push($array, $review->rating);
+        }
+        if(count($array) == 0){
+            return 0;
+        }else{
+            return array_sum($array)/count($array);
+        }
+    }

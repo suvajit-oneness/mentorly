@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
-use App\Models\User;use Hash;
+use App\Models\User;use Hash;use App\Models\MessageToMentor;
 
 class MentorController extends Controller
 {
@@ -78,6 +78,30 @@ class MentorController extends Controller
             $user = Auth::guard($guard)->user();
             return view('mentor.settingPassword',compact('guard','user'));
         }
+    }
+
+    public function messageSubmitToMentor(Request $req)
+    {
+        $rules = [
+            'message' => 'required|string|max:255',
+            'mentorId' => 'required|min:1|numeric',
+        ];
+        $validator = validator()->make($req->all(),$rules);
+        if(!$validator->fails()){
+            $user = Auth::guard(get_guard())->user();
+            $message = new MessageToMentor();
+            $message->mentorId = $req->mentorId;
+            if(get_guard() == 'web'){
+                $message->userId = $user->id;
+                $message->mentorOrMentee = 'mentee,'.$user->id;
+            }else{
+                $message->mentorOrMentee = 'mentor,'.$user->id;
+            }
+            $message->message = $req->message;
+            $message->save();
+            return response()->json(['error'=>false,'message'=>'message Submitted Successfully']);
+        }
+        return response()->json(['error'=>true,'message'=>'Something went wrong please try after some time']);
     }
 
     public function settingPasswordUpdate(Request $req,$userType)

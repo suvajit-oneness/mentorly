@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use App\Models\TimeZone;
 use App\Models\User;use Hash;use App\Models\Review;
 use App\Models\Mentor;use Auth;use App\Models\ContactUs;
+use App\Models\Seniority;
 
 class WebsiteController extends Controller
 {
@@ -105,8 +106,14 @@ class WebsiteController extends Controller
 
     public function findMentors(Request $req)
     {
-        $mentors = Mentor::get();
-    	return view('website.findMentors',compact('mentors'));
+        $mentors = Mentor::orderBy('name')->with('reviews');
+        if(!empty($req->seniority) &&  $req->seniority > 0){
+            $mentors = $mentors->whereSeniorityId($req->seniority);
+        }
+        $mentors = $mentors->get();
+        $seniority = Seniority::whereStatus(1)->get();
+        $request = $req->all();
+    	return view('website.findMentors',compact('mentors','seniority','request'));
     }
 
     public function mentorDetails(Request $req,$mentorId)
