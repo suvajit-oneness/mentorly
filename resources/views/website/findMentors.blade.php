@@ -391,9 +391,9 @@
 			mentorId = parseInt($(this).attr('data-mentor'));
 			if(checkGuard == '' || checkGuard == 'admin'){
 				alert('you have to perform login before sending message');
-			}else if(checkGuard == 'mentor' && parseInt(mentorId) == parseInt('{{Auth::guard(get_guard())->user()->id}}')){
+			}/*else if(checkGuard == 'mentor' && parseInt(mentorId) == parseInt('authuserId')){
 				alert('you can not send message yourself');
-			}else{
+			}*/else{
 				var mentorName = $(this).attr('data-name');
 				$('#messageToMentorModal #mentorName').text('( '+mentorName+' )');
 				$('#messageToMentorModal #mentorMessage').val('');
