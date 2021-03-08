@@ -7,6 +7,9 @@
 		<div class="title-place">
 			Online Finance tutors & teachers
 			<span><i>360</i> tutors avalable</span>
+			@if(url()->full() != url()->current())
+				<a href="{{url()->current()}}" class="btn btn-danger">Reset Filter</a>
+			@endif
 		</div>
 
 		<div class="filter-place">
@@ -23,9 +26,9 @@
 			<div class="grid-box">
 				<span>Seniority </span>
 				<select name="seniority" id="senioritylevel">
-					<option hidden="" selected="" value="">Select Seniority</option>
+					<option value="">Select Seniority</option>
 					@foreach($seniority as $senior)
-						<option value="{{$senior->id}}" @if(!empty($request) && $request['seniority'] == $senior->id){{('selected')}}@endif>{{$senior->title}}</option>
+						<option value="{{$senior->id}}" @if(!empty($request['seniority']) && $request['seniority'] == $senior->id){{('selected')}}@endif>{{$senior->title}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -191,8 +194,8 @@
 				</select>
 			</div>
 			<div class="search-holder">
-				<input type="text" id="" placeholder="Search by, Name, Keyword, or Company">
-				<span><img src="{{asset('design/images/magnifire.png')}}"></span>
+				<input type="text" id="searchby" name="searchby" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
+				<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
 			</div>
 		</div>
 
@@ -349,18 +352,36 @@
 
 @section('script')
 	<script type="text/javascript">
-		var seniorityLevel = 0;
+		var seniorityLevel = 0,keyword = '';
+		@if(!empty($request['seniority']) && $request['seniority'] > 0)
+			seniorityLevel = parseInt({{$request['seniority']}});
+		@endif
+		@if(!empty($request['keyword']))
+			keyword = "{{$request['keyword']}}";
+		@endif
 		$(document).on('change','select#senioritylevel',function(){
 			seniorityLevel = $('select#senioritylevel option:selected').val();
 			dataRetriving();
+		});
+
+		$(document).on('click','#searchFinalBtn',function(){
+			keyword = $('#searchby').val();
+			if(keyword == ''){}
+			else{
+				dataRetriving();
+			}
 		});
 
 		function dataRetriving()
 		{
 			var originalURL = '{{url()->current()}}?';
 			if(parseInt(seniorityLevel) > 0){
-				originalURL += 'seniority='+seniorityLevel;
+				originalURL += 'seniority='+seniorityLevel+'&';
 			}
+			if(keyword != ''){
+				originalURL += 'keyword='+keyword+'&';
+			}
+			originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
 			window.location.href = originalURL;
 		}
 

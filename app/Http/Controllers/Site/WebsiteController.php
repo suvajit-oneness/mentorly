@@ -110,7 +110,10 @@ class WebsiteController extends Controller
         if(!empty($req->seniority) &&  $req->seniority > 0){
             $mentors = $mentors->whereSeniorityId($req->seniority);
         }
-        $mentors = $mentors->get();
+        if(!empty($req->keyword)){
+            $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
+        }
+        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->get();
         $seniority = Seniority::whereStatus(1)->get();
         $request = $req->all();
     	return view('website.findMentors',compact('mentors','seniority','request'));
