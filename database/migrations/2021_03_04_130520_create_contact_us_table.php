@@ -18,6 +18,7 @@ class CreateContactUsTable extends Migration
             $table->tinyInteger('type')->default(1)->comment('1:contacted, 0 :address to show on web');
             $table->string('title');
             $table->longText('address');
+            $table->string('image');
             $table->string('mobile');
             $table->string('email');
             $table->string('linkedinLink');
@@ -35,6 +36,7 @@ class CreateContactUsTable extends Migration
                 'address' => '35 Nowland St, Seven Hills, NSW 2147',
                 'mobile' => '0433 019 012',
                 'email' => 'info@gmail.com',
+                'image' => '',
                 'linkedinLink' => 'https://in.linkedin.com/',
                 'facebookLink' => 'https://www.facebook.com/',
                 'instagramLink' => 'https://www.instagram.com/',

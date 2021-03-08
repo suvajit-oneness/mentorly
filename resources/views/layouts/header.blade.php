@@ -1,7 +1,7 @@
 <header>
     <div class="container">
         <div class="inner-header">
-            <a href="#" class="logo">
+            <a href="{{url('/')}}" class="logo">
                 <img src="{{asset('design/images/logo.png')}}">
             </a>
             <div class="nevigation">
@@ -10,7 +10,7 @@
                         <li><a href="{{route('mentors.find')}}">Find Mentors</a></li>
                         <li><a href="#">Become a Mentor </a></li>
                         <li><a href="#">Careers</a></li>
-                        <li><a href="{{route('aboutus')}}">About Us  </a></li>
+                        <li><a href="{{route('aboutus')}}">About Us </a></li>
                         <li><a href="{{route('contactus')}}">Contact </a></li>
                     </ul>
                 </div>

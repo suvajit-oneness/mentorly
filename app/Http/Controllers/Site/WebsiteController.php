@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use App\Models\TimeZone;
 use App\Models\User;use Hash;use App\Models\Review;
-use App\Models\Mentor;use Auth;
+use App\Models\Mentor;use Auth;use App\Models\ContactUs;
 
 class WebsiteController extends Controller
 {
@@ -124,7 +124,8 @@ class WebsiteController extends Controller
 
     public function contactUs(Request $req)
     {
-    	return view('website.contactUs');
+        $contact = ContactUs::whereType(0)->first();
+    	return view('website.contactUs',compact('contact'));
     }
 
     public function showForgetPassword($userType)
