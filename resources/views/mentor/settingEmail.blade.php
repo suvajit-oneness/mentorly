@@ -3,14 +3,7 @@
 @section('content')
 <section class="gray-wrapper">
 	<div class="setting-wrapper">
-		<ul class="setting-list">
-			<li><a href="{{route('mentor.mentee.setting')}}">Account</a></li>
-			<li><a href="{{route('mentor.email.setting')}}" class="active">Email</a></li>
-			<li><a href="{{route('mentor.password.setting')}}">Password </a></li>
-			<li><a href="#">Payment Methods</a></li>
-			<li><a href="#">Payment History</a></li>
-			<li><a href="#">Calendar</a></li>
-		</ul>
+		@include('mentor.settingSidebar')
 		<div class="settings-details">
 			<form method="post" action="{{route('mentor.email.update')}}">
 				@csrf

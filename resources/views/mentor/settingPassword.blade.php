@@ -4,14 +4,7 @@
 	
 <section class="gray-wrapper">
 	<div class="setting-wrapper">
-		<ul class="setting-list">
-			<li><a href="{{route('mentor.mentee.setting')}}">Account</a></li>
-			<li><a href="{{route('mentor.email.setting')}}">Email</a></li>
-			<li><a href="{{route('mentor.password.setting')}}" class="active">Password </a></li>
-			<li><a href="#">Payment Methods</a></li>
-			<li><a href="#">Payment History</a></li>
-			<li><a href="#">Calendar</a></li>
-		</ul>
+		@include('mentor.settingSidebar')
 		<div class="settings-details">
 			<form method="post" action="{{route('mentor.password.update',$guard)}}">
 				<input type="hidden" name="">

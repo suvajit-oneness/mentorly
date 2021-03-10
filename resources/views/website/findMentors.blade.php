@@ -231,18 +231,95 @@
 
 							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
 						</div>
+						<!-- Mentor Availability Calender -->
+						<div class="right-floating-place">
+							<div class="calender">
+								<div class="row-grid">
+									<div class="row-title"></div>
+									<div class="row-cell">
+										<div class="cell">Mon</div>
+										<div class="cell">Tue</div>
+										<div class="cell">Wed</div>
+										<div class="cell">Tus</div>
+										<div class="cell">Fri</div>
+										<div class="cell">Sat</div>
+										<div class="cell">Sun</div>
+									</div>
+								</div>
+								
+								<div class="row-grid">
+									<div class="row-title">
+										<span class="daytime">Morning</span>
+										<span class="time">06:00—12:00</span>
+									</div>
+									<div class="row-cell">
+										<div class="cell cell-light"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-light"></div>
+									</div>
+								</div>
+								
+								<div class="row-grid">
+									<div class="row-title">
+										<span class="daytime">Afternoon</span>
+										<span class="time">12:00—18:00</span>
+									</div>
+									<div class="row-cell">
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-light"></div>
+									</div>
+								</div>
+								
+								<div class="row-grid">
+									<div class="row-title">
+										<span class="daytime">Evening</span>
+										<span class="time">18:00—24:00</span>
+									</div>
+									<div class="row-cell">
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-light"></div>
+									</div>
+								</div>
+
+								<div class="row-grid">
+									<div class="row-title">
+										<span class="daytime">Night</span>
+										<span class="time">00:00—06:00</span>
+									</div>
+									<div class="row-cell">
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-light"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-deep"></div>
+										<div class="cell cell-light"></div>
+									</div>
+								</div>
+							</div>
+							<a href="#" class="avality-button">View full availability</a>
+						</div>
+						<!-- Mentor Availability Calender END -->
 					</div>
 				@endforeach
 
-				<!-- <div class="pagination-place">
-					<ul class="pagination-list">
-						<li><a href="{{url('')}}">Next</a></li>
-					</ul>
-				</div> -->
-
 			</div>
 
-			<div class="right-floating-place">
+			<!-- <div class="right-floating-place">
 				<div class="calender">
 					<div class="row-grid">
 						<div class="row-title"></div>
@@ -256,6 +333,7 @@
 							<div class="cell">Sun</div>
 						</div>
 					</div>
+					
 					<div class="row-grid">
 						<div class="row-title">
 							<span class="daytime">Morning</span>
@@ -271,6 +349,7 @@
 							<div class="cell cell-light"></div>
 						</div>
 					</div>
+					
 					<div class="row-grid">
 						<div class="row-title">
 							<span class="daytime">Afternoon</span>
@@ -286,6 +365,7 @@
 							<div class="cell cell-light"></div>
 						</div>
 					</div>
+					
 					<div class="row-grid">
 						<div class="row-title">
 							<span class="daytime">Evening</span>
@@ -301,6 +381,7 @@
 							<div class="cell cell-light"></div>
 						</div>
 					</div>
+
 					<div class="row-grid">
 						<div class="row-title">
 							<span class="daytime">Night</span>
@@ -318,7 +399,7 @@
 					</div>
 				</div>
 				<a href="#" class="avality-button">View full availability</a>
-			</div>
+			</div> -->
 
 		</div>
 

@@ -38,49 +38,7 @@
             }  
             return false;  
         }
-
-        // logo slider
-        $('.logo-slider').slick({
-          centerMode: false,
-          centerPadding: '60px',
-          slidesToShow: 5,
-          arrows:true,
-          nextArrow: '<span class="next"><img src="design/images/next-arrow.png"></span>',
-          prevArrow: '<span class="pre"><img src="design/images/pre-arrow.png"></span>',
-          responsive: [
-            {
-              breakpoint: 768,
-              settings: {
-                arrows: true,
-                centerMode: true,
-                centerPadding: '10px',
-                slidesToShow: 3
-              }
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                arrows: true,
-                centerMode: true,
-                centerPadding: '10px',
-                slidesToShow: 1
-              }
-            }
-          ]
-        });
-
-        // success story slider
-        $('.profile-slider').slick({
-          centerMode: false,
-          centerPadding: '30px',
-          slidesToShow:1,
-          arrows:true,
-          dots: true,
-          speed: 300,
-          nextArrow: '<span class="next-arrow"><img src="design/images/next-arrow-white.png"></span>',
-          prevArrow: '<span class="pre-arrow"><img src="design/images/pre-arrow-white.png"></span>'
-        });
-
+        
         // accordian
         jQuery(document).ready(function($){
             // Acordeon

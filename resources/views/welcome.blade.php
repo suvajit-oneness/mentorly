@@ -6,8 +6,8 @@
         <div class="banner-caption ">
             <h1>Get the job you always wanted with the best mentors.</h1>
             <div class="search-place">
-                <input type="text" name="search" id="" placeholder="Search by mentor, company, industry, seniority">
-                <input type="submit" id="" value="Explore">
+                <input type="text" name="search" id="exploreInput" placeholder="Search by mentor, company, industry, seniority">
+                <input type="submit" id="exploreBtn" value="Explore" style="display: none;">
             </div>
         </div>
     </div>
@@ -17,12 +17,10 @@
     <div class="container logo-section">
         <h2>Where our mentor’s work at</h2>
         <div class="logo-slider">
-            <div class="logo-holder"><img src="{{asset('design/images/logo1.png')}}"></div>
-            <div class="logo-holder"><img src="{{asset('design/images/logo2.png')}}"></div>
+            @for($logo = 1;$logo <= 5; $logo++ )
+                <div class="logo-holder"><img src="{{asset('design/images/logo'.$logo.'.png')}}"></div>
+            @endfor
             <div class="logo-holder"><img src="{{asset('design/images/logo3.png')}}"></div>
-            <div class="logo-holder"><img src="{{asset('design/images/logo4.png')}}"></div>
-            <div class="logo-holder"><img src="{{asset('design/images/logo5.png')}}"></div>
-            <div class="logo-holder"><img src="{{asset('design/images/logo1.png')}}"></div>
         </div>
     </div>
 </section>
@@ -256,12 +254,74 @@
     </div>
 </section>
 
-<section class="footer-top" style="background: url('./design/images/footer-top.jpg') no-repeat center center; background-size: cover;">
-    <div class="container">
-        <h4>Every year n people prepare to interview confidently on mentorly. Get fast results with professional mentors. Prepare to achieve your goals today. </h4>
-        <a href="#" class="prinery-btm blue-btm">Get Started</a>
-    </div>
-</section>
+@section('script')
+    <script type="text/javascript">
+         // logo slider
+        $('.logo-slider').slick({
+          centerMode: false,
+          centerPadding: '60px',
+          slidesToShow: 5,
+          arrows:true,
+          nextArrow: '<span class="next"><img src="design/images/next-arrow.png"></span>',
+          prevArrow: '<span class="pre"><img src="design/images/pre-arrow.png"></span>',
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                arrows: true,
+                centerMode: true,
+                centerPadding: '10px',
+                slidesToShow: 3
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                arrows: true,
+                centerMode: true,
+                centerPadding: '10px',
+                slidesToShow: 1
+              }
+            }
+          ]
+        });
 
-@section('script')@stop
+        // success story slider
+        $('.profile-slider').slick({
+          centerMode: false,
+          centerPadding: '30px',
+          slidesToShow:1,
+          arrows:true,
+          dots: true,
+          speed: 300,
+          nextArrow: '<span class="next-arrow"><img src="design/images/next-arrow-white.png"></span>',
+          prevArrow: '<span class="pre-arrow"><img src="design/images/pre-arrow-white.png"></span>'
+        });
+
+        var keyword = $('#exploreInput').val();
+        if(keyword == ''){$('#exploreBtn').hide();}
+        else{$('#exploreBtn').show();}
+        
+        $(document).on('keyup','#exploreInput',function(){
+            keyword = $(this).val();
+            if(keyword == ''){$('#exploreBtn').hide();}
+            else{$('#exploreBtn').show();}
+        });
+        $(document).on('click','#exploreBtn',function(){
+            if(keyword == ''){}
+            else{
+                dataRetriving();
+            }
+        });
+
+        function dataRetriving() {
+            var originalURL = "{{url('find/mentors')}}?";
+            if(keyword != ''){
+                originalURL += 'keyword='+keyword+'&';
+            }
+            originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
+            window.location.href = originalURL;
+        }
+    </script>
+@stop
 @endsection
