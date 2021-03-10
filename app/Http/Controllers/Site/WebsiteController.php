@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use App\Models\TimeZone;
 use App\Models\User;use Hash;use App\Models\Review;
 use App\Models\Mentor;use Auth;use App\Models\ContactUs;
-use App\Models\Seniority;
+use App\Models\Seniority;use App\Models\AvailableDay;
+use App\Models\AvailableShift;
 
 class WebsiteController extends Controller
 {
@@ -114,9 +115,37 @@ class WebsiteController extends Controller
             $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
         }
         $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->get();
+        $days = AvailableDay::get();
+        foreach ($mentors as $mentor) {
+            $mentor->timeShift = $this->getShowTimeShift($mentor,$days);
+        }
         $seniority = Seniority::whereStatus(1)->get();
         $request = $req->all();
-    	return view('website.findMentors',compact('mentors','seniority','request'));
+    	return view('website.findMentors',compact('mentors','seniority','request','days'));
+    }
+
+    public function getShowTimeShift($mentor,$days)
+    {
+        $shifting = [];
+        $time = ['Morning'=>['06:00','12:00'],'Afternoon' =>['12:00','18:00'],'Evening'=>['18:00','00:00'],'Night'=>['00:00','06:00']];
+        foreach($time as $key => $t){
+            $weeklyShift = [];
+            foreach ($days as $day) {
+                $getData = AvailableShift::where('mentorId',$mentor->id)->where('available_days_id',$day->id)->whereBetween('time_shift',$t)->where('available',1)->get();
+                $weeklyShift[] = [
+                    'day' => $day->day,
+                    'short_day' => $day->short_day,
+                    'available' => count($getData),
+                ];
+            }
+            $shifting[]=[
+                'mentorId' => $mentor->id,
+                'shift' => $t[0].'-'.$t[1],
+                'shift_name' => $key,
+                'days' => $weeklyShift,
+            ];
+        }
+        return $shifting;
     }
 
     public function mentorDetails(Request $req,$mentorId)

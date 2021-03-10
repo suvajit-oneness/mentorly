@@ -6,7 +6,7 @@
 	<div class="container-xl">
 		<div class="title-place">
 			Online Finance tutors & teachers
-			<span><i>360</i> tutors avalable</span>
+			<span><i>{{count($mentors)}}</i> tutors avalable</span>
 			@if(url()->full() != url()->current())
 				<a href="{{url()->current()}}" class="btn btn-danger">Reset Filter</a>
 			@endif
@@ -237,17 +237,33 @@
 								<div class="row-grid">
 									<div class="row-title"></div>
 									<div class="row-cell">
-										<div class="cell">Mon</div>
+										@foreach($days as $day)
+											<div class="cell">{{$day->short_day}}</div>	
+										@endforeach
+										<!-- <div class="cell">Mon</div>
 										<div class="cell">Tue</div>
 										<div class="cell">Wed</div>
 										<div class="cell">Tus</div>
 										<div class="cell">Fri</div>
 										<div class="cell">Sat</div>
-										<div class="cell">Sun</div>
+										<div class="cell">Sun</div> -->
 									</div>
 								</div>
-								
-								<div class="row-grid">
+								@foreach($mentor->timeShift as $timeShift)
+									<div class="row-grid">
+										<div class="row-title">
+											<span class="daytime">{{$timeShift['shift_name']}}</span>
+											<span class="time">{{$timeShift['shift']}}</span>
+										</div>
+										<div class="row-cell">
+											@foreach($timeShift['days'] as $av_day)
+												<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
+											@endforeach
+										</div>
+									</div>
+								@endforeach
+
+								<!-- <div class="row-grid">
 									<div class="row-title">
 										<span class="daytime">Morning</span>
 										<span class="time">06:00—12:00</span>
@@ -261,9 +277,9 @@
 										<div class="cell cell-deep"></div>
 										<div class="cell cell-light"></div>
 									</div>
-								</div>
+								</div> -->
 								
-								<div class="row-grid">
+								<!-- <div class="row-grid">
 									<div class="row-title">
 										<span class="daytime">Afternoon</span>
 										<span class="time">12:00—18:00</span>
@@ -309,7 +325,7 @@
 										<div class="cell cell-deep"></div>
 										<div class="cell cell-light"></div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							<a href="#" class="avality-button">View full availability</a>
 						</div>
