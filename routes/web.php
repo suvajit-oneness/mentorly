@@ -86,9 +86,15 @@ require 'admin.php';
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');
+// Registration
+Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
+Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');
+Route::post('registration/mentor_mentee','Site\WebsiteController@signUpMentorAndMentee')->name('registration.mentee_mentor');
+// Login
 Route::get('/mentor/login','Site\WebsiteController@showLoginFormForMentor');
 Route::get('/mentee/login','Site\WebsiteController@showLoginFormForMentee');
 Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
+// Forget Password
 Route::get('forget/password/{userType}','Site\WebsiteController@showForgetPassword')->name('both.forget.password');
 Route::post('forget/password/{userType}','Site\WebsiteController@postForgetPassword')->name('both.forget.password.post');
 
@@ -104,9 +110,6 @@ Route::post('message/submit/to_mentor','Site\MentorController@messageSubmitToMen
 Route::get('mentor/shift/availability','Site\MentorController@mentorAvailabilitySettingView')->name('mentor.availability.setting');
 Route::post('mentor/shift/availability','Site\MentorController@saveMentorAvailabilitySetting')->name('mentor.availability.setting.save');
 
-Route::get('registration/mentee','Site\WebsiteController@signupFormMentee')->name('singup.mentee');
-Route::get('registration/mentor','Site\WebsiteController@signupFormMentor')->name('singup.mentor');
-Route::post('registration/mentor_mentee','Site\WebsiteController@signUpMentorAndMentee')->name('registration.mentee_mentor');
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');

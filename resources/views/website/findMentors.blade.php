@@ -240,13 +240,6 @@
 										@foreach($days as $day)
 											<div class="cell">{{$day->short_day}}</div>	
 										@endforeach
-										<!-- <div class="cell">Mon</div>
-										<div class="cell">Tue</div>
-										<div class="cell">Wed</div>
-										<div class="cell">Tus</div>
-										<div class="cell">Fri</div>
-										<div class="cell">Sat</div>
-										<div class="cell">Sun</div> -->
 									</div>
 								</div>
 								@foreach($mentor->timeShift as $timeShift)
@@ -262,72 +255,8 @@
 										</div>
 									</div>
 								@endforeach
-
-								<!-- <div class="row-grid">
-									<div class="row-title">
-										<span class="daytime">Morning</span>
-										<span class="time">06:00—12:00</span>
-									</div>
-									<div class="row-cell">
-										<div class="cell cell-light"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-light"></div>
-									</div>
-								</div> -->
-								
-								<!-- <div class="row-grid">
-									<div class="row-title">
-										<span class="daytime">Afternoon</span>
-										<span class="time">12:00—18:00</span>
-									</div>
-									<div class="row-cell">
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-light"></div>
-									</div>
-								</div>
-								
-								<div class="row-grid">
-									<div class="row-title">
-										<span class="daytime">Evening</span>
-										<span class="time">18:00—24:00</span>
-									</div>
-									<div class="row-cell">
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-light"></div>
-									</div>
-								</div>
-
-								<div class="row-grid">
-									<div class="row-title">
-										<span class="daytime">Night</span>
-										<span class="time">00:00—06:00</span>
-									</div>
-									<div class="row-cell">
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-light"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-deep"></div>
-										<div class="cell cell-light"></div>
-									</div>
-								</div> -->
 							</div>
-							<a href="#" class="avality-button">View full availability</a>
+							<a href="javascript:void(0)" class="avality-button" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}">View full availability</a>
 						</div>
 						<!-- Mentor Availability Calender END -->
 					</div>
@@ -447,11 +376,31 @@
   	</div>
 </div>
 
+<div class="modal fade" id="availabilityModal" tabindex="-1" role="dialog" aria-labelledby="availableModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="availableModalLabel">Modal title</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      		<div class="modal-body">
+        		...
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        		<button type="button" class="btn btn-primary">Save changes</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+
 @section('script')
 	<script type="text/javascript">
 		var seniorityLevel = 0,keyword = '';
 		@if(!empty($request['seniority']) && $request['seniority'] > 0)
-			seniorityLevel = parseInt({{$request['seniority']}});
+			seniorityLevel = parseInt('{{$request["seniority"]}}');
 		@endif
 		@if(!empty($request['keyword']))
 			keyword = "{{$request['keyword']}}";
@@ -520,6 +469,11 @@
 					}
 				});
 			}
+		});
+
+		$(document).on('click','.avality-button',function(){
+			var mentorId = $(this).attr('data-mentor'),mentorName=$(this).attr('mentor-name');
+			$('#availabilityModal').modal('show');
 		});
 	</script>
 @stop

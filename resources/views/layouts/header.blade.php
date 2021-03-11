@@ -8,7 +8,9 @@
                 <div class="menu-wrap">
                     <ul class="menu">
                         <li><a href="{{route('mentors.find')}}">Find Mentors</a></li>
-                        <li><a href="#">Become a Mentor </a></li>
+                        @if(get_guard() == '' || get_guard() != 'mentor')
+                            <li><a href="{{route('singup.mentor')}}">Become a Mentor </a></li>
+                        @endif
                         <li><a href="#">Careers</a></li>
                         <li><a href="{{route('aboutus')}}">About Us </a></li>
                         <li><a href="{{route('contactus')}}">Contact </a></li>
