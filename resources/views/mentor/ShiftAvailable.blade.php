@@ -7,7 +7,7 @@
 		<div class="settings-details">
 			<form method="post" action="{{route('mentor.availability.setting.save')}}">
 				@csrf
-				<table id="MyTable" border="1" style="width: 100%">
+				<table id="MyTable" class="table" border="1" style="width: 100%">
 					<thead>
 						<tr>
 							<th rowspan="3">Date</th>

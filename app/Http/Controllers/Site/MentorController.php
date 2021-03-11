@@ -243,4 +243,23 @@ class MentorController extends Controller
             return response()->json(['error'=>true,'msg'=>'Invalid Mentor']);
         }
     }
+
+    public function seeBookingDetails(Request $req)
+    {
+        $guard = get_guard();
+        if($guard == 'mentor'){
+            $mentor = Auth::guard($guard)->user();
+            $booking = MentorSlotBooked::where('mentorId',$mentor->id)->with('slot_details')->orderBy('id','desc')->get();
+            foreach ($booking as $userType) {
+                $user = [];
+                if($userType->userType == 'mentee'){
+                    $user = User::where('id',$userType->bookedUserId)->first();
+                }elseif($userType->userType == 'mentor'){
+                    $user = Mentor::where('id',$userType->bookedUserId)->first();
+                }
+                $userType->userDetails = $user;
+            }
+            return view('mentor.bookingConfirmedMentee',compact('mentor','booking'));
+        }
+    }
 }

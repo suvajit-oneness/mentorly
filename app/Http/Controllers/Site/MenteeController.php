@@ -19,7 +19,6 @@ class MenteeController extends Controller
     		elseif($guard == 'mentor'){$userType = 'mentor';}
     		$purchase = MentorSlotBooked::where('bookedUserId',$user->id)->where('userType',$userType);
 	    	$purchase = $purchase->with('slot_details')->with('mentor')->orderBy('id','Desc')->get();
-	    	// dd($purchase);
 	    	return view('mentee.purchaseHistory',compact('purchase'));
     	}
   

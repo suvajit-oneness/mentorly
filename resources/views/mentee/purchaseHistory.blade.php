@@ -6,7 +6,7 @@
 		@include('mentor.settingSidebar')
 		<div class="settings-details">
 			@if(count($purchase) > 0)
-			<table id="MyTable" border="1" style="width: 100%">
+			<table class="table" border="1" style="width: 100%">
 				<thead>
 					<tr>
 						<th>Booking Id</th>
