@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAvailableShiftsTable extends Migration
+class CreateMentorSlotBookedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateAvailableShiftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('available_shifts', function (Blueprint $table) {
+        Schema::create('mentor_slot_bookeds', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('available_days_id');
             $table->bigInteger('mentorId');
-            $table->date('date');
-            $table->string('time_shift');
-            $table->tinyInteger('available')->comment('1:Yes, 0:No,2:Booked');
+            $table->bigInteger('availableShiftId');
+            $table->enum('userType',['mentor','mentee']);
+            $table->bigInteger('bookedUserId');
+            $table->float('price',8,2);
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
@@ -33,6 +33,6 @@ class CreateAvailableShiftsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('available_shifts');
+        Schema::dropIfExists('mentor_slot_bookeds');
     }
 }

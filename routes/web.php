@@ -110,8 +110,12 @@ Route::post('message/submit/to_mentor','Site\MentorController@messageSubmitToMen
 Route::get('mentor/shift/availability','Site\MentorController@mentorAvailabilitySettingView')->name('mentor.availability.setting');
 Route::post('mentor/shift/availability','Site\MentorController@saveMentorAvailabilitySetting')->name('mentor.availability.setting.save');
 
+Route::get('purchase/history','Site\MenteeController@purchasHistory')->name('purchase.history');
+
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
+Route::get('mentor/full/availability/{mentorId}','Site\MentorController@viewFullAvailability')->name('mentor.full.availability');
+Route::post('mentor/booking/request','Site\MentorController@saveBookingRequest')->name('mentor/booking/slot');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');

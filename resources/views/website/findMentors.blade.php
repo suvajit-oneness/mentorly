@@ -224,10 +224,10 @@
 
 						<div class="profile-right">
 							<span class="price">
-								$1640 <span>/ hour</span>
+								${{$mentor->charge_per_hour}} <span>/ hour</span>
 							</span>
 
-							<a href="#" class="prinery-btm blue-btm">Book mentor</a>
+							<a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="prinery-btm blue-btm">Book mentor</a>
 
 							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
 						</div>
@@ -256,7 +256,7 @@
 									</div>
 								@endforeach
 							</div>
-							<a href="javascript:void(0)" class="avality-button" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}">View full availability</a>
+							<a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}" class="avality-button" target="_blank">View full availability</a>
 						</div>
 						<!-- Mentor Availability Calender END -->
 					</div>
@@ -264,7 +264,7 @@
 
 			</div>
 
-			<!-- <div class="right-floating-place">
+			<div class="right-floating-place">
 				<div class="calender">
 					<div class="row-grid">
 						<div class="row-title"></div>
@@ -344,10 +344,9 @@
 					</div>
 				</div>
 				<a href="#" class="avality-button">View full availability</a>
-			</div> -->
+			</div>
 
 		</div>
-
 
 	</div>
 </section>
@@ -371,26 +370,6 @@
       		<div class="modal-footer">
         		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         		<button type="button" id="modalMessageSendBtn" class="btn btn-primary">Send Message</button>
-      		</div>
-    	</div>
-  	</div>
-</div>
-
-<div class="modal fade" id="availabilityModal" tabindex="-1" role="dialog" aria-labelledby="availableModalLabel" aria-hidden="true">
-  	<div class="modal-dialog" role="document">
-    	<div class="modal-content">
-      		<div class="modal-header">
-        		<h5 class="modal-title" id="availableModalLabel">Modal title</h5>
-        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          			<span aria-hidden="true">&times;</span>
-        		</button>
-      		</div>
-      		<div class="modal-body">
-        		...
-      		</div>
-      		<div class="modal-footer">
-        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        		<button type="button" class="btn btn-primary">Save changes</button>
       		</div>
     	</div>
   	</div>
@@ -469,11 +448,6 @@
 					}
 				});
 			}
-		});
-
-		$(document).on('click','.avality-button',function(){
-			var mentorId = $(this).attr('data-mentor'),mentorName=$(this).attr('mentor-name');
-			$('#availabilityModal').modal('show');
 		});
 	</script>
 @stop

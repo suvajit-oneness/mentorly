@@ -52,6 +52,6 @@ class Mentor extends Authenticatable
 
     public function reviews()
     {
-        return $this->hasMany('App\Models\Review','mentor_id','id')->select('reviews.*','users.name','users.email')->where('reviews.status',1)->where('reviews.is_deleted',0)->leftjoin('users','reviews.user_id','=','users.id');
+        return $this->hasMany('App\Models\Review','mentor_id','id')->select('reviews.*','users.name','users.email','users.image')->where('reviews.status',1)->where('reviews.is_deleted',0)->leftjoin('users','reviews.user_id','=','users.id');
     }
 }
