@@ -217,9 +217,9 @@
 								<li class="company">Twitch</li>
 								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="#">({{count($mentor->reviews)}} Reviews)</a></li>
 							</ul>
-							<div class="inerview-taken">
+							<!-- <div class="inerview-taken">
 								<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
-							</div>
+							</div> -->
 						</div>
 
 						<div class="profile-right">
