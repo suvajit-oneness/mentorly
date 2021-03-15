@@ -264,7 +264,7 @@
 
 			</div>
 
-			<div class="right-floating-place">
+			<!-- <div class="right-floating-place">
 				<div class="calender">
 					<div class="row-grid">
 						<div class="row-title"></div>
@@ -344,7 +344,7 @@
 					</div>
 				</div>
 				<a href="#" class="avality-button">View full availability</a>
-			</div>
+			</div> -->
 
 		</div>
 
