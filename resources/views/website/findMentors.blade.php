@@ -256,7 +256,6 @@
 									</div>
 								@endforeach
 							</div>
-							<!-- <a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a> -->
 							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
 						</div>
 						<!-- Mentor Availability Calender END -->
