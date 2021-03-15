@@ -181,33 +181,33 @@ class MentorController extends Controller
         return back()->with('success','Data Saved Success');
     }
 
-    public function viewFullAvailability(Request $req,$mentorId)
-    {
-        $date = date('Y-m-d');
-        if(!empty($req->date)){
-            $date = date('Y-m-d',strtotime($req->date));
-        }
-        $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
-        $mentorId = base64_decode($mentorId);
-        $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
-        // dd($mentor);
-        if($mentor){
-            $daysData = [];
-            for($i = 0; $i < 7;$i++){
-                $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
-                $day = date('D',strtotime($originalDay.'+'.$i.' days'));
-                $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->where('available',1)->get();
-                $daysData[] = [
-                    'date' => $date,
-                    'day' => $day,
-                    'short_date' => date('d',strtotime($date)),
-                    'available' => $getSlots,
-                ];
-            }
-            return view('mentor.viewFullAvailability',compact('mentor','daysData','originalDate','date'));
-        }
-        return 'Invalid Request <a href="/">Go back</a>';
-    }
+    // public function viewFullAvailability(Request $req,$mentorId)
+    // {
+    //     $date = date('Y-m-d');
+    //     if(!empty($req->date)){
+    //         $date = date('Y-m-d',strtotime($req->date));
+    //     }
+    //     $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
+    //     $mentorId = base64_decode($mentorId);
+    //     $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
+    //     // dd($mentor);
+    //     if($mentor){
+    //         $daysData = [];
+    //         for($i = 0; $i < 7;$i++){
+    //             $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
+    //             $day = date('D',strtotime($originalDay.'+'.$i.' days'));
+    //             $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->where('available',1)->get();
+    //             $daysData[] = [
+    //                 'date' => $date,
+    //                 'day' => $day,
+    //                 'short_date' => date('d',strtotime($date)),
+    //                 'available' => $getSlots,
+    //             ];
+    //         }
+    //         return view('mentor.viewFullAvailability',compact('mentor','daysData','originalDate','date'));
+    //     }
+    //     return 'Invalid Request <a href="/">Go back</a>';
+    // }
 
     public function saveBookingRequest(Request $req)
     {

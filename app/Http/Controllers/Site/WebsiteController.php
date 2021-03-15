@@ -150,10 +150,37 @@ class WebsiteController extends Controller
 
     public function mentorDetails(Request $req,$mentorId)
     {
-        $mentor = Mentor::findorFail($mentorId);
-        $mentor->review = Review::where('mentor_id',$mentor->id)->where('is_deleted',0)->with('user')->get();
-        $timezone = TimeZone::get();
-        return view('mentor.details',compact('mentor','timezone'));
+        // $mentor = Mentor::findorFail($mentorId);
+        // $mentor->review = Review::where('mentor_id',$mentor->id)->where('is_deleted',0)->with('user')->get();
+        // $timezone = TimeZone::get();
+        // return view('mentor.details',compact('mentor','timezone'));
+
+        $date = date('Y-m-d');
+        if(!empty($req->date)){
+            $date = date('Y-m-d',strtotime($req->date));
+        }
+        $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
+        $mentorId = base64_decode($mentorId);
+        $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
+        if($mentor){
+            $days = AvailableDay::get();
+            $mentor->timeShift = $this->getShowTimeShift($mentor,$days);
+            $daysData = [];$timezone = TimeZone::get();
+            for($i = 0; $i < 7;$i++){
+                $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
+                $day = date('D',strtotime($originalDay.'+'.$i.' days'));
+                $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->where('available',1)->get();
+                $daysData[] = [
+                    'date' => $date,
+                    'day' => $day,
+                    'short_date' => date('d',strtotime($date)),
+                    'available' => $getSlots,
+                ];
+            }
+            return view('mentor.details',compact('mentor','daysData','days','originalDate','date','timezone'));
+            // return view('mentor.viewFullAvailability',compact('mentor','daysData','originalDate','date','timezone'));
+        }
+        return 'Invalid Request <a href="/">Go back</a>';
     }
 
     public function aboutUs(Request $req)

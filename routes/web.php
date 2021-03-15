@@ -115,7 +115,7 @@ Route::get('mentor/booking/request','Site\MentorController@seeBookingDetails')->
 
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
-Route::get('mentor/full/availability/{mentorId}','Site\MentorController@viewFullAvailability')->name('mentor.full.availability');
+// Route::get('mentor/full/availability/{mentorId}','Site\MentorController@viewFullAvailability')->name('mentor.full.availability');
 Route::post('mentor/booking/request','Site\MentorController@saveBookingRequest')->name('mentor/booking/slot');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');

@@ -212,7 +212,7 @@
 							</a>
 						</div>
 						<div class="profile-middle">
-							<a href="{{route('mentor.details',$mentor->id)}}" class="profile-name">{{$mentor->name}}.</a>
+							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="profile-name" target="_blank">{{$mentor->name}}.</a>
 							<ul class="twolist">
 								<li class="company">Twitch</li>
 								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="#">({{count($mentor->reviews)}} Reviews)</a></li>
@@ -227,7 +227,7 @@
 								${{$mentor->charge_per_hour}} <span>/ hour</span>
 							</span>
 
-							<a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="prinery-btm blue-btm">Book mentor</a>
+							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="prinery-btm blue-btm">Book mentor</a>
 
 							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
 						</div>
@@ -256,7 +256,8 @@
 									</div>
 								@endforeach
 							</div>
-							<a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}" class="avality-button" target="_blank">View full availability</a>
+							<!-- <a href="{{route('mentor.full.availability',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a> -->
+							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
 						</div>
 						<!-- Mentor Availability Calender END -->
 					</div>

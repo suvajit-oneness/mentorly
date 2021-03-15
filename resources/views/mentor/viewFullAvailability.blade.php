@@ -2,15 +2,6 @@
 @section('title','Full Availabilty')
 @section('content')
 
-<style type="text/css">
-	.date .day{
-		float : left;
-		margin-left: 28px;
-	}
-	.slots{
-		margin-top: 20px;
-	}
-</style>
 
 <section class="gray-wrapper">
 	<div class="container-xl">
