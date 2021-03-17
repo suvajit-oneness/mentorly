@@ -233,7 +233,7 @@
 						</div>
 					</div>
 					<!-- Mentor Availability Calender -->
-					<div class="right-floating-place" style="display: none;">
+					<div class="right-floating-place">
 						<div class="calender">
 							<div class="row-grid">
 								<div class="row-title"></div>
