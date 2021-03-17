@@ -67,7 +67,88 @@
                 e.stopPropagation();
             });
         });
+
+    // logo slider
+    $('.logo-slider').slick({
+      centerMode: false,
+      centerPadding: '60px',
+      slidesToShow: 5,
+      arrows:true,
+      nextArrow: '<span class="next"><img src="images/next-arrow.png"></span>',
+      prevArrow: '<span class="pre"><img src="images/pre-arrow.png"></span>',
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+
+    $('.mentor-slider').slick({
+      centerMode: false,
+      centerPadding: '60px',
+      slidesToShow: 3,
+      dots: true,
+      arrows:false,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+
+    
+
+    // success story slider
+    $('.profile-slider').slick({
+      centerMode: false,
+      centerPadding: '60px',
+      slidesToShow:1,
+      arrows:true,
+      dots: true,
+      speed: 300,
+      nextArrow: '<span class="next-arrow"><img src="images/next-arrow-white.png"></span>',
+      prevArrow: '<span class="pre-arrow"><img src="images/pre-arrow-white.png"></span>'
+    });
+
+
+
+        
     </script>
+
+
+
+
+
     @yield('script')
 </body>
 </html>

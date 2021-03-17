@@ -97,7 +97,7 @@
 		<ul class="news-list">
 			<li>
 				<div class="box">
-					<figure style="background: url('images/news1.jpg') no-repeat center center; background-size: cover;"></figure>
+					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
 					<figcaption>
 						<div class="date">
 							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
@@ -110,7 +110,7 @@
 			</li>
 			<li>
 				<div class="box">
-					<figure style="background: url('images/news1.jpg') no-repeat center center; background-size: cover;"></figure>
+					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
 					<figcaption>
 						<div class="date">
 							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
@@ -123,7 +123,7 @@
 			</li>
 			<li>
 				<div class="box">
-					<figure style="background: url('images/news1.jpg') no-repeat center center; background-size: cover;"></figure>
+					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
 					<figcaption>
 						<div class="date">
 							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
@@ -182,11 +182,15 @@
 	</div>
 </section>
 
-<section class="footer-top" style="background: url('./images/footer-top.jpg') no-repeat center center; background-size: cover; ">
+<section class="get-paid" style="background: url('{{asset('design/images/paid-image.jpg')}}') no-repeat center center; background-size: cover;">
 	<div class="container">
-		<h4>Every year n people prepare to interview confidently on mentorly. Get fast results with professional mentors. Prepare to achieve your goals today. </h4>
-
-		<a href="#" class="prinery-btm blue-btm">Get Started</a>
+		<div class="row">
+			<div class="col-md-12 col-lg-5">
+				<h2 class="page-heading white-color">Get poid to reach <br> online</h2>
+				<p class="white-color">Earn money sharing your expert knowledge with mentees. Sign up to start mentoring online with MentorMatch</p>
+				<a href="#" class="prinery-btm blue-btm">Get Started</a>
+			</div>
+		</div>
 	</div>
 </section>
 

@@ -51,6 +51,10 @@ p {
     line-height: 1.8;
 }
 
+.white-color{
+    color:#fff !important;
+}
+
 /*====Common style
 ===================*/
 
@@ -413,7 +417,7 @@ color: #fff;
 	position: absolute;
 	left:0;
 	top:0;
-	background: url('../design/images/list-icon.png') no-repeat center center;
+	background: url('../images/list-icon.png') no-repeat center center;
 	width: 39px;
 	height: 39px;
 }
@@ -1243,7 +1247,7 @@ text-transform: capitalize;
     margin-left: -1px;
 }
 .cell-light {
-    background: #3d768d;
+    background:#429bbf;
 }
 .cell-deep {
     background: #345c6c;
@@ -1423,7 +1427,7 @@ text-transform: capitalize;
 
 
 .mentor-signup-place {
-    padding:83px 0 73px;
+    padding:0px 0 73px;
     text-align: center;
 }
 
@@ -1487,6 +1491,7 @@ text-transform: capitalize;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 53px;
+    margin-top: 53px;
 }
 .mentor-comments li {
     text-align: left;
@@ -1537,6 +1542,25 @@ text-transform: capitalize;
 
 .question-place {
     margin-bottom: 70px;
+}
+
+
+.login-place-top {
+    padding: 39px 0;
+    margin:0px 0 67px;
+}
+
+.left-login {
+}
+
+.left-login .form-wrapper {
+    max-width: 447px;
+    margin: 0;
+    padding: 38px 29px;
+    background: #fff;
+    border-radius: 4px;
+    text-align: left;
+}
 }
 
 /*===Mentee Settings
@@ -2055,6 +2079,11 @@ border: 1px solid #bfbfbf;
     padding: 9px 22px;
 }
 
+.get-paid {
+    padding: 171px 0;
+}
+
+
 /*====Responsive
 ====================*/
 
@@ -2320,6 +2349,9 @@ border: 1px solid #bfbfbf;
     .mentor-comments li {
         max-width: 50%;
         flex: 0 0 50%;
+    }
+    .get-paid {
+        text-align: center;
     }
 
  }

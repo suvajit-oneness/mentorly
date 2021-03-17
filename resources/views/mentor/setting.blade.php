@@ -4,6 +4,7 @@
 
 <section class="gray-wrapper">
 	<div class="setting-wrapper">
+		<h2 class="page-heading">Fill in your Mentor Profile</h2>
 		@include('mentor.settingSidebar')
 		<div class="settings-details">
 			<form method="post" action="{{route('mentor.mentee.account_update')}}" enctype="multipart/form-data">
