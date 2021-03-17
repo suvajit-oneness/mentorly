@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
   <link rel="stylesheet" href="{{asset('design/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="{{asset('design/css/slick.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{asset('design/css/slick-theme.css')}}"/>
   <link rel="stylesheet" href="{{asset('design/css/style.css')}}">
@@ -24,6 +25,7 @@
     <script src="{{asset('design/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('design/js/slick.min.js')}}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <script>
 
         @if(Session::has('Success'))
