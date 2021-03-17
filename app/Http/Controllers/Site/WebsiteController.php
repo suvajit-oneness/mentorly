@@ -115,7 +115,8 @@ class WebsiteController extends Controller
             $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
         }
         if(!empty($req->price)){
-            $range = explode('-',$req->price);
+            $range = explode('-',removeDollerSign($req->price));
+            // $range = removeFirstCharacterFromArray($range);
             // $mentors = $mentors->where('mentors.charge_per_hour','>=',$range[0])->where('mentors.charge_per_hour','<=',$range[1]);
             $mentors = $mentors->whereBetween('mentors.charge_per_hour',$range);
         }

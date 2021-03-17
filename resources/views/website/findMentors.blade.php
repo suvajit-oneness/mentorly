@@ -458,18 +458,26 @@
   			min: 30,
   			max: 2000,
   			values: [ 30, 2000 ],
+  			@if(!empty($request['price']))
+  				<?php $range = explode('-',removeDollerSign($request['price'])); ?>
+  				values: [ {{$range[0]}}, {{$range[1]}} ],
+  			@endif
   			slide: function( event, ui ) {
-				// $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-				$( "#amount" ).val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
+				$( "#amount" ).val( "$" + ui.values[ 0 ] + "-$" + ui.values[ 1 ] );
+				// $( "#amount" ).val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
   			}
 		});
-		// $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-		$( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "-" + $( "#slider-range" ).slider( "values", 1 ) );
+		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + "-$" + $( "#slider-range" ).slider( "values", 1 ) );
+		// $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "-" + $( "#slider-range" ).slider( "values", 1 ) );
 	});
 
 	$(function() {
 		$('.price-drropdown').click(function(){
 			$('.dropdown-custom').toggleClass('show');
+			if($('.dropdown-custom').hasClass('show')){}
+			else{
+				dataRetriving();
+			}
 		});
 		$('.multiselect-dropdown').click(function(){
 			$('.mul-select-dropdown').toggleClass('show');

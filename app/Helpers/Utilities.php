@@ -104,3 +104,14 @@ if (!function_exists('imageResizeAndSave')) {
             return array_sum($array)/count($array);
         }
     }
+
+    function removeDollerSign($string)
+    {
+        $newString = '';
+        for($i=0;$i<strlen($string); $i++){
+            if($string[$i] != '$'){
+                $newString .= $string[$i];
+            }
+        }
+        return $newString;
+    }
