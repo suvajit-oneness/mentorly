@@ -35,7 +35,7 @@
 			<div class="grid-box price-drropdown">
 				<span>Price per hour </span>
 				<div class="show-price">
-					<input type="text" id="amount" readonly>
+					<input type="text" id="amount" onkeypress="return isNumberKey(event)" maxlength="5">
 				</div>
 				<div class="dropdown-custom">
 					 <div id="slider-range" class="range-bar"></div>
