@@ -114,6 +114,11 @@ class WebsiteController extends Controller
         if(!empty($req->keyword)){
             $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
         }
+        if(!empty($req->price)){
+            $range = explode('-',$req->price);
+            // $mentors = $mentors->where('mentors.charge_per_hour','>=',$range[0])->where('mentors.charge_per_hour','<=',$range[1]);
+            $mentors = $mentors->whereBetween('mentors.charge_per_hour',$range);
+        }
         $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {

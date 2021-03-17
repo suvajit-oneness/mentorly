@@ -399,13 +399,14 @@
 
 		function dataRetriving()
 		{
-			var originalURL = '{{url()->current()}}?';
+			var originalURL = '{{url()->current()}}?',price = $('#amount').val();
 			if(parseInt(seniorityLevel) > 0){
 				originalURL += 'seniority='+seniorityLevel+'&';
 			}
 			if(keyword != ''){
 				originalURL += 'keyword='+keyword+'&';
 			}
+			originalURL += 'price='+price+'&';
 			originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
 			window.location.href = originalURL;
 		}
@@ -453,32 +454,26 @@
 		// price range
 	$(function() {
 		$( "#slider-range" ).slider({
-  range: true,
-  min: 130,
-  max: 500,
-  values: [ 130, 250 ],
-  slide: function( event, ui ) {
-			$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-  }
+  			range: true,
+  			min: 30,
+  			max: 2000,
+  			values: [ 30, 2000 ],
+  			slide: function( event, ui ) {
+				// $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				$( "#amount" ).val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
+  			}
 		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+		// $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+		$( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "-" + $( "#slider-range" ).slider( "values", 1 ) );
 	});
 
-
 	$(function() {
-
-
 		$('.price-drropdown').click(function(){
 			$('.dropdown-custom').toggleClass('show');
 		});
-
-
 		$('.multiselect-dropdown').click(function(){
 			$('.mul-select-dropdown').toggleClass('show');
 		});
-
-
 	});
 	</script>
 @stop
