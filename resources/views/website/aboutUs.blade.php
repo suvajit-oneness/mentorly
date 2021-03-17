@@ -185,6 +185,28 @@
 <!--  -->
 
 @section('script')
-	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		// accordian
+	jQuery(document).ready(function($){
+
+		// Acordeon
+		$('.dropdown-toggle').click(function(e) {
+		  	e.preventDefault();
+		  
+		    var $this = $(this);
+		  
+		    if ($this.hasClass('dropdown-active')) {
+		        $this.removeClass('dropdown-active');
+		        $this.next().slideUp(350);
+		    } else {
+		        $this.toggleClass('dropdown-active');
+		        $this.next().slideToggle(350);
+		        $('.dropdown-toggle').not($(this)).removeClass('dropdown-active');
+		        $('.dropdown-inner').not($(this).next()).slideUp('600');
+		    }
+		});
+
+	});
+	</script>
 @stop
 @endsection

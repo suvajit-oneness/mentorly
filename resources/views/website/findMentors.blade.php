@@ -35,7 +35,7 @@
 			<div class="grid-box price-drropdown">
 				<span>Price per hour </span>
 				<div class="show-price">
-					<input type="text" id="amount" onkeypress="return isNumberKey(event)" maxlength="5">
+					<input type="text" id="amount" readonly="">
 				</div>
 				<div class="dropdown-custom">
 					 <div id="slider-range" class="range-bar"></div>
@@ -231,35 +231,35 @@
 
 							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
 						</div>
-						<!-- Mentor Availability Calender -->
-						<div class="right-floating-place">
-							<div class="calender">
+					</div>
+					<!-- Mentor Availability Calender -->
+					<div class="right-floating-place" style="display: none;">
+						<div class="calender">
+							<div class="row-grid">
+								<div class="row-title"></div>
+								<div class="row-cell">
+									@foreach($days as $day)
+										<div class="cell">{{$day->short_day}}</div>	
+									@endforeach
+								</div>
+							</div>
+							@foreach($mentor->timeShift as $timeShift)
 								<div class="row-grid">
-									<div class="row-title"></div>
+									<div class="row-title">
+										<span class="daytime">{{$timeShift['shift_name']}}</span>
+										<span class="time">{{$timeShift['shift']}}</span>
+									</div>
 									<div class="row-cell">
-										@foreach($days as $day)
-											<div class="cell">{{$day->short_day}}</div>	
+										@foreach($timeShift['days'] as $av_day)
+											<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
 										@endforeach
 									</div>
 								</div>
-								@foreach($mentor->timeShift as $timeShift)
-									<div class="row-grid">
-										<div class="row-title">
-											<span class="daytime">{{$timeShift['shift_name']}}</span>
-											<span class="time">{{$timeShift['shift']}}</span>
-										</div>
-										<div class="row-cell">
-											@foreach($timeShift['days'] as $av_day)
-												<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
-											@endforeach
-										</div>
-									</div>
-								@endforeach
-							</div>
-							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
+							@endforeach
 						</div>
-						<!-- Mentor Availability Calender END -->
+						<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
 					</div>
+					<!-- Mentor Availability Calender END -->
 				@endforeach
 
 			</div>
@@ -449,6 +449,37 @@
 				});
 			}
 		});
+
+		// price range
+	$(function() {
+		$( "#slider-range" ).slider({
+  range: true,
+  min: 130,
+  max: 500,
+  values: [ 130, 250 ],
+  slide: function( event, ui ) {
+			$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+  }
+		});
+		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	});
+
+
+	$(function() {
+
+
+		$('.price-drropdown').click(function(){
+			$('.dropdown-custom').toggleClass('show');
+		});
+
+
+		$('.multiselect-dropdown').click(function(){
+			$('.mul-select-dropdown').toggleClass('show');
+		});
+
+
+	});
 	</script>
 @stop
 @endsection
