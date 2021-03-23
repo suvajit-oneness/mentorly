@@ -18,7 +18,7 @@
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^2.0",
         "pragmarx/countries": "^0.7.0",
-        "stripe/stripe-php": "^7.27",
+        "stripe/stripe-php": "^7.76",
         "typicms/nestablecollection": "^1.1"
     },
     "require-dev": {
