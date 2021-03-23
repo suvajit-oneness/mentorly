@@ -55,9 +55,9 @@ Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
 
 // STRIPE Payment Routes
-Route::get('stripe', 'StripePaymentController@stripe');
+Route::get('stripe/{amount?}', 'StripePaymentController@stripe');
 Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
-
+Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
 
 // Auth::routes();
 // Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
