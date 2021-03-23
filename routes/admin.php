@@ -97,6 +97,13 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 		});
+
+		// Zoom Meeting
+		Route::group(['prefix'=>'zoom'],function(){
+		    Route::get('meetings','ZoomMeetingController@list')->name('admin.zoom.meeting');
+		    Route::post('meetings/create','ZoomMeetingController@create')->name('admin.zoom.meeting.create');
+		    Route::get('meetings/{meetingId}/delete','ZoomMeetingController@deleteZoomMeeting')->name('admin.zoom.delete');
+		});
 	});
 });
 ?>
