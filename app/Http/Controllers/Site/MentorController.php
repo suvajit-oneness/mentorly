@@ -223,7 +223,8 @@ class MentorController extends Controller
                 $slot->available = 2;
                 $slot->save();
             DB::commit();
-            return redirect(route('mentor.details',base64_encode($slot->mentorId)))->with('Success','Booking Confirmed SuccessFully');
+            return redirect(route('mentor.booked.success').'?transactionId='.$req->transactionId);
+            // return redirect(route('mentor.details',base64_encode($slot->mentorId)))->with('Success','Booking Confirmed SuccessFully');
         }catch(Exception $e){
             DB::rollback();
             return response(['error'=>true,'message'=>'Something Went Wrong','data' => 
@@ -233,8 +234,6 @@ class MentorController extends Controller
                 ],
             ]);
         }
-        
-        dd($req->all());
     }
 
     public function seeBookingDetails(Request $req)

@@ -58,6 +58,7 @@ Route::get('logout','Site\WebsiteController@logout');
 Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');
 Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');
 Route::get('stripe/payment/success', 'Site\MentorController@stripeBookingConfirmed')->name('stripe.payment.success');
+Route::get('payment/bokking/success','StripePaymentController@thankyouPageToSHow')->name('mentor.booked.success');
 // Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
 
 // Auth::routes();

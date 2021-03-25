@@ -55,9 +55,12 @@ class StripePaymentController extends Controller
         return back();
     }
 
-    public function successTransaction(Request $req, $transactionId)
+    public function thankyouPageToSHow(Request $req)
     {
-    	$stripe = StripeTransaction::findOrfail(base64_decode($transactionId));
+        $req->validate([
+            'transactionId' => 'required|min:1|numeric',
+        ]);
+    	$stripe = StripeTransaction::findOrfail($req->transactionId);
     	return view('stripe.thankyou',compact('stripe'));
     }
 }

@@ -237,7 +237,7 @@
 				.then((willDelete) => {
 				  	if (willDelete) {
 				  		$.ajax({
-							url : '{{Route('mentor/booking/slot')}}',
+							url : '{{Route('mentor.booking.slot')}}',
 							type: 'post',
 							data: {slotId:slotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
 							success:function(data){
