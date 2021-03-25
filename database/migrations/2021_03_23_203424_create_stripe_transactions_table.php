@@ -15,8 +15,6 @@ class CreateStripeTransactionsTable extends Migration
     {
         Schema::create('stripe_transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('authId');
-            $table->string('authGuest');
             $table->string('transactionId');
             $table->string('balance_transaction');
             $table->float('amount',8,2);

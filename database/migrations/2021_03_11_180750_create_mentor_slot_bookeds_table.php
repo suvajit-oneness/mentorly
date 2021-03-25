@@ -15,6 +15,7 @@ class CreateMentorSlotBookedsTable extends Migration
     {
         Schema::create('mentor_slot_bookeds', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('stripeTransactionId');
             $table->bigInteger('mentorId');
             $table->bigInteger('availableShiftId');
             $table->enum('userType',['mentor','mentee']);

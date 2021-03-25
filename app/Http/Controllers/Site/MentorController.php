@@ -7,7 +7,7 @@ use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
 use App\Models\User;use Hash;use App\Models\MessageToMentor;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
-use App\Models\AvailableShift;
+use App\Models\AvailableShift;use DB;
 class MentorController extends Controller
 {
     public function setting(Request $req)
@@ -181,67 +181,60 @@ class MentorController extends Controller
         return back()->with('success','Data Saved Success');
     }
 
-    // public function viewFullAvailability(Request $req,$mentorId)
-    // {
-    //     $date = date('Y-m-d');
-    //     if(!empty($req->date)){
-    //         $date = date('Y-m-d',strtotime($req->date));
-    //     }
-    //     $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
-    //     $mentorId = base64_decode($mentorId);
-    //     $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
-    //     // dd($mentor);
-    //     if($mentor){
-    //         $daysData = [];
-    //         for($i = 0; $i < 7;$i++){
-    //             $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
-    //             $day = date('D',strtotime($originalDay.'+'.$i.' days'));
-    //             $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->where('available',1)->get();
-    //             $daysData[] = [
-    //                 'date' => $date,
-    //                 'day' => $day,
-    //                 'short_date' => date('d',strtotime($date)),
-    //                 'available' => $getSlots,
-    //             ];
-    //         }
-    //         return view('mentor.viewFullAvailability',compact('mentor','daysData','originalDate','date'));
-    //     }
-    //     return 'Invalid Request <a href="/">Go back</a>';
-    // }
-
-    public function saveBookingRequest(Request $req)
+    public function holdBookingRequest(Request $req)
     {
         $req->validate([
             'slotId' => 'required|numeric|min:1',
             'mentorId' => 'required|numeric|min:1',
-            'price' => 'required',
         ]);
         $guard = get_guard();
         if($guard == '' || $guard == 'admin'){
             return response()->json(['error'=>true,'msg'=>'You have to perform login for booking']);
         }else{
-            $user = Auth::guard($guard)->user();
-            $mentor = Mentor::where('id',$req->mentorId)->first();
-            if($mentor){
-                $slot = AvailableShift::where('id',$req->slotId)->where('mentorId',$mentor->id)->where('available',1)->first();
-                if($slot){
-                    if($guard == 'web'){$userType='mentee';}elseif($guard == 'mentor'){$userType='mentor';}
-                    $slotBooked = new MentorSlotBooked();
-                    $slotBooked->mentorId = $mentor->id;
-                    $slotBooked->availableShiftId = $slot->id;
-                    $slotBooked->userType = $userType;
-                    $slotBooked->bookedUserId = $user->id;
-                    $slotBooked->price = $req->price;
-                    if($slotBooked->save()){
-                        $slot->available = 2;
-                        $slot->save();
-                    }
-                    return response()->json(['error'=>false,'msg'=>'Your Booking Confirmed Successfully']);
-                }
-                return response()->json(['error'=>true,'msg'=>'This slot is not available']);
+            $slot = AvailableShift::where('id',$req->slotId)->where('mentorId',$req->mentorId)->where('available',1)->first();
+            if($slot){
+                if($guard == 'web'){$userType='mentee';}elseif($guard == 'mentor'){$userType='mentor';}
+                $slot->available = 3;
+                $slot->save();
+                return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('slot.booking.stripe').'?slotId='.base64_encode($slot->id).'&userType='.base64_encode($guard).'&mentorId='.base64_encode($req->mentorId)]);
             }
-            return response()->json(['error'=>true,'msg'=>'Invalid Mentor']);
+            return response()->json(['error'=>true,'msg'=>'This slot is not available']);
         }
+    }
+
+    public function stripeBookingConfirmed(Request $req)
+    {
+        $req->validate([
+            'slotId' => 'required|numeric|min:1',
+            'userType' => 'required|in:mentor,web',
+            'transactionId' => 'required|min:1|numeric',
+        ]);
+        try{
+            DB::beginTransaction();
+                $slot = AvailableShift::where('id',$req->slotId)->first();
+                $slotBooked = new MentorSlotBooked();
+                $user = Auth::guard($req->userType)->user();
+                $slotBooked->mentorId = $slot->mentorId;
+                $slotBooked->stripeTransactionId = $req->transactionId;
+                $slotBooked->availableShiftId = $slot->id;
+                $slotBooked->userType = $req->userType;
+                $slotBooked->bookedUserId = $user->id;
+                $slotBooked->save();
+                $slot->available = 2;
+                $slot->save();
+            DB::commit();
+            return redirect(route('mentor.details',base64_encode($slot->mentorId)))->with('Success','Booking Confirmed SuccessFully');
+        }catch(Exception $e){
+            DB::rollback();
+            return response(['error'=>true,'message'=>'Something Went Wrong','data' => 
+                [
+                    'Note' => 'Please note the Transaction Id to claim',
+                    'Transaction Id' => $req->transactionId,
+                ],
+            ]);
+        }
+        
+        dd($req->all());
     }
 
     public function seeBookingDetails(Request $req)

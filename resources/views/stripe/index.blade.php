@@ -48,7 +48,7 @@
                         </div>
                     @endif
   
-                    <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+                    <form role="form" action="{{ route('slot.booking.stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
                         @csrf
   
                         <div class='form-row row'>
@@ -93,7 +93,7 @@
   
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{$price}})</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ({{$mentor->charge_per_hour}})</button>
                             </div>
                         </div>
                           
@@ -157,7 +157,9 @@ $(function() {
             // insert the token into the form so it gets submitted to the server
             $form.find('input[type=text]').empty();
             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-            $form.append("<input type='hidden' name='amount' value='{{$price}}'/>");
+            $form.append("<input type='hidden' name='slotId' value='{{base64_decode($data['slotId'])}}'/>");
+            $form.append("<input type='hidden' name='userType' value='{{base64_decode($data['userType'])}}'/>");
+            $form.append("<input type='hidden' name='amount' value='{{$mentor->charge_per_hour}}'/>");
             $form.get(0).submit();
         }
     }

@@ -239,15 +239,10 @@
 				  		$.ajax({
 							url : '{{Route('mentor/booking/slot')}}',
 							type: 'post',
-							data: {slotId:slotId,mentorId:mentorId,price:'{{$mentor->charge_per_hour}}','_token':'{{csrf_token()}}'},
+							data: {slotId:slotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
 							success:function(data){
 								if(data.error == false){
-									swal(data.msg, {
-				      					icon: "success",
-				    				});
-				    				setTimeout(function(){ 
-				    					location.reload();
-				    				},2000);
+									window.location.href=data.redirectURL;
 								}else{
 									swal('Error',data.msg);
 								}

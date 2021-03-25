@@ -27,7 +27,7 @@
 							<td>{{$book->userDetails->email}}</td>
 							<td>{{$book->userDetails->mobile}}</td>
 							<td>{{$book->price}}</td>
-							<td>{{$book->slot_details->date}} - {{$book->slot_details->time_shift}}</td>
+							<td>@if($book->slot_details){{$book->slot_details->date}} - {{$book->slot_details->time_shift}}@endif</td>
 						</tr>
 					@endforeach
 				</tbody>

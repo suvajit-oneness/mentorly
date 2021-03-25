@@ -49,15 +49,16 @@ Route::get('mentor/booking/request','Site\MentorController@seeBookingDetails')->
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
 // Route::get('mentor/full/availability/{mentorId}','Site\MentorController@viewFullAvailability')->name('mentor.full.availability');
-Route::post('mentor/booking/request','Site\MentorController@saveBookingRequest')->name('mentor/booking/slot');
+Route::post('mentor/booking/request','Site\MentorController@holdBookingRequest')->name('mentor.booking.slot');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
 
 // STRIPE Payment Routes
-Route::get('stripe/{amount?}', 'StripePaymentController@stripe');
-Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
-Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
+Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');
+Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');
+Route::get('stripe/payment/success', 'Site\MentorController@stripeBookingConfirmed')->name('stripe.payment.success');
+// Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
 
 // Auth::routes();
 // Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {

@@ -19,7 +19,7 @@ class CreateAvailableShiftsTable extends Migration
             $table->bigInteger('mentorId');
             $table->date('date');
             $table->string('time_shift');
-            $table->tinyInteger('available')->comment('1:Yes, 0:No,2:Booked');
+            $table->tinyInteger('available')->comment('1:Yes, 0:No,2:Booked,3:Hold for Payment');
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

@@ -156,11 +156,6 @@ class WebsiteController extends Controller
 
     public function mentorDetails(Request $req,$mentorId)
     {
-        // $mentor = Mentor::findorFail($mentorId);
-        // $mentor->review = Review::where('mentor_id',$mentor->id)->where('is_deleted',0)->with('user')->get();
-        // $timezone = TimeZone::get();
-        // return view('mentor.details',compact('mentor','timezone'));
-
         $date = date('Y-m-d');
         if(!empty($req->date)){
             $date = date('Y-m-d',strtotime($req->date));
