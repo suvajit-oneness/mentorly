@@ -85,6 +85,7 @@ class WebsiteController extends Controller
     		$mentor->email = $req->email;
     		$mentor->password = Hash::make($req->password);
             $mentor->status = 1;
+            $mentor->charge_per_hour = 100;
     		$mentor->save();
     		$errors['signup'] = 'Registration Successfull';
     		return back()->withErrors($errors);
