@@ -48,7 +48,7 @@
                         </div>
                     @endif
   
-                    <form role="form" action="{{ route('slot.booking.stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+                    <form role="form" action="{{ route('slot.booking.stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="sk_test_4eC39HqLyjWDarjtT1zdp7dc" id="payment-form">
                         @csrf
   
                         <div class='form-row row'>
