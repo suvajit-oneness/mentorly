@@ -86,14 +86,13 @@
   
                         <div class='form-row row'>
                             <div class='col-md-12 error form-group hide'>
-                                <div class='alert-danger alert'>Please correct the errors and try
-                                    again.</div>
+                                <div class='alert-danger alert'>Please correct the errors and try again.</div>
                             </div>
                         </div>
   
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ({{$mentor->charge_per_hour}})</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now $ ({{$mentor->charge_per_hour}})</button>
                             </div>
                         </div>
                           
