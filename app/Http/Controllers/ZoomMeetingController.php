@@ -9,10 +9,8 @@ class ZoomMeetingController extends Controller
 {
 	public function generateToken()
 	{
-		// $key = env('ZOOM_API_KEY', 'pk_test_TYooMQauvdEDq54NiTphI7jx');
-        // $secret = env('ZOOM_API_SECRET', 'sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-        $key = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
-        $secret = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc';
+		$key = env('ZOOM_API_KEY');
+        $secret = env('ZOOM_API_SECRET');
         $payload = [
             'iss' => $key,
             'exp' => strtotime('+1 minute'),
