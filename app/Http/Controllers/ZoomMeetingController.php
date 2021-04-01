@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ZoomMeetingController extends Controller
 {
-
 	public function generateToken()
 	{
 		$key = env('ZOOM_API_KEY', '');
@@ -17,7 +16,6 @@ class ZoomMeetingController extends Controller
             'iss' => $key,
             'exp' => strtotime('+1 minute'),
         ];
-
         return \Firebase\JWT\JWT::encode($payload, $secret, 'HS256');
 	}
 
