@@ -92,8 +92,8 @@ class MentorController extends Controller
             $user = Auth::guard(get_guard())->user();
             $message = new MessageToMentor();
             $message->mentorId = $req->mentorId;
+            $message->userId = $user->id;
             if(get_guard() == 'web'){
-                $message->userId = $user->id;
                 $message->mentorOrMentee = 'mentee,'.$user->id;
             }else{
                 $message->mentorOrMentee = 'mentor,'.$user->id;
@@ -124,13 +124,9 @@ class MentorController extends Controller
     public function mentorAvailabilitySettingView(Request $req)
     {
         if(get_guard() == 'mentor'){
-            $days = AvailableDay::get();
             $mentor = Auth::guard('mentor')->user();
-            $timeShift = AvailableShift::where('mentorId',$mentor->id)->groupBy('time_shift')->get();
-            foreach($timeShift as $key => $data){
-                $data->mainData = AvailableShift::with('day')->where('time_shift',$data->time_shift)->where('mentorId',$mentor->id)->groupBy('available_days_id')->get();
-            }
-            return view('mentor.ShiftAvailable',compact('days','timeShift'));
+            $timeShift = AvailableShift::where('mentorId',$mentor->id)->orderBy('date','DESC')->get();
+            return view('mentor.ShiftAvailable',compact('timeShift'));
         }
         return back();
     }
@@ -142,43 +138,26 @@ class MentorController extends Controller
             'date.*' => ['required','date'],
             'time' => ['required','array'],
             'time.*' => ['required'],
-            'Monday' => ['required','array'],
-            'Monday.*' => ['required','in:0,1'],
-            'Tuesday' => ['required','array'],
-            'Tuesday.*' => ['required','in:0,1'],
-            'Wednesday' => ['required','array'],
-            'Wednesday.*' => ['required','in:0,1'],
-            'Thrusday' => ['required','array'],
-            'Thrusday.*' => ['required','in:0,1'],
-            'Friday' => ['required','array'],
-            'Friday.*' => ['required','in:0,1'],
-            'Saturday' => ['required','array'],
-            'Saturday.*' => ['required','in:0,1'],
-            'Sunday' => ['required','array'],
-            'Sunday.*' => ['required','in:0,1'],
+            'available' => ['required','array'],
+            'available.*' => ['required','in:0,1,2,3'],
         ]);
-        $data = [];
+        $insertData = [];
         if(get_guard() == 'mentor'){
             $mentor = Auth::guard('mentor')->user();
-            $days = AvailableDay::get();
-            AvailableShift::where('mentorId',$mentor->id)->delete();
-            foreach ($days as $day) {
-                $requestedDays = $day->day;
-                foreach($req->$requestedDays as $key => $available){
-                    $data[] = [
-                        'available_days_id' => $day->id,
-                        'mentorId' => $mentor->id,
-                        'date' => $req->date[$key],
-                        'time_shift' => $req->time[$key],
-                        'available' => $available,
-                    ];
-                }   
+            AvailableShift::where('mentorId',$mentor->id)->where('available','!=',2)->delete();
+            foreach($req->date as $key => $data){
+                $insertData[] = [
+                    'mentorId' => $mentor->id,
+                    'date' => $req->date[$key],
+                    'time_shift' => $req->time[$key],
+                    'available' => $req->available[$key],
+                ];
             }
-            if(count($data) > 0){
-                AvailableShift::insert($data);
+            if(count($insertData) > 0){
+                AvailableShift::insert($insertData);
+                return back()->with('success','Data Saved Success');
             }
         }
-        return back()->with('success','Data Saved Success');
     }
 
     public function holdBookingRequest(Request $req)

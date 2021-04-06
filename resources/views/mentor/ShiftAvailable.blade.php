@@ -12,9 +12,7 @@
 						<tr>
 							<th rowspan="3">Date</th>
 							<th>Time Shift</th>
-							@foreach($days as $day)
-								<th>{{$day->day}}</th>
-							@endforeach
+							<th>Available</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -24,12 +22,10 @@
 								<tr>
 									<td><input type="date" name="date[]" onfocus="blur()" value="{{ old('date.'.$i)}}"></td>
 									<td><input type="time" name="time[]" onfocus="blur()" value="{{ old('time.'.$i)}}"></td>
-									@foreach($days as $day)
-										<td>
-											<input type="checkbox" class="checkboxbtn" @if(old($day->day.'.'.$i) == 1){{'checked'}}@endif>
-											<input type="hidden" name="{{$day->day}}[]" value="{{ old($day->day.'.'.$i)}}">
-										</td>
-									@endforeach
+									<td>
+										<input type="checkbox" class="checkboxbtn" @if(old('available.'.$i)){{('checked')}}@endif>
+										<input type="hidden" name="available[]" value="{{ old('available.'.$i)}}">
+									</td>
 									<td>
 										@if(($i+1) == count(old('date')))
 											<a href="javascript:void(0)" class="actionbtn addNew">
@@ -45,24 +41,27 @@
 							@endfor
 						@elseif(count($timeShift) > 0)
 							<?php $countTimeShift = count($timeShift); $j=0; ?>
-							@foreach($timeShift as $key => $time)
+							@foreach($timeShift as $key => $data)
 								<?php $j++; ?>
 								<tr>
-									<td><input type="date" name="date[]" onfocus="blur()" value="{{$time->date}}"></td>
-									<td><input type="time" name="time[]" onfocus="blur()" value="{{$time->time_shift}}"></td>
-									@foreach($time->mainData as $data)
-										<td>
-											<input type="checkbox" class="checkboxbtn" @if($data->available==1){{'checked'}}@endif>
-											<input type="hidden" name="{{$data->day->day}}[]" value="@if($data->available==1){{'1'}}@else{{'0'}}@endif">
-										</td>
-									@endforeach
+									<td>
+										<input type="date" name="date[]" onfocus="blur()" value="{{$data->date}}" @if($data->available == 2){{('disabled')}}@endif>
+									</td>
+									<td>
+										<input type="time" name="time[]" onfocus="blur()" value="{{$data->time_shift}}" @if($data->available == 2){{('disabled')}}@endif>
+									</td>
+									<td>
+										<input type="checkbox" class="checkboxbtn" @if($data->available >0){{('checked')}}@endif @if($data->available == 2){{('disabled')}}@endif>
+										@if($data->available == 2){{('Booked')}}@endif
+										<input type="hidden" name="available[]" value="{{$data->available}}" @if($data->available == 2){{('disabled')}}@endif>
+									</td>
 									<td>
 										@if(($j) == $countTimeShift)
 											<a href="javascript:void(0)" class="actionbtn addNew">
 												<span class="text-success">&#x2b;</span>
 											</a>
 										@else
-											<a href="javascript:void(0)" class="actionbtn remove">
+											<a href="javascript:void(0)" class="@if($data->available != 2){{'remove'}}@endif">
 												<span class="text-danger">&#10006;</span>
 											</a>
 										@endif
@@ -71,14 +70,12 @@
 							@endforeach
 						@else
 							<tr>
-								<td><input type="date" onfocus="blur()" name="date[]"></td>
+								<td><input type="date" name="date[]" onfocus="blur()"></td>
 								<td><input type="time" name="time[]" onfocus="blur()"></td>
-								@foreach($days as $day)
-									<td>
-										<input type="checkbox" class="checkboxbtn">
-										<input type="hidden" name="{{$day->day}}[]" value="0">
-									</td>
-								@endforeach
+								<td>
+									<input type="checkbox" class="checkboxbtn" checked>
+									<input type="hidden" name="available[]" value="1">
+								</td>
 								<td>
 									<a href="javascript:void(0)" class="actionbtn addNew">
 										<span class="text-success">&#x2b;</span>
@@ -119,9 +116,7 @@
 			$('.actionbtn').removeClass('addNew').addClass('remove');
 			$('.remove').empty().append('<span class="text-danger">&#10006;</span>');
 			var newRow = '<tr><td><input type="date" onfocus="blur()" name="date[]"></td><td><input type="time" onfocus="blur()" name="time[]"></td>';
-			@foreach($days as $day)
-				newRow += '<td><input type="checkbox" class="checkboxbtn"><input type="hidden" name="{{$day->day}}[]" value="0"></td>';
-			@endforeach
+			newRow += '<td><input type="checkbox" class="checkboxbtn" checked><input type="hidden" name="available[]" value="1"></td>'
 			newRow += '<td><a href="javascript:void(0)" class="actionbtn addNew">&#x2b;</a></td></tr>';
 			$('#MyTable tr:last').after(newRow);
 		});

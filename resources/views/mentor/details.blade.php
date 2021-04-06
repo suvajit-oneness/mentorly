@@ -60,7 +60,13 @@
 								@foreach($daysData as $day)
 									<div class="time-avali">
 										@foreach($day['available'] as $slot)
-											<div class="time-slot"><a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a></div>
+											<div class="time-slot">
+												@if($slot['available'] == 2)
+													<a href="javascript:void(0)" class="text-danger">{{$slot['time_shift']}}</a>
+												@else
+													<a href="javascript:void(0)" class="slotBooking text-success" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
+												@endif
+											</div>
 										@endforeach
 									</div>
 								@endforeach
@@ -147,7 +153,7 @@
 				</div>
 
 				<div class="button-place">
-					<a href="#" class="prinery-btm blue-btm">Book mentor</a>
+					<a href="javascript:void(0)" class="prinery-btm blue-btm bookMentorButton">Book mentor</a>
 					<a href="javascript:void(0)" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm messageToMentor">Message</a>
 				</div>
 
@@ -251,6 +257,10 @@
 				  	}
 				});
 			}
+		});
+
+		$(document).on('click','.bookMentorButton',function(){
+			alert('Please select the slot from available Slots List');
 		});
 	</script>
 @stop

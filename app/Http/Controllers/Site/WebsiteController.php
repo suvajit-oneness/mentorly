@@ -118,32 +118,35 @@ class WebsiteController extends Controller
         }
         if(!empty($req->price)){
             $range = explode('-',removeDollerSign($req->price));
-            // $range = removeFirstCharacterFromArray($range);
-            // $mentors = $mentors->where('mentors.charge_per_hour','>=',$range[0])->where('mentors.charge_per_hour','<=',$range[1]);
             $mentors = $mentors->whereBetween('mentors.charge_per_hour',$range);
         }
         $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {
-            $mentor->timeShift = $this->getShowTimeShift($mentor,$days);
+            $mentor->timeShift = $this->getIndivisualSlots($mentor);
         }
         $seniority = Seniority::whereStatus(1)->get();
         $request = $req->all();
     	return view('website.findMentors',compact('mentors','seniority','request','days'));
     }
 
-    public function getShowTimeShift($mentor,$days)
+    public function getIndivisualSlots($mentor)
     {
         $shifting = [];
-        $time = ['Morning'=>['06:00','12:00'],'Afternoon' =>['12:00','18:00'],'Evening'=>['18:00','00:00'],'Night'=>['00:00','06:00']];
+        $time = ['Morning'=>['06:00','11:59'],'Afternoon' =>['12:00','17:59'],'Evening'=>['18:00','23:59'],'Night'=>['00:00','05:59']];
+        $originalDate = date('Y-m-d');
         foreach($time as $key => $t){
             $weeklyShift = [];
-            foreach ($days as $day) {
-                $getData = AvailableShift::where('mentorId',$mentor->id)->where('available_days_id',$day->id)->whereBetween('time_shift',$t)->where('available',1)->get();
+            for ($loop=0; $loop < 7; $loop++) {
+                $date = date('Y-m-d',strtotime($originalDate.'+'.$loop.' days'));
+                $day = date('D',strtotime($originalDate.'+'.$loop.' days'));
+                $getData = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->whereBetween('time_shift',$t)->get();
                 $weeklyShift[] = [
-                    'day' => $day->day,
-                    'short_day' => $day->short_day,
+                    'day' => $day,
+                    'date' => $date,
+                    'short_day' => $day,
                     'available' => count($getData),
+                    'data' => $getData,
                 ];
             }
             $shifting[]=[
@@ -156,6 +159,30 @@ class WebsiteController extends Controller
         return $shifting;
     }
 
+    // public function getShowTimeShift($mentor,$days)
+    // {
+    //     $shifting = [];
+    //     $time = ['Morning'=>['06:00','12:00'],'Afternoon' =>['12:00','18:00'],'Evening'=>['18:00','00:00'],'Night'=>['00:00','06:00']];
+    //     foreach($time as $key => $t){
+    //         $weeklyShift = [];
+    //         foreach ($days as $day) {
+    //             $getData = AvailableShift::where('mentorId',$mentor->id)->where('available_days_id',$day->id)->whereBetween('time_shift',$t)->where('available',1)->get();
+    //             $weeklyShift[] = [
+    //                 'day' => $day->day,
+    //                 'short_day' => $day->short_day,
+    //                 'available' => count($getData),
+    //             ];
+    //         }
+    //         $shifting[]=[
+    //             'mentorId' => $mentor->id,
+    //             'shift' => $t[0].'-'.$t[1],
+    //             'shift_name' => $key,
+    //             'days' => $weeklyShift,
+    //         ];
+    //     }
+    //     return $shifting;
+    // }
+
     public function mentorDetails(Request $req,$mentorId)
     {
         $date = date('Y-m-d');
@@ -167,12 +194,12 @@ class WebsiteController extends Controller
         $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
         if($mentor){
             $days = AvailableDay::get();
-            $mentor->timeShift = $this->getShowTimeShift($mentor,$days);
+            $mentor->timeShift = $this->getIndivisualSlots($mentor);
             $daysData = [];$timezone = TimeZone::get();
             for($i = 0; $i < 7;$i++){
                 $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
                 $day = date('D',strtotime($originalDay.'+'.$i.' days'));
-                $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->where('available',1)->get();
+                $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->get();
                 $daysData[] = [
                     'date' => $date,
                     'day' => $day,
