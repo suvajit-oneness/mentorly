@@ -108,6 +108,10 @@ Route::group(['prefix' => 'admin'], function () {
 		    Route::post('meetings/create','ZoomMeetingController@create')->name('admin.zoom.meeting.create');
 		    Route::get('meetings/{meetingId}/delete','ZoomMeetingController@deleteZoomMeeting')->name('admin.zoom.delete');
 		});
+
+		Route::group(['prefix' => 'transaction'],function(){
+			Route::get('logs','Admin\TrasactionLogController@index')->name('admin.transaction.index');
+		});
 	});
 });
 ?>

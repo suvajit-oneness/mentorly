@@ -78,5 +78,12 @@
                 <span class="app-menu__label">All Mentors</span>
             </a>
         </li>
+
+        <li>
+            <a class="app-menu__item {{ sidebar_open(['admin.transaction.*']) }}"
+                href="{{ route('admin.transaction.index') }}"><i class="app-menu__icon fa fa-cogs"></i>
+                <span class="app-menu__label">Transaction Log</span>
+            </a>
+        </li>
     </ul>
 </aside>

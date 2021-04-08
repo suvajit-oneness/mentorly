@@ -18,4 +18,9 @@ class MentorSlotBooked extends Model
     {
     	return $this->belongsTo('App\Models\Mentor','mentorId','id');
     }
+
+    public function transaction_detail()
+    {
+    	return $this->belongsTo('App\Models\StripeTransaction','stripeTransactionId','id');
+    }
 }
