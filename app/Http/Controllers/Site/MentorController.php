@@ -7,7 +7,7 @@ use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
 use App\Models\User;use Hash;use App\Models\MessageToMentor;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
-use App\Models\AvailableShift;use DB;
+use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
 class MentorController extends Controller
 {
     public function setting(Request $req)
@@ -191,8 +191,8 @@ class MentorController extends Controller
         try{
             DB::beginTransaction();
                 $slot = AvailableShift::where('id',$req->slotId)->first();
-                $slotBooked = new MentorSlotBooked();
                 $user = Auth::guard($req->userType)->user();
+                $slotBooked = new MentorSlotBooked();
                 $slotBooked->mentorId = $slot->mentorId;
                 $slotBooked->stripeTransactionId = $req->transactionId;
                 $slotBooked->availableShiftId = $slot->id;
@@ -201,9 +201,9 @@ class MentorController extends Controller
                 $slotBooked->save();
                 $slot->available = 2;
                 $slot->save();
+                $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
             DB::commit();
             return redirect(route('mentor.booked.success').'?transactionId='.$req->transactionId);
-            // return redirect(route('mentor.details',base64_encode($slot->mentorId)))->with('Success','Booking Confirmed SuccessFully');
         }catch(Exception $e){
             DB::rollback();
             return response(['error'=>true,'message'=>'Something Went Wrong','data' => 
@@ -213,6 +213,50 @@ class MentorController extends Controller
                 ],
             ]);
         }
+    }
+
+    public function crateZoomMeeting($slot,$user,$slotBooked)
+    {
+        $mentor = Mentor::where('id',$slotBooked->mentorId)->first();
+        $topic = 'Meeting with '.$mentor->name.' at '.$slot->date. ' '.$slot->time_shift;
+        $startTime = date('Y-m-d',strtotime($slot->date)).' '.date('h:i:s',strtotime($slot->time_shift));
+
+        $client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);
+        $response = $client->request('POST', '/v2/users/me/meetings', [
+            "headers" => [
+                "Authorization" => "Bearer " . $this->generateToken(),
+            ],
+            'json' => [
+                "topic" => $topic,
+                "type" => 2,
+                "start_time" => $startTime,
+                "duration" => "30", // 30 mins
+                "password" => "123456",
+                "agenda" => 'Scheduled Class',
+            ],
+        ]);
+        $data = json_decode($response->getBody());
+        $newMeeting = new ZoomMeeting;
+        if($data){
+            $newMeeting->mentorId = $mentor->id;
+            $newMeeting->menteeId = $user->id;
+            $newMeeting->userType = $slotBooked->userType;
+            $newMeeting->uuid = $data->uuid;
+            $newMeeting->meetingId = $data->id;
+            $newMeeting->host_id = $data->host_id;
+            $newMeeting->host_email = $data->host_email;
+            $newMeeting->topic = $data->topic;
+            $newMeeting->start_time = $data->start_time;
+            $newMeeting->agenda = !empty($data->agenda) ? $data->agenda : '';
+            $newMeeting->join_url = $data->join_url;
+            $newMeeting->password = !empty($data->password) ? $data->password : '';
+            $newMeeting->encrypted_password = !empty($data->encrypted_password) ? $data->encrypted_password : '';
+            $newMeeting->status = $data->status;
+            $newMeeting->type = $data->type;
+            $newMeeting->start_url = !empty($data->start_url) ? $data->start_url : '';
+            $newMeeting->save();
+        }
+        return $newMeeting;
     }
 
     public function seeBookingDetails(Request $req)

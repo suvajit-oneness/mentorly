@@ -2,32 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;use Auth;
+use Illuminate\Http\Request;use App\Models\ZoomMeeting;
+use App\Models\User;use App\Models\Mentor;use App\Models\Admin;
 
 class ZoomMeetingController extends Controller
 {
-	public function generateToken()
-	{
-		$key = env('ZOOM_API_KEY');
-        $secret = env('ZOOM_API_SECRET');
-        $payload = [
-            'iss' => $key,
-            'exp' => strtotime('+1 minute'),
-        ];
-        return \Firebase\JWT\JWT::encode($payload, $secret, 'HS256');
-	}
-
 	public function list(Request $req)
 	{
-		$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);
-		$response = $client->request('GET', '/v2/users/me/meetings', [
-		    "headers" => [
-		        "Authorization" => "Bearer ". $this->generateToken(),
-		    ]
-		]);
-		$data = json_decode($response->getBody());
-		return view('zoom.meetings',compact('data'));
+		$data = ZoomMeeting::select('*')->with('mentor');
+		$guard = get_guard();
+		$user = Auth::guard($guard)->user();
+		switch ($guard) {
+			case 'admin':break;
+			case 'web':
+				$data = $data->where('menteeId',$user->id);
+				break;
+			case 'mentor':
+				$data = $data->where('mentorId',$user->id);
+				break;
+		}
+		$data = $data->where('over',0)->orderBy('id','DESC')->get();
+		foreach($data as $newData){
+			if($newData->userType == 'web'){
+				$newData->mentee = User::where('id',$newData->menteeId)->first();
+			}elseif($newData->userType == 'mentor'){
+				$newData->mentee = Mentor::where('id',$newData->menteeId)->first();
+			}elseif($newData->userType == 'admin'){
+				$newData->mentee = Admin::where('id',$newData->menteeId)->first();
+			}else{
+				$newData->mentee = new User;
+			}
+		}
+		if($guard == 'admin'){
+			$mentor = Mentor::where('is_verified',1)->where('status',1)->orderBy('name')->get();
+			$mentee = User::where('is_verified',1)->where('status',1)->orderBy('name')->get();
+			return view('zoom.meetings',compact('data','guard','mentor','mentee'));
+		}elseif($guard == 'web'){
+			return 'web';
+		}elseif($guard == 'mentor'){
+			return 'Mentor';
+		}
 	}
 
 	public function create(Request $req)
@@ -36,8 +51,9 @@ class ZoomMeetingController extends Controller
 			'topic' => 'required|string',
 			'start_time' => 'required|date',
 			'agenda' => 'string|nullable',
+			'mentor' => 'required|min:1|numeric',
+			'mentee' => 'required|min:1|numeric',
 		]);
-
 		$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);
 		$response = $client->request('POST', '/v2/users/me/meetings', [
 	        "headers" => [
@@ -53,7 +69,29 @@ class ZoomMeetingController extends Controller
 	        ],
 	    ]);
 	    $data = json_decode($response->getBody());
-	    return redirect(route('admin.zoom.meeting'))->with('Status','Meeting Create Success');
+	    if($data){
+	    	$newMeeting = new ZoomMeeting;
+	    	$newMeeting->mentorId = $req->mentor;
+            $newMeeting->menteeId = $req->mentee;
+            $newMeeting->userType = 'web';
+            $newMeeting->uuid = $data->uuid;
+            $newMeeting->meetingId = $data->id;
+            $newMeeting->host_id = $data->host_id;
+            $newMeeting->host_email = $data->host_email;
+            $newMeeting->topic = $data->topic;
+            $newMeeting->start_time = $data->start_time;
+            $newMeeting->agenda = !empty($data->agenda) ? $data->agenda : '';
+            $newMeeting->join_url = $data->join_url;
+            $newMeeting->password = !empty($data->password) ? $data->password : '';
+            $newMeeting->encrypted_password = !empty($data->encrypted_password) ? $data->encrypted_password : '';
+            $newMeeting->status = $data->status;
+            $newMeeting->type = $data->type;
+            $newMeeting->start_url = !empty($data->start_url) ? $data->start_url : '';
+            $newMeeting->save();
+            return redirect(route('admin.zoom.meeting'))->with('Status','Meeting Create Success');
+	    }
+	    $error['topic'] = 'Something went wrong please try after some time';
+	    return back()->withInput($req->all())->withErrors($error);
 	}
 
 	public function deleteZoomMeeting(Request $req,$meeting_id)
@@ -66,6 +104,7 @@ class ZoomMeetingController extends Controller
 	    ]);
 
 	    if (204 == $response->getStatusCode()) {
+	    	ZoomMeeting::where('meetingId',$meeting_id)->delete();
         	return redirect(route('admin.zoom.meeting'))->with('Status','Meeting Deleted Success');
     	}
 	}

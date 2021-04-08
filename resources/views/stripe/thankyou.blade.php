@@ -10,5 +10,8 @@
 	<span>Booking Id : <strong>{{$stripe->id}}</strong></span><br>
 	<span>Transaction Id : <strong>{{$stripe->transactionId}}</strong></span><br>
 	<span>Amount Charged : Rs.<strong>{{$stripe->amount}} </strong></span>
+
+	<br><br><br><br>
+	<a href="{{url('/')}}">Click here to go home</a>
 </body>
 </html>
