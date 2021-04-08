@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/', 'Admin\UserController@index')->name('admin.user.index');
 			Route::get('/create', 'Admin\UserController@create')->name('admin.user.create');
 			Route::post('/save', 'Admin\UserController@saveNewUser')->name('admin.user.save');
+			Route::get('edit/{id}','Admin\UserController@editUser')->name('admin.user.edit');
+			Route::post('update/{id}','Admin\UserController@updateUser')->name('admin.user.update');
 			Route::get('/{id}/delete', 'Admin\UserController@delete')->name('admin.user.delete');
 			Route::post('updateStatus', 'Admin\UserController@updateStatus')->name('admin.user.updateStatus');
 		});
@@ -98,6 +100,8 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/', 'Admin\MentorController@index')->name('admin.mentor.index');
 			Route::get('/create', 'Admin\MentorController@create')->name('admin.mentor.create');
 			Route::post('/save', 'Admin\MentorController@saveNewMentor')->name('admin.mentor.save');
+			Route::get('edit/{id}','Admin\MentorController@editMentor')->name('admin.mentor.edit');
+			Route::post('update/{id}','Admin\MentorController@updateMentor')->name('admin.mentor.update');
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 		});

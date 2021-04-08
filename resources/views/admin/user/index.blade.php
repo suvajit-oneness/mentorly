@@ -53,8 +53,8 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Second group">
-                                        <!-- <a href="" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></a> -->
-                                        <a href="#" data-id="{{$user['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
+                                        <a href="{{route('admin.user.edit',$user->id)}}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></a>
+                                        <a href="javascript:void(0)" data-id="{{$user['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                                 </tr>

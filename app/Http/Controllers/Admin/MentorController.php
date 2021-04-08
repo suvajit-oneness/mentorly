@@ -38,6 +38,28 @@ class MentorController extends BaseController
         return view('admin.mentor.index', compact('mentor'));
     }
 
+    public function editMentor(Request $req,$id)
+    {
+        $mentor = Mentor::findOrFail($id);
+        return view('admin.mentor.edit',compact('mentor'));
+    }
+
+    public function updateMentor(Request $req,$id)
+    {
+        $req->validate([
+            'name' => 'required|max:200|string',
+            'email' => 'required|email|string|unique:mentors,email,'.$id,
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+        $mentor = Mentor::find($id);
+        $mentor->name = $req->name;
+        $mentor->email = $req->email;
+        $mentor->mobile = $req->mobile;
+        $mentor->save();
+        Session::flash('message', 'Mentor Updated successfully!');
+        return redirect(route('admin.mentor.index'));
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse

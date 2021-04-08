@@ -51,15 +51,37 @@ class UserController extends BaseController
             'mobile' => 'required|numeric|digits:10',
             'password' => 'required|string|min:8|confirmed',
         ]);
-        $mentor = new User;
-        $mentor->name = $req->name;
-        $mentor->email = $req->email;
-        $mentor->mobile = $req->mobile;
-        $mentor->password = Hash::make($req->password);
-        $mentor->status = 1;
-        $mentor->is_verified = 1;
-        $mentor->save();
+        $user = new User;
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->mobile = $req->mobile;
+        $user->password = Hash::make($req->password);
+        $user->status = 1;
+        $user->is_verified = 1;
+        $user->save();
         Session::flash('message', 'User added successfully!');
+        return redirect(route('admin.user.index'));
+    }
+
+    public function editUser(Request $req,$id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.user.edit',compact('user'));
+    }
+
+    public function updateUser(Request $req,$id)
+    {
+        $req->validate([
+            'name' => 'required|max:200|string',
+            'email' => 'required|email|string|unique:users,email,'.$id,
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+        $user = User::find($id);
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->mobile = $req->mobile;
+        $user->save();
+        Session::flash('message', 'Mentee Updated successfully!');
         return redirect(route('admin.user.index'));
     }
 
