@@ -54,6 +54,8 @@ Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
 
+Route::get('user/zoom/meeting','ZoomMeetingController@list')->name('user.zoom.meeting');
+
 // STRIPE Payment Routes
 Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');
 Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');

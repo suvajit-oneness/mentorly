@@ -39,9 +39,9 @@ class ZoomMeetingController extends Controller
 			$mentee = User::where('is_verified',1)->where('status',1)->orderBy('name')->get();
 			return view('zoom.meetings',compact('data','guard','mentor','mentee'));
 		}elseif($guard == 'web'){
-			return 'web';
+			return view('zoom.zoomMentorMentee',compact('data'));
 		}elseif($guard == 'mentor'){
-			return 'Mentor';
+			return view('zoom.zoomMentorMentee',compact('data'));
 		}
 	}
 
