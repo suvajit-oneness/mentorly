@@ -88,12 +88,16 @@ Route::group(['prefix' => 'admin'], function () {
 
 		Route::group(['prefix'  =>   'user'], function() {
 			Route::get('/', 'Admin\UserController@index')->name('admin.user.index');
+			Route::get('/create', 'Admin\UserController@create')->name('admin.user.create');
+			Route::post('/save', 'Admin\UserController@saveNewUser')->name('admin.user.save');
 			Route::get('/{id}/delete', 'Admin\UserController@delete')->name('admin.user.delete');
 			Route::post('updateStatus', 'Admin\UserController@updateStatus')->name('admin.user.updateStatus');
 		});
 
 		Route::group(['prefix'  =>   'mentor'], function() {
 			Route::get('/', 'Admin\MentorController@index')->name('admin.mentor.index');
+			Route::get('/create', 'Admin\MentorController@create')->name('admin.mentor.create');
+			Route::post('/save', 'Admin\MentorController@saveNewMentor')->name('admin.mentor.save');
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 		});

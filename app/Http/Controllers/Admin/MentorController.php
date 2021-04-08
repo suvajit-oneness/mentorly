@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Contracts\MentorContract;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Mentor;use Hash;use Session;
 
 class MentorController extends BaseController
 {
@@ -49,6 +50,31 @@ class MentorController extends BaseController
             return $this->responseRedirectBack('Error occurred while deleting mentor.', 'error', true, true);
         }
         return $this->responseRedirect('admin.mentor.index', 'Mentor deleted successfully' ,'success',false, false);
+    }
+
+    public function create(Request $req)
+    {
+        return view('admin.mentor.create');
+    }
+
+    public function saveNewMentor(Request $req)
+    {
+        $req->validate([
+            'name' => 'required|max:200|string',
+            'email' => 'required|email|string|unique:mentors',
+            'mobile' => 'required|numeric|digits:10',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        $mentor = new Mentor;
+        $mentor->name = $req->name;
+        $mentor->email = $req->email;
+        $mentor->mobile = $req->mobile;
+        $mentor->password = Hash::make($req->password);
+        $mentor->status = 1;
+        $mentor->is_verified = 1;
+        $mentor->save();
+        Session::flash('message', 'Mentor added successfully!');
+        return redirect(route('admin.mentor.index'));
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Contracts\UserContract;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\User;use Hash;use Session;
 
 class UserController extends BaseController
 {
@@ -35,6 +36,31 @@ class UserController extends BaseController
 
         $this->setPageTitle('User', 'List of all User');
         return view('admin.user.index', compact('user'));
+    }
+
+    public function create(Request $req)
+    {
+        return view('admin.user.create');
+    }
+
+    public function saveNewUser(Request $req)
+    {
+        $req->validate([
+            'name' => 'required|max:200|string',
+            'email' => 'required|email|string|unique:mentors',
+            'mobile' => 'required|numeric|digits:10',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        $mentor = new User;
+        $mentor->name = $req->name;
+        $mentor->email = $req->email;
+        $mentor->mobile = $req->mobile;
+        $mentor->password = Hash::make($req->password);
+        $mentor->status = 1;
+        $mentor->is_verified = 1;
+        $mentor->save();
+        Session::flash('message', 'User added successfully!');
+        return redirect(route('admin.user.index'));
     }
 
     /**

@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB;
+use DB;use Illuminate\Database\Eloquent\SoftDeletes;
 class Mentor extends Authenticatable
 {
+    use SoftDeletes;
     protected $table = 'mentors';
 
     protected $fillable = [

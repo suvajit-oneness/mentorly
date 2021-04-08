@@ -76,7 +76,6 @@ class MentorRepository extends BaseRepository implements MentorContract
     public function updateMentor(array $params)
     {
         $collection = collect($params);
-
     }
 
      /**
@@ -88,7 +87,6 @@ class MentorRepository extends BaseRepository implements MentorContract
         $collection = collect($params)->except('_token');
         $mentor->status = $collection['check_status'];
         $mentor->save();
-
         return $mentor;
     }
 

@@ -69,7 +69,7 @@
         <li>
             <a class="app-menu__item {{ sidebar_open(['admin.user.*']) }}"
                 href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-cogs"></i>
-                <span class="app-menu__label">All Users</span>
+                <span class="app-menu__label">All Mentee</span>
             </a>
         </li>
         <li>

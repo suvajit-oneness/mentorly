@@ -15,6 +15,10 @@
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
+                    <a href="{{route('admin.mentor.create')}}" class="float-right">Add Mentor</a>
+                    @if(Session::has('message'))
+                        <p class="alert alert-success">{{ Session::get('message') }}</p>
+                    @endif
                     <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
@@ -70,25 +74,25 @@
      {{-- New Add --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <script type="text/javascript">
-    $('.sa-remove').on("click",function(){
-        var mentorid = $(this).data('id');
-        swal({
-          title: "Are you sure?",
-          text: "Your will not be able to recover the record!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonClass: "btn-danger",
-          confirmButtonText: "Yes, delete it!",
-          closeOnConfirm: false
-        },
-        function(isConfirm){
-          if (isConfirm) {
-            window.location.href = "mentor/"+mentorid+"/delete";
-            } else {
-              swal("Cancelled", "Record is safe", "error");
-            }
+        $('.sa-remove').on("click",function(){
+            var mentorid = $(this).data('id');
+            swal({
+              title: "Are you sure?",
+              text: "Your will not be able to recover the record!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes, delete it!",
+              closeOnConfirm: false
+            },
+            function(isConfirm){
+              if (isConfirm) {
+                window.location.href = "mentor/"+mentorid+"/delete";
+                } else {
+                  swal("Cancelled", "Record is safe", "error");
+                }
+            });
         });
-    });
     </script>
     <script type="text/javascript">
         $('input[id="toggle-block"]').change(function() {

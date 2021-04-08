@@ -33,6 +33,7 @@ class CreateMentorsTable extends Migration
             $table->integer('is_verified')->default(0);
             $table->integer('status')->default(0);
             $table->integer('is_deleted')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
