@@ -10,5 +10,5 @@
 		<li><a href="{{route('mentor.availability.setting')}}" class="{{Route::currentRouteName()=='mentor.availability.setting'?'active':''}}">Set Availability </a></li>
 	@endif
 
-	<li><a href="{{route('user.zoom.meeting')}}" class="{{Route::currentRouteName()=='zoom.request'?'active':''}}">Zoom Meeting</a></li>
+	<li><a href="{{route('user.zoom.meeting')}}" class="{{Route::currentRouteName()=='user.zoom.meeting'?'active':''}}">Zoom Meeting</a></li>
 </ul>
