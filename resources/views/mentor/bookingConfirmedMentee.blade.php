@@ -28,9 +28,9 @@
 									<tr>
 										<td>{{$book->id}}</td>
 										<td>{{date('Y-m-d h:i:s',strtotime($book->created_at))}}</td>
-										<td>{{$book->userDetails->name}}</td>
-										<td>{{$book->userDetails->email}}</td>
-										<td>{{$book->userDetails->mobile}}</td>
+										<td>{{($book->userDetails) ? $book->userDetails->name : 'N/A'}}</td>
+										<td>{{($book->userDetails) ? $book->userDetails->email : 'N/A'}}</td>
+										<td>{{($book->userDetails) ? $book->userDetails->mobile : 'N/A'}}</td>
 										<td>{{$book->price}}</td>
 										<td>@if($book->slot_details){{$book->slot_details->date}} - {{$book->slot_details->time_shift}}@endif</td>
 									</tr>
