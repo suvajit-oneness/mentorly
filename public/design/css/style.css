@@ -1577,9 +1577,10 @@ text-transform: capitalize;
 
 .settings-details {
     background: #fff;
-    max-width: 693px;
-    flex: 0 0 693px;
-    padding: 13px 43px;
+    /* max-width: 693px; */
+    /* flex: 0 0 693px; */
+    padding: 15px !important;
+	margin-left: 30px;
 }
 .setting-list {}
 .setting-list li {}
@@ -1614,9 +1615,10 @@ text-transform: capitalize;
     font-weight: 400;
     font-size: 29px;
     border-bottom: 1px solid #bdbdbd;
-    margin-left: -43px;
-    margin-right: -43px;
-    padding: 0 43px 10px;
+    /* margin-left: -43px;
+     margin-right: -43px; 
+    padding: 0 43px 10px;*/
+	padding: 0 0 10px;
     margin-bottom: 10px;
 }
 
@@ -2084,6 +2086,38 @@ border: 1px solid #bfbfbf;
 }
 
 
+.zoomTable table tr th{
+	font-size:14px;
+	vertical-align:middle;
+	color:#000;
+	font-weight:600;
+	text-align:center;
+	padding: 5px 10px;
+}
+.zoomTable table tr td{
+	font-size:14px;
+	color:#000;
+	font-family: GT Walsheim Pro;
+	font-weight:400;
+	text-align:center;
+	padding: 5px 10px;
+}
+
+.zoomTable table tr td .zoomBtn{
+	color: #fff;
+	padding: 4px 16px;
+	text-align: center;
+	display: block;
+	background: #27b0d5;
+	border-radius: 5px;
+	transition: all 0.5s;
+}
+
+.zoomTable table tr td .zoomBtn:hover{
+	background: #007bff;
+}
+
+
 /*====Responsive
 ====================*/
 
@@ -2301,6 +2335,7 @@ border: 1px solid #bfbfbf;
     .settings-details {
         max-width: 100%;
         flex: 0 0 100%;
+		margin-left: 0px;
     }
     .setting-list {
         display: flex;

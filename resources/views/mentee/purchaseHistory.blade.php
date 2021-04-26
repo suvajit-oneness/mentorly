@@ -2,39 +2,49 @@
 @section('title','Shift Available')
 @section('content')
 <section class="gray-wrapper">
-	<div class="setting-wrapper">
-		@include('mentor.settingSidebar')
-		<div class="settings-details">
-			@if(count($purchase) > 0)
-			<table class="table" border="1" style="width: 100%">
-				<thead>
-					<tr>
-						<th>Booking Id</th>
-						<th>Booking Date</th>
-						<th>Mentor Name</th>
-						<th>Mentor Email</th>
-						<th>Mentor Mobile</th>
-						<th>Booking Amount</th>
-						<th>Booking Slot</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($purchase as $pur)
-						<tr>
-							<td>{{$pur->id}}</td>
-							<td>{{date('Y-m-d h:i:s',strtotime($pur->created_at))}}</td>
-							<td>{{$pur->mentor->name}}</td>
-							<td>{{$pur->mentor->email}}</td>
-							<td>{{$pur->mentor->mobile}}</td>
-							<td>{{$pur->price}}</td>
-							<td>{{$pur->slot_details->date}} - {{$pur->slot_details->time_shift}}</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-			@else
-				<h4>You donot have any Booking</h4>
-			@endif
+	<div class="container">
+		<div class="setting-wrapper">
+			<div class="row m-0 mt-5">
+				<div class="col-12 col-md-2 p-0">
+					@include('mentor.settingSidebar')
+				</div>
+				<div class="col-12 col-md-10 pl-2 pl-md-5">
+					<div class="settings-details p-1" style="max-width: none;">
+						<div class="table-responsive zoomTable">
+							@if(count($purchase) > 0)
+							<table class="table table-hover table-sm table-bordered">
+								<thead>
+									<tr>
+										<th>Booking Id</th>
+										<th>Booking Date</th>
+										<th>Mentor Name</th>
+										<th>Mentor Email</th>
+										<th>Mentor Mobile</th>
+										<th>Booking Amount</th>
+										<th>Booking Slot</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($purchase as $pur)
+										<tr>
+											<td>{{$pur->id}}</td>
+											<td>{{date('Y-m-d h:i:s',strtotime($pur->created_at))}}</td>
+											<td>{{$pur->mentor->name}}</td>
+											<td>{{$pur->mentor->email}}</td>
+											<td>{{$pur->mentor->mobile}}</td>
+											<td>{{$pur->price}}</td>
+											<td>{{$pur->slot_details->date}} - {{$pur->slot_details->time_shift}}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+							@else
+								<h4 class="text-center p-3">You donot have any Booking</h4>
+							@endif
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
