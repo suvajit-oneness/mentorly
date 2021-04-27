@@ -36,7 +36,7 @@
                                         <img style="width: 150px;height: 100px;" src="{{URL::to('/').'/news/'}}{{$news->image}}">
                                         @endif
                                     </td>
-                                    <td>{{ $news->description }}</td>
+                                    <td>{!! $news->description !!}</td>
                                     <td class="text-center">
                                     <div class="toggle-button-cover margin-auto">
                                         <div class="button-cover">
@@ -70,51 +70,46 @@
      {{-- New Add --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <script type="text/javascript">
-    $('.sa-remove').on("click",function(){
-        var newsid = $(this).data('id');
-        swal({
-          title: "Are you sure?",
-          text: "Your will not be able to recover the record!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonClass: "btn-danger",
-          confirmButtonText: "Yes, delete it!",
-          closeOnConfirm: false
-        },
-        function(isConfirm){
-          if (isConfirm) {
-            window.location.href = "news/"+newsid+"/delete";
-            } else {
-              swal("Cancelled", "Record is safe", "error");
-            }
+        $('.sa-remove').on("click",function(){
+            var newsid = $(this).data('id');
+            swal({
+                title: "Are you sure?",
+                text: "Your will not be able to recover the record!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    window.location.href = "news/"+newsid+"/delete";
+                } else {
+                    swal("Cancelled", "Record is safe", "error");
+                }
+            });
         });
-    });
-    </script>
-    <script type="text/javascript">
         $('input[id="toggle-block"]').change(function() {
             var news_id = $(this).data('news_id');
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var check_status = 0;
-          if($(this).is(":checked")){
-              check_status = 1;
-          }else{
-            check_status = 0;
-          }
-          $.ajax({
+            if($(this).is(":checked")){
+                check_status = 1;
+            }
+            $.ajax({
                 type:'POST',
                 dataType:'JSON',
                 url:"{{route('admin.news.updateStatus')}}",
                 data:{ _token: CSRF_TOKEN, id:news_id, check_status:check_status},
                 success:function(response)
                 {
-                  swal("Success!", response.message, "success");
+                    swal("Success!", response.message, "success");
                 },
                 error: function(response)
                 {
-                    
-                  swal("Error!", response.message, "error");
+                    swal("Error!", response.message, "error");
                 }
-              });
+            });
         });
     </script>
 @endpush
