@@ -7,82 +7,33 @@
 		<h2 class="page-heading">We are Mentorly</h2>
 
 		<div class="mentor-slider">
-			<div class="mentor-grid-inner">
-				<a href="#">
-					<figure>
-						<img src="{{asset('design/images/mentor1.jpg')}}">
-					</figure>
-					<div class="about-mentor">
-						<h3>Sam Harper</h3>
-						<p>product strategy mentor</p>
-					</div>
-				</a>
-				<div class="short-description">
-					Sam has led product vision, strategy, and development at SoftBank Robotics, where he launched an innovative
+			@foreach($data->mentor as $key => $mentor)
+				<div class="mentor-grid-inner">
+					<a href="#">
+						<figure>
+							<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
+						</figure>
+						<div class="about-mentor">
+							<h3>{{$mentor->name}}</h3>
+							<p>{{$mentor->designation}}</p>
+						</div>
+					</a>
+					<div class="short-description">{!! $mentor->about !!}</div>
+					@if($mentor->facebook_link != '' || $mentor->instagram_link != '' || $mentor->linkedin_link != '')
+						<ul class="mentor-social-list">
+							@if($mentor->linkedin_link != '')
+								<li><a href="{{$mentor->linkedin_link}}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							@endif
+							@if($mentor->facebook_link != '')
+								<li><a href="{{$mentor->facebook_link}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							@endif
+							@if($mentor->instagram_link != '')
+								<li><a href="{{$mentor->instagram_link}}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							@endif
+						</ul>
+					@endif
 				</div>
-				<ul class="mentor-social-list">
-					<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-					<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-					<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-				</ul>
-			</div>
-			<div class="mentor-grid-inner">
-				<a href="#">
-					<figure>
-						<img src="{{asset('design/images/mentor3.jpg')}}">
-					</figure>
-					<div class="about-mentor">
-						<h3>Sam Harper</h3>
-						<p>product strategy mentor</p>
-					</div>
-				</a>
-				<div class="short-description">
-					Sam has led product vision, strategy, and development at SoftBank Robotics, where he launched an innovative
-				</div>
-				<ul class="mentor-social-list">
-					<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-					<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-					<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-				</ul>
-			</div>
-			<div class="mentor-grid-inner">
-				<a href="#">
-					<figure>
-						<img src="{{asset('design/images/mentor2.jpg')}}">
-					</figure>
-					<div class="about-mentor">
-						<h3>Olga Boldarieva</h3>
-						<p>Data science mentor</p>
-					</div>
-				</a>
-				<div class="short-description">
-					Sam has led product vision, strategy, and development at SoftBank Robotics, where he launched an innovative
-				</div>
-				<ul class="mentor-social-list">
-					<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-					<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-					<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-				</ul>
-			</div>
-			<div class="mentor-grid-inner">
-				<a href="#">
-					<figure>
-						<img src="{{asset('design/images/mentor1.jpg')}}">
-					</figure>
-					<div class="about-mentor">
-						<h3>Sam Harper</h3>
-						<p>product strategy mentor</p>
-					</div>
-				</a>
-				<div class="short-description">
-					Sam has led product vision, strategy, and development at SoftBank Robotics, where he launched an innovative
-				</div>
-				<ul class="mentor-social-list">
-					<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-					<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-					<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-				</ul>
-			</div>
+			@endforeach
 		</div>
 
 	</div>
@@ -92,121 +43,49 @@
 <section class="white-section">
 	<div class="container">
 		<h2 class="page-heading">Latest News</h2>
-
-
 		<ul class="news-list">
-			<li>
-				<div class="box">
-					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
-					<figcaption>
-						<div class="date">
-							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
-							March 5 2020
-						</div>
-						<h3>DriveWealth CEO Bob Cortright: A note on this week’s markets</h3>
-						<a href="#" class="prinery-btm blue-btm" >Read More</a>
-					</figcaption>
-				</div>
-			</li>
-			<li>
-				<div class="box">
-					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
-					<figcaption>
-						<div class="date">
-							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
-							March 5 2020
-						</div>
-						<h3>DriveWealth CEO Bob Cortright: A note on this week’s markets</h3>
-						<a href="#" class="prinery-btm blue-btm" >Read More</a>
-					</figcaption>
-				</div>
-			</li>
-			<li>
-				<div class="box">
-					<figure style="background: url('{{asset('design/images/news1.jpg')}}') no-repeat center center; background-size: cover;"></figure>
-					<figcaption>
-						<div class="date">
-							<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
-							March 5 2020
-						</div>
-						<h3>DriveWealth CEO Bob Cortright: A note on this week’s markets</h3>
-						<a href="#" class="prinery-btm blue-btm" >Read More</a>
-					</figcaption>
-				</div>
-			</li>
+			@foreach($data->news as $key => $news)
+				<li>
+					<div class="box">
+						<figure style="background: url('{{asset('news/'.$news->image)}}') no-repeat center center; background-size: cover;"></figure>
+						<figcaption>
+							<div class="date">
+								<span><img src="{{asset('design/images/calender-icon.png')}}"></span>
+								{{date('M d Y',strtotime($news->created_at))}}
+							</div>
+							<h3>{!! $news->description !!}</h3>
+							<a href="#" class="prinery-btm blue-btm" >Read More</a>
+						</figcaption>
+					</div>
+				</li>
+			@endforeach
 		</ul>
-
 	</div>
 </section>
 
 <section class="wedo-section">
 	<div class="container">
 		<h2 class="page-heading">FAQ</h2>
-
 		<div class="faq-place">
-			<div class="dropdown">
-				<a href="javascript:void(0)" class="dropdown-toggle dropdown-active">
-					<span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-					<span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span>	
-					When should I start? 
-				</a>
-				<div class="dropdown-inner open">
-				    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-				</div>
-			</div>
-
-			<div class="dropdown">
-				<a href="javascript:void(0)" class="dropdown-toggle">
-					<span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-					<span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span>	
-					How much does it cost? 
-				</a>
-				<div class="dropdown-inner">
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into</p>
-				</div>
-			</div>
-
-			<div class="dropdown">
-				<a href="javascript:void(0)" class="dropdown-toggle">
-					<span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-					<span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span>	
-					Time Commitment
-				</a>
-			  	<div class="dropdown-inner">
-			    	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of</p>
-			  	</div>
-			</div>
+			@foreach($data->faq as $key => $faqs)
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle @if($key == 0){{('dropdown-active')}}@endif">
+                        <span class="caret minus faq-minus"><img src="{{asset('design/images/minus.png')}}"></span>
+                        <span class="caret plus faq-plus"><img src="{{asset('design/images/plus.png')}}"></span> 
+                        {{$faqs->title}}
+                    </a>
+                    <div class="dropdown-inner @if($key == 0){{('open')}}@endif">
+                        <p>{!! $faqs->description !!}</p>
+                    </div>
+                </div>
+            @endforeach
 		</div>
-
-
 	</div>
 </section>
 
 <!--  -->
 
 @section('script')
-	<script type="text/javascript">
-		// accordian
-	jQuery(document).ready(function($){
-
-		// Acordeon
-		$('.dropdown-toggle').click(function(e) {
-		  	e.preventDefault();
-		  
-		    var $this = $(this);
-		  
-		    if ($this.hasClass('dropdown-active')) {
-		        $this.removeClass('dropdown-active');
-		        $this.next().slideUp(350);
-		    } else {
-		        $this.toggleClass('dropdown-active');
-		        $this.next().slideToggle(350);
-		        $('.dropdown-toggle').not($(this)).removeClass('dropdown-active');
-		        $('.dropdown-inner').not($(this).next()).slideUp('600');
-		    }
-		});
-
-	});
-	</script>
+	<script type="text/javascript"></script>
 @stop
 @endsection

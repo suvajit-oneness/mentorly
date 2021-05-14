@@ -30,7 +30,7 @@
                                 <tr>
                                     <td>{{ $faq->id }}</td>
                                     <td>{{ $faq->title }}</td>
-                                    <td>{{ $faq->description }}</td>
+                                    <td>{!! $faq->description !!}</td>
                                     <td class="text-center">
                                     <div class="toggle-button-cover margin-auto">
                                         <div class="button-cover">

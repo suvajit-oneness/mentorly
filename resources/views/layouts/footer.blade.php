@@ -19,11 +19,13 @@
         <div class="footer-gid">
             <h4 class="footer-title">Company</h4>
             <ul class="footer-list">
-                <li><a href="#">Find Mentors</a></li>
-                <li><a href="#">Become a Mentor </a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{route('mentors.find')}}">Find Mentors</a></li>
+                @if(get_guard() == '' || get_guard() != 'mentor')
+                    <li><a href="{{route('singup.mentor')}}">Become a Mentor </a></li>
+                @endif
+                <li><a href="javascript:void(0)">Careers</a></li>
+                <li><a href="{{route('aboutus')}}">About Us</a></li>
+                <li><a href="{{route('contactus')}}">Contact</a></li>
 
             </ul>
         </div>
@@ -37,9 +39,10 @@
         <div class="footer-gid">
             <h4 class="footer-title">Connect Us</h4>
             <ul class="social-list">
-                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                <!-- sharing the Data from AppServiceProvidor -->
+                <li><a href="{{$contact->linkedinLink}}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="{{$contact->facebookLink}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="{{$contact->instagramLink}}" target="_blank"><i class="fab fa-instagram"></i></a></li>
             </ul>
         </div>
     </div>

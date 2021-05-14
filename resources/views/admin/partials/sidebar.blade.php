@@ -52,6 +52,12 @@
                     <i class="icon fa fa-circle-o"></i>Contact Us
                     </a>
                 </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.cms.homepage']) }}"
+                    href="{{ route('admin.cms.homepage') }}">
+                    <i class="icon fa fa-circle-o"></i>Home Page
+                    </a>
+                </li>
             </ul>
         </li>
         <li>

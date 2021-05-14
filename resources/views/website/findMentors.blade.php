@@ -201,9 +201,7 @@
 
 
 		<div class="profile-wrapper">
-
 			<div class="profile-holder">
-
 				@foreach($mentors as $key => $mentor)
 					<div class="profile-details-box">
 						<div class="profile-first">

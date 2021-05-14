@@ -13,7 +13,9 @@ class WebsiteController extends Controller
 {
     public function index(Request $req)
     {
-    	return view('welcome');
+        $data = (object)[];
+        $data->faq = \App\Models\Faq::get();
+        return view('welcome',compact('data'));
     }
 
     public function showLoginFormForMentor(Request $req)
@@ -215,13 +217,16 @@ class WebsiteController extends Controller
 
     public function aboutUs(Request $req)
     {
-    	return view('website.aboutUs');
+        $data = (object)[];
+        $data->faq = \App\Models\Faq::get();
+        $data->mentor = Mentor::limit(6)->get();
+        $data->news = \App\Models\News::limit(3)->orderBy('id','DESC')->get();
+    	return view('website.aboutUs',compact('data'));
     }
 
     public function contactUs(Request $req)
     {
-        $contact = ContactUs::whereType(0)->first();
-    	return view('website.contactUs',compact('contact'));
+    	return view('website.contactUs');
     }
 
     public function showForgetPassword($userType)

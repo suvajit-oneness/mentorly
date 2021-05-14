@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::post('/profile', 'Admin\ProfileController@update')->name('admin.profile.update');
 		Route::post('/changepassword', 'Admin\ProfileController@changePassword')->name('admin.profile.changepassword');
 		
-		Route::group(['prefix'  =>   'banner'], function() {
+		Route::group(['prefix'  => 'banner'], function() {
 			Route::get('/', 'Admin\BannerController@index')->name('admin.banner.index');
 			Route::get('/create', 'Admin\BannerController@create')->name('admin.banner.create');
 			Route::post('/store', 'Admin\BannerController@store')->name('admin.banner.store');
@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\BannerController@updateStatus')->name('admin.banner.updateStatus');
 		});
 		
-		Route::group(['prefix'  =>   'faq'], function() {
+		Route::group(['prefix' => 'faq'], function() {
 			Route::get('/', 'Admin\FaqController@index')->name('admin.faq.index');
 			Route::get('/create', 'Admin\FaqController@create')->name('admin.faq.create');
 			Route::post('/store', 'Admin\FaqController@store')->name('admin.faq.store');
@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::get('contact-us','Admin\AdminController@contactUs')->name('admin.contactus.show');
 		Route::post('contact-us','Admin\AdminController@storeContactUs')->name('admin.contactus.store');
 
-		Route::group(['prefix'  =>   'news'], function() {
+		Route::group(['prefix' => 'news'], function() {
 			Route::get('/', 'Admin\NewsController@index')->name('admin.news.index');
 			Route::get('/create', 'Admin\NewsController@create')->name('admin.news.create');
 			Route::post('/store', 'Admin\NewsController@store')->name('admin.news.store');
@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\NewsController@updateStatus')->name('admin.news.updateStatus');
 		});
 
-		Route::group(['prefix'  =>   'industry'], function() {
+		Route::group(['prefix' => 'industry'], function() {
 			Route::get('/', 'Admin\IndustryController@index')->name('admin.industry.index');
 			Route::get('/create', 'Admin\IndustryController@create')->name('admin.industry.create');
 			Route::post('/store', 'Admin\IndustryController@store')->name('admin.industry.store');
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\IndustryController@updateStatus')->name('admin.industry.updateStatus');
 		});
 
-		Route::group(['prefix'  =>   'seniority'], function() {
+		Route::group(['prefix' => 'seniority'], function() {
 			Route::get('/', 'Admin\SeniorityController@index')->name('admin.seniority.index');
 			Route::get('/create', 'Admin\SeniorityController@create')->name('admin.seniority.create');
 			Route::post('/store', 'Admin\SeniorityController@store')->name('admin.seniority.store');
@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\SeniorityController@updateStatus')->name('admin.seniority.updateStatus');
 		});
 
-		Route::group(['prefix'  =>   'user'], function() {
+		Route::group(['prefix' => 'user'], function() {
 			Route::get('/', 'Admin\UserController@index')->name('admin.user.index');
 			Route::get('/create', 'Admin\UserController@create')->name('admin.user.create');
 			Route::post('/save', 'Admin\UserController@saveNewUser')->name('admin.user.save');
@@ -96,7 +96,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\UserController@updateStatus')->name('admin.user.updateStatus');
 		});
 
-		Route::group(['prefix'  =>   'mentor'], function() {
+		Route::group(['prefix' => 'mentor'], function() {
 			Route::get('/', 'Admin\MentorController@index')->name('admin.mentor.index');
 			Route::get('/create', 'Admin\MentorController@create')->name('admin.mentor.create');
 			Route::post('/save', 'Admin\MentorController@saveNewMentor')->name('admin.mentor.save');
@@ -106,8 +106,12 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 		});
 
+		Route::group(['prefix' => 'cms'],function(){
+			Route::get('homepage','Admin\CMSController@homePage')->name('admin.cms.homepage');
+		});
+
 		// Zoom Meeting
-		Route::group(['prefix'=>'zoom'],function(){
+		Route::group(['prefix' => 'zoom'],function(){
 		    Route::get('meetings','ZoomMeetingController@list')->name('admin.zoom.meeting');
 		    Route::post('meetings/create','ZoomMeetingController@create')->name('admin.zoom.meeting.create');
 		    Route::get('meetings/{meetingId}/delete','ZoomMeetingController@deleteZoomMeeting')->name('admin.zoom.delete');

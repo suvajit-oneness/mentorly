@@ -35,4 +35,9 @@ class Controller extends BaseController
         ];
         return \Firebase\JWT\JWT::encode($payload, $secret, 'HS256');
     }
+
+    protected function setPageTitle($title, $subTitle)
+    {
+        view()->share(['pageTitle' => $title, 'subTitle' => $subTitle]);
+    }
 }

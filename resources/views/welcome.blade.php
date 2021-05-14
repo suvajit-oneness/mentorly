@@ -210,7 +210,9 @@
                 </div>
             </li>
         </ul>
-        <a href="#" class="prinery-btm blue-btm">Becoming a mentor</a>
+        @if(get_guard() == '' || get_guard() != 'mentor')
+            <a href="{{route('singup.mentor')}}" class="prinery-btm blue-btm">Becoming a mentor</a>
+        @endif
     </div>
 </section>
 
@@ -218,45 +220,25 @@
     <div class="container">
         <h2 class="page-heading">Most common questions</h2>
         <div class="faq-place">
-            <div class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle dropdown-active">
-                    <span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-                    <span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span> 
-                    When should I start? 
-                </a>
-                <div class="dropdown-inner open">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            @foreach($data->faq as $key => $faqs)
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle @if($key == 0){{('dropdown-active')}}@endif">
+                        <span class="caret minus faq-minus"><img src="{{asset('design/images/minus.png')}}"></span>
+                        <span class="caret plus faq-plus"><img src="{{asset('design/images/plus.png')}}"></span> 
+                        {{$faqs->title}}
+                    </a>
+                    <div class="dropdown-inner @if($key == 0){{('open')}}@endif">
+                        <p>{!! $faqs->description !!}</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle">
-                    <span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-                    <span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span> 
-                    How much does it cost? 
-                </a>
-                <div class="dropdown-inner">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into</p>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle">
-                    <span class="caret minus"><img src="{{asset('design/images/minus.png')}}"></span>
-                    <span class="caret plus"><img src="{{asset('design/images/plus.png')}}"></span> 
-                    Time Commitment
-                </a>
-                <div class="dropdown-inner">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
 
 @section('script')
     <script type="text/javascript">
-         // logo slider
+        // logo slider
         $('.logo-slider').slick({
           centerMode: false,
           centerPadding: '60px',
