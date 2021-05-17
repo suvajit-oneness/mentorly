@@ -14,28 +14,125 @@
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
-                    <form method="post" enctype="multipart/form-data" action="{{route('admin.csm.homepage.save',$key)}}">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form method="post" enctype="multipart/form-data" action="{{route('admin.csm.homepage.saveorupdate',$key)}}">
                         @csrf
                         <input type="hidden" name="key" value="{{$key}}">
                         <input type="hidden" name="task" value="{{$task}}">
+                        @if(!empty($data))
+                            <input type="hidden" name="id" value="{{$data->id}}">
+                        @endif
                         @switch($key)
                             @case('where_our_mentor_work_at')
-                                <h1>where_our_mentor_work_at</h1>
+                                <h3>Where Our Mentor Work At <span>( {{strtoupper($task)}} )</span></h3>
+                                @if(!empty($data))
+                                    <img src="{{asset($data->icon)}}" height="100" width="200">
+                                @endif
+                                <div class="form-group">
+                                    <label class="control-label">Icon</label>
+                                    <input class="form-control @error('icon') is-invalid @enderror" type="file" id="icon" name="icon" @if(empty($data)) required @endif/>
+                                    @error('icon') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             @break
                             @case('what_we_do')
-                                <h1>what_we_do</h1>
+                                <h3>What We Do <span>( {{strtoupper($task)}} )</span></h3>
+                                @if(!empty($data))
+                                    <img src="{{asset($data->icon)}}" height="100" width="200">
+                                @endif
+                                <div class="form-group">
+                                    <label class="control-label">Icon</label>
+                                    <input class="form-control @error('icon') is-invalid @enderror" type="file" id="icon" name="icon" @if(empty($data)) required @endif />
+                                    @error('icon') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Title <span class="m-l-5 text-danger"> *</span></label>
+                                    <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') ? old('title') : (($data) ? $data->title : '') }}" placeholder="Title" required="">
+                                    @error('title') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Description <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{ old('description') ? old('description') : (($data) ? $data->description : '') }}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             @break
                             @case('focus_ontheskill_you_need')
-                                <h1>focus_ontheskill_you_need</h1>
+                                <h3>Focus On The Skill You Need <span>( {{strtoupper($task)}} )</span></h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Description <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{ old('description') ? old('description') : (($data) ? $data->description : '') }}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             @break
                             @case('our_sucess_story')
-                                <h1>our_sucess_story</h1>
+                                <h3>Our Sucess Story <span>( {{strtoupper($task)}} )</span></h3>
+                                @if(!empty($data))
+                                    <img src="{{asset($data->media)}}" height="100" width="200">
+                                @endif
+                                <div class="form-group">
+                                    <label class="control-label">Image</label>
+                                    <input class="form-control @error('media') is-invalid @enderror" type="file" id="media" name="media" @if(empty($data)) required @endif />
+                                    @error('media') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Name <span class="m-l-5 text-danger"> *</span></label>
+                                    <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') ? old('title') : (($data) ? $data->title : '') }}" placeholder="Title" required="">
+                                    @error('title') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="designation">Designation <span class="m-l-5 text-danger"> *</span></label>
+                                    <input class="form-control @error('designation') is-invalid @enderror" type="text" name="designation" id="designation" value="{{ old('designation') ? old('designation') : (($data) ? $data->designation : '') }}" placeholder="Designation" required="">
+                                    @error('designation') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Description <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{ old('description') ? old('description') : (($data) ? $data->description : '') }}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             @break
                             @case('how_mentory_works')
-                                <h1>how_mentory_works</h1>
+                                <h3>How Mentory Works <span>( {{strtoupper($task)}} )</span></h3>
+                                @if(!empty($data))
+                                    <img src="{{asset($data->media)}}" height="100" width="200">
+                                @endif
+                                <div class="form-group">
+                                    <label class="control-label">Image</label>
+                                    <input class="form-control @error('media') is-invalid @enderror" type="file" id="media" name="media" @if(empty($data)) required @endif />
+                                    @error('media') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Sl no <span class="m-l-5 text-danger"> *</span></label>
+                                    <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{old('title') ? old('title') : (($data) ? $data->title : '')}}" placeholder="Title" required="">
+                                    @error('title') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Description <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{old('description') ? old('description') : (($data) ? $data->description : '')}}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
                             @break
                             @case('become_mentor_home_page')
-                                <h1>become_mentor_home_page</h1>
+                                <h3>Become Mentor <span>( {{strtoupper($task)}} )</span></h3>
+                                @if(!empty($data))
+                                    <img src="{{asset($data->media)}}" height="100" width="200">
+                                @endif
+                                <div class="form-group">
+                                    <label class="control-label">Image</label>
+                                    <input class="form-control @error('media') is-invalid @enderror" type="file" id="media" name="media" @if(empty($data)) required @endif />
+                                    @error('media') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Title <span class="m-l-5 text-danger"> *</span></label>
+                                    <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{old('title') ? old('title') : (($data) ? $data->title : '')}}" placeholder="Title" required="">
+                                    @error('title') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
+                                </div>
                             @break
                             @default
                         @endswitch

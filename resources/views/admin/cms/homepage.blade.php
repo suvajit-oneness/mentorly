@@ -26,7 +26,7 @@
                             @foreach($setting->get_data('where_our_mentor_work_at') as $key => $whereWork)
                                 <tr>
                                     <td><img src="{{asset($whereWork->icon)}}" height="50" width="100"></td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$whereWork->id}}" data-key="{{$whereWork->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$whereWork->id,'where_our_mentor_work_at'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$whereWork->id}}" data-key="{{$whereWork->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -50,7 +50,7 @@
                                     <td><img src="{{asset($whatwedo->icon)}}" height="50" width="100"></td>
                                     <td>{!! $whatwedo->title !!}</td>
                                     <td>{!! $whatwedo->description !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$whatwedo->id}}" data-key="{{$whatwedo->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$whatwedo->id,'what_we_do'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$whatwedo->id}}" data-key="{{$whatwedo->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -70,7 +70,7 @@
                             @foreach($setting->get_data('focus_ontheskill_you_need') as $key => $focus_ontheskill_you_need)
                                 <tr>
                                     <td>{!! $focus_ontheskill_you_need->description !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$focus_ontheskill_you_need->id}}" data-key="{{$focus_ontheskill_you_need->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$focus_ontheskill_you_need->id,'focus_ontheskill_you_need'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$focus_ontheskill_you_need->id}}" data-key="{{$focus_ontheskill_you_need->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -96,7 +96,7 @@
                                     <td>{!! $our_sucess_story->title !!}</td>
                                     <td>{!! $our_sucess_story->designation !!}</td>
                                     <td>{!! $our_sucess_story->description !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$our_sucess_story->id}}" data-key="{{$our_sucess_story->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$our_sucess_story->id,'our_sucess_story'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$our_sucess_story->id}}" data-key="{{$our_sucess_story->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -120,7 +120,7 @@
                                     <td><img src="{{asset($how_mentory_works->media)}}" height="50" width="100"></td>
                                     <td>{!! $how_mentory_works->title !!}</td>
                                     <td>{!! $how_mentory_works->description !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$how_mentory_works->id}}" data-key="{{$how_mentory_works->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$how_mentory_works->id,'how_mentory_works'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$how_mentory_works->id}}" data-key="{{$how_mentory_works->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -142,7 +142,7 @@
                                 <tr>
                                     <td><img src="{{asset($become_mentor_home_page->media)}}" height="50" width="100"></td>
                                     <td>{!! $become_mentor_home_page->title !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-danger delete" data-id="{{$become_mentor_home_page->id}}" data-key="{{$become_mentor_home_page->key}}">Delete</a></td>
+                                    <td><a href="{{route('admin.cms.homepage.edit',[$become_mentor_home_page->id,'become_mentor_home_page'])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger delete" data-id="{{$become_mentor_home_page->id}}" data-key="{{$become_mentor_home_page->key}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

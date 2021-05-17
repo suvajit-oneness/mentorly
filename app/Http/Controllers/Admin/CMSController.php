@@ -18,7 +18,16 @@ class CMSController extends Controller
     {
     	$this->setPageTitle('Home Page', 'Home page Add');
     	$task = 'add';
-    	return view('admin.cms.addHomepage',compact('key','task'));
+    	$data = [];
+    	return view('admin.cms.addHomepage',compact('key','task','data'));
+    }
+
+    public function editHomePageData(Request $req,$id,$key)
+    {
+    	$this->setPageTitle('Home Page', 'Home page Add');
+    	$task = 'edit';
+    	$data = FrontendSetting::where('id',$id)->where('key',$key)->first();
+    	return view('admin.cms.addHomepage',compact('key','task','data'));
     }
 
     public function saveHomePageKey(Request $req,$key)
@@ -40,23 +49,30 @@ class CMSController extends Controller
     {
     	$req->validate([
     		'task' => 'required|string|in:add,edit',
-    		'icon' => 'required|image',
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','where_our_mentor_work_at')->first();
     	}else{
+    		$req->validate([
+    			'icon' => 'required|image',
+    		]);
     		$setting = new FrontendSetting();
     		$setting->key = 'where_our_mentor_work_at';
     	}
-    	// Image Upload
-    	$random = $this->randomGenerator();
-        $image = $req->file('icon');
-        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-        // Image Upload Done
-        $setting->icon = $imageurl;
+    	if($req->hasFile('icon')){
+	    	// Image Upload
+	    	$random = $this->randomGenerator();
+	        $image = $req->file('icon');
+	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
+	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
+	        // Image Upload Done
+	        $setting->icon = $imageurl;
+	    }
     	$setting->save();
     	return redirect(route('admin.cms.homepage'))->with('Success','Setting '.$message.' Successfully');
     }
@@ -65,25 +81,32 @@ class CMSController extends Controller
     {
     	$req->validate([
     		'task' => 'required|string|in:add,edit',
-    		'icon' => 'required|image',
     		'title' => 'required|string|max:200',
     		'description' => 'required|string',
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','what_we_do')->first();
     	}else{
+    		$req->validate([
+    			'icon' => 'required|image',
+    		]);
     		$setting = new FrontendSetting();
     		$setting->key = 'what_we_do';
     	}
-    	// Image Upload
-    	$random = $this->randomGenerator();
-        $image = $req->file('icon');
-        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-        // Image Upload Done
-        $setting->icon = $imageurl;
+    	if($req->hasFile('icon')){
+	    	// Image Upload
+	    	$random = $this->randomGenerator();
+	        $image = $req->file('icon');
+	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
+	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
+	        // Image Upload Done
+	        $setting->icon = $imageurl;
+    	}
     	$setting->title = $req->title;
     	$setting->description = $req->description;
     	$setting->save();
@@ -98,6 +121,9 @@ class CMSController extends Controller
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','focus_ontheskill_you_need')->first();
     	}else{
@@ -113,26 +139,33 @@ class CMSController extends Controller
     {
     	$req->validate([
     		'task' => 'required|string|in:add,edit',
-    		'media' => 'required|image',
     		'title' => 'required|string|max:200',
     		'description' => 'required|string',
     		'designation' => 'required|string|max:200',
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','our_sucess_story')->first();
     	}else{
+    		$req->validate([
+    			'media' => 'required|image',
+    		]);
     		$setting = new FrontendSetting();
     		$setting->key = 'our_sucess_story';
     	}
-    	// Image Upload
-    	$random = $this->randomGenerator();
-        $image = $req->file('media');
-        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-        // Image Upload Done
-    	$setting->media = $imageurl;
+    	if($req->hasFile('media')){
+    		// Image Upload
+	    	$random = $this->randomGenerator();
+	        $image = $req->file('media');
+	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
+	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
+	        // Image Upload Done
+	    	$setting->media = $imageurl;
+    	}
     	$setting->title = $req->title;
     	$setting->designation = $req->designation;
     	$setting->description = $req->description;
@@ -144,25 +177,32 @@ class CMSController extends Controller
     {
     	$req->validate([
     		'task' => 'required|string|in:add,edit',
-    		'media' => 'required|image',
     		'title' => 'required|string|max:200',
     		'description' => 'required|string',
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','how_mentory_works')->first();
     	}else{
+    		$req->validate([
+    			'media' => 'required|image',
+    		]);
     		$setting = new FrontendSetting();
     		$setting->key = 'how_mentory_works';
     	}
-    	// Image Upload
-    	$random = $this->randomGenerator();
-        $image = $req->file('media');
-        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-        // Image Upload Done
-    	$setting->media = $imageurl;
+    	if($req->hasFile('media')){
+    		// Image Upload
+	    	$random = $this->randomGenerator();
+	        $image = $req->file('media');
+	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
+	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
+	        // Image Upload Done
+	    	$setting->media = $imageurl;
+    	}
     	$setting->title = $req->title;
     	$setting->description = $req->description;
     	$setting->save();
@@ -173,24 +213,31 @@ class CMSController extends Controller
     {
     	$req->validate([
     		'task' => 'required|string|in:add,edit',
-    		'media' => 'required|image',
     		'title' => 'required|string|max:200',
     	]);
     	$message = 'Created';
     	if($req->task == 'edit'){
+    		$req->validate([
+    			'id' => 'required|numeric|min:1',
+    		]);
     		$message = 'Updated';
     		$setting = FrontendSetting::where('id',$req->id)->where('key','become_mentor_home_page')->first();
     	}else{
+    		$req->validate([
+    			'media' => 'required|image',
+    		]);
     		$setting = new FrontendSetting();
     		$setting->key = 'become_mentor_home_page';
     	}
-    	// Image Upload
-    	$random = $this->randomGenerator();
-        $image = $req->file('media');
-        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-        // Image Upload Done
-    	$setting->media = $imageurl;
+    	if($req->hasFile('media')){
+    		// Image Upload
+	    	$random = $this->randomGenerator();
+	        $image = $req->file('media');
+	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
+	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
+	        // Image Upload Done
+	    	$setting->media = $imageurl;
+    	}
     	$setting->title = $req->title;
     	$setting->save();
     	return redirect(route('admin.cms.homepage'))->with('Success','Setting '.$message.' Successfully');

@@ -109,7 +109,8 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::group(['prefix' => 'cms'],function(){
 			Route::get('homepage','Admin\CMSController@homePage')->name('admin.cms.homepage');
 			Route::get('homepage/add/{key}','Admin\CMSController@addHomePageData')->name('admin.cms.homepage.add');
-			Route::post('homepage/save/{key}','Admin\CMSController@saveHomePageKey')->name('admin.csm.homepage.save');
+			Route::get('homepage/{id}/edit/{key}','Admin\CMSController@editHomePageData')->name('admin.cms.homepage.edit');
+			Route::post('homepage/save/{key}','Admin\CMSController@saveHomePageKey')->name('admin.csm.homepage.saveorupdate');
 			Route::post('homepage/delete','Admin\CMSController@deleteHomePageKey')->name('admin.cms.homepage.delete');
 
 		});
