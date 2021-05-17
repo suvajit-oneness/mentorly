@@ -15,6 +15,12 @@ class WebsiteController extends Controller
     {
         $data = (object)[];
         $data->faq = \App\Models\Faq::get();
+        $data->whereourmentor_work = \App\Models\FrontendSetting::where('key','where_our_mentor_work_at')->get();
+        $data->whatwedo = \App\Models\FrontendSetting::where('key','what_we_do')->get();
+        $data->focusonSkill = \App\Models\FrontendSetting::where('key','focus_ontheskill_you_need')->get();
+        $data->story = \App\Models\FrontendSetting::where('key','our_sucess_story')->get();
+        $data->howmentory_works = \App\Models\FrontendSetting::where('key','how_mentory_works')->get();
+        $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_home_page')->get();
         return view('welcome',compact('data'));
     }
 
@@ -70,7 +76,11 @@ class WebsiteController extends Controller
 
     public function signupFormMentor(Request $req)
     {
-    	return view('website.singUpMentor');
+        $data = (object)[];
+        $data->faq = \App\Models\Faq::get();
+        $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_page')->get();
+        $data->mentor = Mentor::limit(10)->get();
+    	return view('website.singUpMentor',compact('data'));
     }
 
     public function signUpMentorAndMentee(Request $req)

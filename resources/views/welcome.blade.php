@@ -17,10 +17,9 @@
     <div class="container logo-section">
         <h2>Where our mentor’s work at</h2>
         <div class="logo-slider">
-            @for($logo = 1;$logo <= 5; $logo++ )
-                <div class="logo-holder"><img src="{{asset('design/images/logo'.$logo.'.png')}}"></div>
-            @endfor
-            <div class="logo-holder"><img src="{{asset('design/images/logo3.png')}}"></div>
+            @foreach($data->whereourmentor_work as $key => $work)
+                <div class="logo-holder"><img src="{{asset($work->icon)}}"></div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -34,42 +33,17 @@
             </p>
         </div>
         <ul class="wedo-list">
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/expert.png')}}"></figure>
-                    <figcaption>
-                        <h3>Expert Mentors</h3>
-                        <p>We've brought together the best mentors from finance, healthcare, consulting, and more, both big and small</p>
-                    </figcaption>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/profile.png')}}"></figure>
-                    <figcaption>
-                        <h3>Verified Profiles</h3>
-                        <p>We carefully check and confirm each mentor’s profile</p>
-                    </figcaption>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/any-time.png')}}"></figure>
-                    <figcaption>
-                        <h3>Learn Anytime</h3>
-                        <p>Take online lessons at the perfect time for your busy schedule</p>
-                    </figcaption>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/price.png')}}"></figure>
-                    <figcaption>
-                        <h3>Affordable Prices</h3>
-                        <p>Choose an experienced mentor that fits your budget.</p>
-                    </figcaption>
-                </div>
-            </li>
+            @foreach($data->whatwedo as $key => $whatwedo)
+                <li>
+                    <div class="box">
+                        <figure><img src="{{asset($whatwedo->icon)}}"></figure>
+                        <figcaption>
+                            <h3>{{$whatwedo->title}}</h3>
+                            <p>{{$whatwedo->description}}</p>
+                        </figcaption>
+                    </div>
+                </li>
+            @endforeach
         </ul>
     </div>
 </section>
@@ -79,10 +53,9 @@
         <h2 class="page-heading">Focus on the skills you need</h2>
         <div class="shorten-place">
             <ul class="common-list">
-                <li>Know how to answer those tricky behavioral questions</li>
-                <li>Understand the company from the mentor who works or has worked there previously. </li>
-                <li>Learn the right questions to ask. </li>
-                <li>Understand what to study and how to approach the technical portion of the interview. </li>
+                @foreach($data->focusonSkill as $key => $skill)
+                    <li>{!! $skill->description !!}</li>
+                @endforeach
             </ul>
         </div>
     </div>
@@ -95,33 +68,17 @@
             <p>Our mentors have helped thousands of people land that next job. </p>
         </div>
         <div class="profile-slider">
-            <div class="inner">
-                <div class="prifile-content">
-                    <h3>Belina</h3>
-                    <span class="designation">Mastered 5 languages online on Preply</span>
-                    <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
-                    <a href="#" class="prinery-btm blue-btm">More Review</a>
+            @foreach($data->story as $key => $story)
+                <div class="inner">
+                    <div class="prifile-content">
+                        <h3>{{$story->title}}</h3>
+                        <span class="designation">{{$story->designation}}</span>
+                        <p>{{$story->description}}</p>
+                        <a href="#" class="prinery-btm blue-btm">More Review</a>
+                    </div>
+                    <div class="profile-image" style="background: url({{asset($story->media)}}) no-repeat center center; background-size: cover;"></div>
                 </div>
-                <div class="profile-image" style="background: url(./design/images/mentor1.jpg) no-repeat center center; background-size: cover;"></div>
-            </div>
-            <div class="inner">
-                <div class="prifile-content">
-                    <h3>Gowoon S.</h3>
-                    <span class="designation">Mastered 5 languages online on Preply</span>
-                    <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
-                    <a href="#" class="prinery-btm blue-btm">More Review</a>
-                </div>
-                <div class="profile-image" style="background: url(./design/images/mentor2.jpg) no-repeat center center; background-size: cover;"></div>
-            </div>
-            <div class="inner">
-                <div class="prifile-content">
-                    <h3>Yujing Z.</h3>
-                    <span class="designation">Mastered 5 languages online on Preply</span>
-                    <p>I was a very shy person in the beginning. After more than 160 hours of classes on Preply, learning languages has somehow made me feel more comfortable about myself.</p>
-                    <a href="#" class="prinery-btm blue-btm">More Review</a>
-                </div>
-                <div class="profile-image" style="background: url(./design/images/mentor3.jpg) no-repeat center center; background-size: cover;"></div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -130,50 +87,17 @@
     <div class="container">
         <h2 class="page-heading">How Mentorly works</h2>
         <ul class="work-list">
-            <li>
-                <div class="step-first">
-                    <span>1</span>
-                    <h3>
-                        Find the mentor you like through our search engine.
-                    </h3>
-                </div>
-                <div class="step-second">
-                    <img src="{{asset('design/images/step1.png')}}">
-                </div>
-            </li>
-            <li>
-                <div class="step-first">
-                    <span>2</span>
-                    <h3>
-                        Create an account and send info 
-                    </h3>
-                </div>
-                <div class="step-second">
-                    <img src="{{asset('design/images/step2.png')}}">
-                </div>
-            </li>
-            <li>
-                <div class="step-first">
-                    <span>3</span>
-                    <h3>
-                        Set up interview time with mentor
-                    </h3>
-                </div>
-                <div class="step-second">
-                    <img src="{{asset('design/images/step3.png')}}">
-                </div>
-            </li>
-            <li>
-                <div class="step-first">
-                    <span>4</span>
-                    <h3>
-                        Start interviewing  
-                    </h3>
-                </div>
-                <div class="step-second">
-                    <img src="{{asset('design/images/step4.png')}}">
-                </div>
-            </li>
+            @foreach($data->howmentory_works as $key => $howitwork)
+                <li>
+                    <div class="step-first">
+                        <span>{{$howitwork->title}}</span>
+                        <h3>{{$howitwork->description}}</h3>
+                    </div>
+                    <div class="step-second">
+                        <img src="{{asset($howitwork->media)}}">
+                    </div>
+                </li>
+            @endforeach
         </ul>
     </div>
 </section>
@@ -185,30 +109,16 @@
             <p>Earn money sharing your expert knowledge with mentees. Sign up to start mentoring online with MentorMatch</p>
         </div>
         <ul class="wedo-list become-mentor">
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/new-mentor.png')}}"></figure>
-                    <figcaption>
-                        <h3>Find new Mentees</h3>
-                    </figcaption>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/grow-business.png')}}"></figure>
-                    <figcaption>
-                        <h3>Grow your business</h3>
-                    </figcaption>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <figure><img src="{{asset('design/images/paid-secure.png')}}"></figure>
-                    <figcaption>
-                        <h3>Get Paid Securely</h3>
-                    </figcaption>
-                </div>
-            </li>
+            @foreach($data->becomeMentor as $key => $becomMentorSteps)
+                <li>
+                    <div class="box">
+                        <figure><img src="{{asset($becomMentorSteps->media)}}"></figure>
+                        <figcaption>
+                            <h3>{{$becomMentorSteps->title}}</h3>
+                        </figcaption>
+                    </div>
+                </li>
+            @endforeach
         </ul>
         @if(get_guard() == '' || get_guard() != 'mentor')
             <a href="{{route('singup.mentor')}}" class="prinery-btm blue-btm">Becoming a mentor</a>
