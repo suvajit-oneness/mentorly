@@ -253,6 +253,7 @@ class CMSController extends Controller
     	if(!$validator->fails()){
     		$setting = FrontendSetting::where('id',$req->id)->where('key',$req->key)->first();
     		if($setting){
+    			$setting->delete();
     			return response()->json(['error'=>false,'message'=>'Deleted Success']);
     		}
     		return response()->json(['error'=>true,'message'=>'Something went wrong please try after some time']);

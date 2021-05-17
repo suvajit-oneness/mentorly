@@ -14721,7 +14721,8 @@ li.treeview.is-expanded a {
     z-index: 12;
 }
 .row-md-body.no-nav{
-    margin-top: 115px;
+    /*margin-top: 115px;*/
+    margin-top: 63px;
 }
 .gallery-box {
     font-size: 0;
