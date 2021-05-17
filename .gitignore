@@ -18,3 +18,4 @@ package.json
 composer.lock
 *.zip
 /public/banners/*
+/public/upload/*
