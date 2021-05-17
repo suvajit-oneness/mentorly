@@ -108,6 +108,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 		Route::group(['prefix' => 'cms'],function(){
 			Route::get('homepage','Admin\CMSController@homePage')->name('admin.cms.homepage');
+			Route::get('homepage/add/{key}','Admin\CMSController@addHomePageData')->name('admin.cms.homepage.add');
+			Route::post('homepage/save/{key}','Admin\CMSController@saveHomePageKey')->name('admin.csm.homepage.save');
+			Route::post('homepage/delete','Admin\CMSController@deleteHomePageKey')->name('admin.cms.homepage.delete');
+
 		});
 
 		// Zoom Meeting

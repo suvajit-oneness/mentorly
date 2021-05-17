@@ -24,6 +24,7 @@
     <script src="{{ asset('backend/js/main.js') }}"></script>
     <script src="{{ asset('backend/js/plugins/pace.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.5/tinymce.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         tinymce.init({
             selector: "textarea:not(.detail_ad)",
@@ -75,6 +76,13 @@
             $('#country').hide();
           }
         });
+
+        @if(Session::has('Success'))
+            swal('Success','{{Session::get('Success')}}');
+        @elseif(Session::has('Errors'))
+            swal('Error','{{Session::get('Errors')}}');
+        @endif
+        
         // Loader
         $(document).ready(function() {
             $('.loading-data').hide();

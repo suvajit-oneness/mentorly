@@ -24,6 +24,11 @@ class Controller extends BaseController
     	}
     }
 
+    function randomGenerator()
+    {
+        return uniqid().''.date('ymdhis').''.uniqid();
+    }
+
     // Zoom Api Generate Token
     public function generateToken()
     {
