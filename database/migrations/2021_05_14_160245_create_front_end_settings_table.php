@@ -18,7 +18,7 @@ class CreateFrontEndSettingsTable extends Migration
             $table->string('key');
             $table->string('title');
             $table->string('designation')->comment('this Column is used for OUR Success Story');
-            $table->string('description');
+            $table->longText('description');
             $table->string('icon');
             $table->string('media');
             $table->softDeletes();
@@ -35,7 +35,6 @@ class CreateFrontEndSettingsTable extends Migration
             ['key' => 'what_we_do','title' => 'Verified Profiles','description' => "We carefully check and confirm each mentor’s profile",'icon'=> 'design/images/profile.png','media'=> '','designation' =>''],
             ['key' => 'what_we_do','title' => 'Learn Anytime','description' => "Take online lessons at the perfect time for your busy schedule",'icon'=> 'design/images/any-time.png','media'=> '','designation' =>''],
             ['key' => 'what_we_do','title' => 'Affordable Prices','description' => "Choose an experienced mentor that fits your budget.",'icon'=> 'design/images/price.png','media'=> '','designation' =>''],
-
             ['key' => 'focus_ontheskill_you_need','title' => '','description' => 'Know how to answer those tricky behavioral questions','icon'=> '','media'=> '','designation' =>''],
             ['key' => 'focus_ontheskill_you_need','title' => '','description' => 'Understand the company from the mentor who works or has worked there previously.','icon'=> '','media'=> '','designation' =>''],
             ['key' => 'focus_ontheskill_you_need','title' => '','description' => 'Learn the right questions to ask.','icon'=> '','media'=> '','designation' =>''],
@@ -50,8 +49,9 @@ class CreateFrontEndSettingsTable extends Migration
             ['key' => 'become_mentor_home_page','title' => 'Find new Mentees','description' => '','icon'=> '','media'=> 'design/images/new-mentor.png','designation'=>''],
             ['key' => 'become_mentor_home_page','title' => 'Grow your business','description' => '','icon'=> '','media'=> 'design/images/grow-business.png','designation'=>''],
             ['key' => 'become_mentor_home_page','title' => 'Get Paid Securely','description' => '','icon'=> '','media'=> 'design/images/paid-secure.png','designation'=>''],
+            ['key' => 'terms_and_condition','title' => '','description' => '','icon'=> '','media'=> '','designation'=>''],
+            ['key' => 'policy','title' => '','description' => '','icon'=> '','media'=> '','designation'=>''],
         ];
-
         DB::table('frontend_settings')->insert($data);
     }
 

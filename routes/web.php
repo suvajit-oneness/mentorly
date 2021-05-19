@@ -61,6 +61,9 @@ Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->
 Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');
 Route::get('stripe/payment/success', 'Site\MentorController@stripeBookingConfirmed')->name('stripe.payment.success');
 Route::get('payment/bokking/success','StripePaymentController@thankyouPageToSHow')->name('mentor.booked.success');
+
+Route::get('terms-and-condition','Site\WebsiteController@termsAndCondition')->name('terms.condition');
+Route::get('policy','Site\WebsiteController@policy')->name('policy');
 // Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
 
 // Auth::routes();

@@ -39,7 +39,7 @@
                         <figure><img src="{{asset($whatwedo->icon)}}"></figure>
                         <figcaption>
                             <h3>{{$whatwedo->title}}</h3>
-                            <p>{{$whatwedo->description}}</p>
+                            <p>{!! $whatwedo->description !!}</p>
                         </figcaption>
                     </div>
                 </li>
@@ -73,7 +73,7 @@
                     <div class="prifile-content">
                         <h3>{{$story->title}}</h3>
                         <span class="designation">{{$story->designation}}</span>
-                        <p>{{$story->description}}</p>
+                        <p>{!! $story->description !!}</p>
                         <a href="#" class="prinery-btm blue-btm">More Review</a>
                     </div>
                     <div class="profile-image" style="background: url({{asset($story->media)}}) no-repeat center center; background-size: cover;"></div>
@@ -91,7 +91,7 @@
                 <li>
                     <div class="step-first">
                         <span>{{$howitwork->title}}</span>
-                        <h3>{{$howitwork->description}}</h3>
+                        <h3>{!! $howitwork->description !!}</h3>
                     </div>
                     <div class="step-second">
                         <img src="{{asset($howitwork->media)}}">

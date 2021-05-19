@@ -58,6 +58,18 @@
                     <i class="icon fa fa-circle-o"></i>Home Page
                     </a>
                 </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.cms.terms_and_condition']) }}"
+                    href="{{ route('admin.cms.terms_and_condition') }}">
+                    <i class="icon fa fa-circle-o"></i>Terms and Condition
+                    </a>
+                </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.cms.policy']) }}"
+                    href="{{ route('admin.cms.policy') }}">
+                    <i class="icon fa fa-circle-o"></i>Policy
+                    </a>
+                </li>
             </ul>
         </li>
         <li>

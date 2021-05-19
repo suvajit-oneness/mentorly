@@ -42,6 +42,8 @@ class CMSController extends Controller
     		case 'our_sucess_story': return $this->our_sucess_story($req); break;
     		case 'how_mentory_works': return $this->how_mentory_works($req); break;
     		case 'become_mentor_home_page': return $this->become_mentor_home_page($req); break;
+			case 'terms_and_condition': return $this->terms_and_condition_save($req); break;
+			case 'policy': return $this->policy_save($req); break;
     	}
     }
 
@@ -260,4 +262,62 @@ class CMSController extends Controller
     	}
     	return response()->json(['error'=>true,'message'=>$validator->errors()->first()]);
     }
+
+	public function termsAndCondition(Request $req)
+	{
+		$this->setPageTitle('Terms and Condition', 'Terms and Condition');
+    	$task = 'edit';$key = 'terms_and_condition';
+    	$data = FrontendSetting::where('key',$key)->first();
+    	return view('admin.cms.addHomepage',compact('key','task','data'));
+	}
+
+	public function policy(Request $req)
+	{
+		$this->setPageTitle('Policy', 'Policy');
+    	$task = 'edit';$key = 'policy';
+    	$data = FrontendSetting::where('key',$key)->first();
+    	return view('admin.cms.addHomepage',compact('key','task','data'));
+	}
+
+	public function terms_and_condition_save(Request $req)
+	{
+		$req->validate([
+    		'task' => 'required|string|in:add,edit',
+    		'description' => 'required|string',
+			'id' => 'nullable|numeric|min:1',
+    	]);
+    	$setting = FrontendSetting::select('*');
+		if(!empty($req->id)){
+			$setting = $setting->where('id',$req->id);
+		}
+		$setting = $setting->where('key','terms_and_condition')->first();
+		if(!$setting){
+    		$setting = new FrontendSetting();
+    		$setting->key = 'terms_and_condition';
+    	}
+    	$setting->description = $req->description;
+    	$setting->save();
+    	return back()->with('Success','Terms and Condition Updated Successfully');
+	}
+
+	public function policy_save(Request $req)
+	{
+		$req->validate([
+    		'task' => 'required|string|in:add,edit',
+    		'description' => 'required|string',
+			'id' => 'nullable|numeric|min:1',
+    	]);
+    	$setting = FrontendSetting::select('*');
+		if(!empty($req->id)){
+			$setting = $setting->where('id',$req->id);
+		}
+		$setting = $setting->where('key','policy')->first();
+		if(!$setting){
+    		$setting = new FrontendSetting();
+    		$setting->key = 'policy';
+    	}
+    	$setting->description = $req->description;
+    	$setting->save();
+    	return back()->with('Success','Policy Updated Successfully');
+	}
 }

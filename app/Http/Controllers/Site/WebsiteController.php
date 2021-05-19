@@ -171,6 +171,20 @@ class WebsiteController extends Controller
         return $shifting;
     }
 
+    public function termsAndCondition(Request $req)
+    {
+        $data = (object)[];
+        $data->terms_and_condition = \App\Models\FrontendSetting::where('key','terms_and_condition')->first();
+        return view('website.termsandcondition',compact('data'));
+    }
+
+    public function policy(Request $req)
+    {
+        $data = (object)[];
+        $data->policy = \App\Models\FrontendSetting::where('key','policy')->first();
+        return view('website.policy',compact('data'));
+    }
+
     // public function getShowTimeShift($mentor,$days)
     // {
     //     $shifting = [];

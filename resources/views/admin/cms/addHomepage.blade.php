@@ -134,6 +134,22 @@
                                     @error('title') <span class="text-danger">{{ $message ?? '' }}</span> @enderror
                                 </div>
                             @break
+                            @case('terms_and_condition')
+                                <h3>Terms and Condition</h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Terms and Condition <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{ old('description') ? old('description') : (($data) ? $data->description : '') }}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            @break
+                            @case('policy')
+                                <h3>Policy</h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="description">Policy <span class="m-l-5 text-danger"> *</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Description">{{ old('description') ? old('description') : (($data) ? $data->description : '') }}</textarea>
+                                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            @break
                             @default
                         @endswitch
                         <input type="submit" name="">

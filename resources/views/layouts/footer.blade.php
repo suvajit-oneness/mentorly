@@ -32,8 +32,8 @@
         <div class="footer-gid">
             <h4 class="footer-title">Legal</h4>
             <ul class="footer-list">
-                <li><a href="#">Tearms and Conditions</a></li>
-                <li><a href="#">Policy</a></li>
+                <li><a href="{{route('terms.condition')}}">Terms and Condition</a></li>
+                <li><a href="{{route('policy')}}">Policy</a></li>
             </ul>
         </div>
         <div class="footer-gid">
