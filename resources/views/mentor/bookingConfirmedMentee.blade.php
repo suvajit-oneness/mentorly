@@ -9,9 +9,9 @@
 					@include('mentor.settingSidebar')
 				</div>
 				<div class="col-12 col-md-10 pl-2 pl-md-5">
-					<div class="settings-details">
+					<div class="settings-details table-responsive zoomTable">
 						@if(count($booking) > 0)
-						<table id="MyTable" class="table" border="1" style="width: 100%">
+						<table id="MyTable" class="table table-hover table-sm table-bordered">
 							<thead>
 								<tr>
 									<th>Booking Id</th>

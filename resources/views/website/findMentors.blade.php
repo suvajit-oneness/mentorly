@@ -203,61 +203,65 @@
 		<div class="profile-wrapper">
 			<div class="profile-holder">
 				@foreach($mentors as $key => $mentor)
-					<div class="profile-details-box">
-						<div class="profile-first">
-							<a href="#">
-								<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
-							</a>
-						</div>
-						<div class="profile-middle">
-							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="profile-name" target="_blank">{{$mentor->name}}.</a>
-							<ul class="twolist">
-								<li class="company">Twitch</li>
-								<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="#">({{count($mentor->reviews)}} Reviews)</a></li>
-							</ul>
-							<!-- <div class="inerview-taken">
-								<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
-							</div> -->
-						</div>
+					<div class="showhim">
+						<div class="profile-details-box">
+							<div class="profile-first">
+								<a href="#">
+									<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
+								</a>
+							</div>
+							<div class="profile-middle">
+								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="profile-name" target="_blank">{{$mentor->name}}.</a>
+								<ul class="twolist">
+									<li class="company">Twitch</li>
+									<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="#">({{count($mentor->reviews)}} Reviews)</a></li>
+								</ul>
+								<!-- <div class="inerview-taken">
+									<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
+								</div> -->
+							</div>
 
-						<div class="profile-right">
-							<span class="price">
-								${{$mentor->charge_per_hour}} <span>/ hour</span>
-							</span>
+							<div class="profile-right">
+								<span class="price">
+									${{$mentor->charge_per_hour}} <span>/ hour</span>
+								</span>
 
-							<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="prinery-btm blue-btm">Book mentor</a>
+								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="prinery-btm blue-btm">Book mentor</a>
 
-							<a href="javascript:void(0)" class="messageToMentor" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm">Message</a>
+								<a href="javascript:void(0)" class="messageToMentor prinery-btm deepblue-btm" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}">Message</a>
+							</div>
 						</div>
-					</div>
-					<!-- Mentor Availability Calender -->
-					<div class="right-floating-place">
-						<div class="calender">
-							<div class="row-grid">
-								<div class="row-title"></div>
-								<div class="row-cell">
-									@foreach($days as $day)
-										<div class="cell">{{$day->short_day}}</div>	
+						<!-- Mentor Availability Calender -->
+						<div class="showme">
+							<div class="right-floating-place">
+								<div class="calender">
+									<div class="row-grid">
+										<div class="row-title"></div>
+										<div class="row-cell">
+											@foreach($days as $day)
+												<div class="cell">{{$day->short_day}}</div>	
+											@endforeach
+										</div>
+									</div>
+									@foreach($mentor->timeShift as $timeShift)
+										<div class="row-grid">
+											<div class="row-title">
+												<span class="daytime">{{$timeShift['shift_name']}}</span>
+												<span class="time">{{$timeShift['shift']}}</span>
+											</div>
+											<div class="row-cell">
+												@foreach($timeShift['days'] as $av_day)
+													<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
+												@endforeach
+											</div>
+										</div>
 									@endforeach
 								</div>
+								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
 							</div>
-							@foreach($mentor->timeShift as $timeShift)
-								<div class="row-grid">
-									<div class="row-title">
-										<span class="daytime">{{$timeShift['shift_name']}}</span>
-										<span class="time">{{$timeShift['shift']}}</span>
-									</div>
-									<div class="row-cell">
-										@foreach($timeShift['days'] as $av_day)
-											<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
-										@endforeach
-									</div>
-								</div>
-							@endforeach
 						</div>
-						<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="avality-button" target="_blank">View full availability</a>
+						<!-- Mentor Availability Calender END -->
 					</div>
-					<!-- Mentor Availability Calender END -->
 				@endforeach
 
 			</div>
@@ -482,5 +486,7 @@
 		});
 	});
 	</script>
+	
+	
 @stop
 @endsection

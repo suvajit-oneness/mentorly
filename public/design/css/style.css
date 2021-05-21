@@ -28,6 +28,9 @@ body {
     font-weight: 400;
     font-size: 16px;
 }
+a{
+	transition: all 0.5s ease-out;
+}
 
 a:hover {
 	text-decoration: none;
@@ -46,7 +49,7 @@ input:focus, input:hover, select:focus, select:hover {
 p {
 	font-family: 'Lato', sans-serif;
     color: #2e2b2b;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 1.8;
 }
@@ -71,6 +74,7 @@ p {
 }
 .blue-btm {
 	background:#1cb3d3;
+	transition: all 0.5s ease-out;
 }
 .blue-btm:hover{
 	background: #000;
@@ -78,11 +82,12 @@ p {
 }
 
 .deepblue-btm {
-    background:#345c6c;
+    background:#345c6c !important;
+	transition: all 0.5s ease-out;
 }
 .deepblue-btm:hover{
-    background: #000;
-    color:#fff;
+    background: #000 !important;
+    color:#fff !important;
 }
 
 .justify-center {
@@ -105,6 +110,7 @@ header{
 	background:#fff;
 	padding:19px 0;
 	position: relative;
+	border-bottom: 1px solid #efefef;
 }
 .inner-header {
     display: flex;
@@ -549,6 +555,7 @@ color: #fff;
 .faq-place {
  	max-width: 704px;
  	margin: 88px auto 0 auto;
+	text-align:left;
 }
 .dropdown-inner { 
  	display: none;
@@ -1179,7 +1186,7 @@ text-transform: capitalize;
     position: relative;
     width: 100%;
     right: 0;
-    max-width: 398px;
+    max-width: 415px;
     padding: 21px;
     top: 0;
     min-height: 330px;
@@ -1580,7 +1587,9 @@ text-transform: capitalize;
     /* max-width: 693px; */
     /* flex: 0 0 693px; */
     padding: 15px !important;
-	margin-left: 30px;
+    margin-left: 0;
+    position: relative;
+    left: -48px;
 }
 .setting-list {}
 .setting-list li {}
@@ -1608,6 +1617,7 @@ text-transform: capitalize;
     border-style: solid;
     border-width: 17.5px 0 17.5px 15px;
     border-color: transparent transparent transparent #1cb5d3;
+	z-index:1;
 }
 .settings-heading{
     color: #000;
@@ -1675,6 +1685,10 @@ text-transform: capitalize;
     font-weight: 400;
     background: url(../design/images/dropdown-arrow.png) no-repeat 98% center;
     appearance: none;
+}
+
+.time-zone .select-style{
+	height:40px;
 }
 
 .rounded-button-style {
@@ -1760,7 +1774,7 @@ text-transform: capitalize;
     font-family: GT Walsheim Pro;
     font-weight: 400;
     color: #000;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1;
     display: block;
     margin-top: 13px;
@@ -1784,7 +1798,7 @@ text-transform: capitalize;
     font-family: GT Walsheim Pro;
     font-weight: 400;
     color: #000;
-    font-size: 18px;
+    font-size: 14px;
     border-top: 3px solid #1cb3d3;
     padding: 9px 0;
     border-right:1px solid #1cb3d3;
@@ -2082,7 +2096,7 @@ border: 1px solid #bfbfbf;
 }
 
 .get-paid {
-    padding: 171px 0;
+    padding: 80px 0;
 }
 
 
@@ -2116,6 +2130,46 @@ border: 1px solid #bfbfbf;
 .zoomTable table tr td .zoomBtn:hover{
 	background: #007bff;
 }
+.showhim{
+	position:relative;
+}
+.showme{ 
+   display: none;
+ }
+ .showhim:hover .showme{
+   display: block;
+    position: absolute;
+    right: -62%;
+    top: 0;
+    z-index: 1;
+    padding-left: 61px;
+ }
+.get-paid{
+	position: relative;
+    background: url(http://demo91.co.in/dev/mentorly/public/design/images/footer-top.jpg) no-repeat center -63px !important;
+    background-size: cover !important;
+}
+.get-paid .row{
+	z-index: 22;
+    position: relative;
+    justify-content: center;
+    text-align: center;
+}
+.get-paid:after{
+	position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    opacity: 0.58;
+}
+
+
+
+
+
 
 
 /*====Responsive
@@ -2279,6 +2333,13 @@ border: 1px solid #bfbfbf;
         max-width: 33%;
         flex: 0 0 33%;
     }
+	.showhim:hover .showme{
+	   display: block;
+		position: relative;
+		right: 0;
+		top: 0;
+		margin-bottom:15px
+	 }
 }
 
 @media(max-width:767px) {
@@ -2336,6 +2397,7 @@ border: 1px solid #bfbfbf;
         max-width: 100%;
         flex: 0 0 100%;
 		margin-left: 0px;
+		left:inherit;
     }
     .setting-list {
         display: flex;
