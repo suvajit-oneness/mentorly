@@ -23,6 +23,7 @@ class CreateMentorsTable extends Migration
             $table->string('designation');
             $table->string('image');
             $table->text('about');
+            $table->date('carrier_started');
             $table->float('charge_per_hour',8,2);
             $table->string('country');
             $table->string('city');

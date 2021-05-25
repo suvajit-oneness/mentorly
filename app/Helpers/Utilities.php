@@ -21,6 +21,21 @@ if (!function_exists('sidebar_open')) {
     }
 }
 
+function dateDifferenceFromNow($startdate)
+{
+    dd($startdate);
+    $d1 = date('Y-m-d',strtotime($startdate));
+    $d2 = date('Y-m-d');
+    $interval = $d1->date_diff($d2);
+    $diffInSeconds = $interval->s; //45
+    $diffInMinutes = $interval->i; //23
+    $diffInHours   = $interval->h; //8
+    $diffInDays    = $interval->d; //21
+    $diffInMonths  = $interval->m; //4
+    $diffInYears   = $interval->y; //1
+    return $diffInYears.' Year '.$diffInMonths.' Month '.$diffInDays. ' Days';
+}
+
 function sendMail($name,$email,$template){
     $data = array(
         'name' => $name,
