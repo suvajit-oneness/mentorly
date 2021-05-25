@@ -37,6 +37,12 @@ class MentorController extends Controller
 	            $imageurl = url('upload/userProfile/'.$random.'.'.$image->getClientOriginalExtension());
 	            $user->image = $imageurl;
 	        }
+            if($guard == 'mentor'){
+                $user->charge_per_hour = ($req->price_per_hour) ? $req->price_per_hour : 40;
+                $user->about = ($req->about) ? $req->about : '';
+                $user->carrier_started = ($req->carrier_started) ? $req->carrier_started : date('Y-m-d');
+                $user->designation = ($req->designation) ? $req->designation : '';
+            }
     		$user->save();
     		return back()->with('Success','Profile Updated SuccessFully');
     	}

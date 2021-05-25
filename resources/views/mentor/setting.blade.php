@@ -77,7 +77,45 @@
 									</div>
 								</div>
 							</div>
+							@if(get_guard() == 'mentor')
 
+								<div class="form-group">
+									<div class="row align-items-center">
+										<label class="col-md-4">Carrier Started Date</label>
+										<div class="col-md-8">
+											<input type="date" name="carrier_started" class="input-style" value="{{$user->carrier_started}}" onkeypress="return false;">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="row align-items-center">
+										<label class="col-md-4">Designation</label>
+										<div class="col-md-8">
+										  	<input type="text" name="designation" class="input-style" value="{{$user->designation}}">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="row align-items-center">
+										<label class="col-md-4">Price Per Hour ($)</label>
+										<div class="col-md-8">
+											<input type="text" name="price_per_hour" onkeypress="return isNumberKey(event)" maxlength="5" class="input-style" placeholder="Price Per Hour" value="{{$user->charge_per_hour}}">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="row align-items-center">
+										<label class="col-md-4">About</label>
+										<div class="col-md-8">
+										  <textarea name="about" class="input-style" placeholder="About You max (200) Character">{{$user->about}}</textarea>
+										</div>
+									</div>
+								</div>
+								
+							@endif
 							<div class="form-group">
 								<div class="row align-items-center">
 									<div class="col-md-4"></div>
@@ -88,7 +126,7 @@
 									</div>
 									<!-- <div class="col-md-4">
 										<div class="form-group">
-											<input type="button" class="rounded-button-style" id="" value="Detete account">
+											<input type="button" class="rounded-button-style" id="" value="Delete account">
 										</div>
 									</div> -->
 								</div>
