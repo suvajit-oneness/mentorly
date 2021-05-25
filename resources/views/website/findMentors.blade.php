@@ -299,39 +299,39 @@
 
 @section('script')
 	<script type="text/javascript">
-		var seniorityLevel = 0,keyword = '';
-		@if(!empty($request['seniority']) && $request['seniority'] > 0)
-			seniorityLevel = parseInt('{{$request["seniority"]}}');
-		@endif
-		@if(!empty($request['keyword']))
-			keyword = "{{$request['keyword']}}";
-		@endif
-		$(document).on('change','select#senioritylevel',function(){
-			seniorityLevel = $('select#senioritylevel option:selected').val();
-			// dataRetriving();
-		});
+		// var seniorityLevel = 0,keyword = '';
+		// @if(!empty($request['seniority']) && $request['seniority'] > 0)
+		// 	seniorityLevel = parseInt('{{$request["seniority"]}}');
+		// @endif
+		// @if(!empty($request['keyword']))
+			// keyword = "{{$request['keyword']}}";
+		// @endif
+		// $(document).on('change','select#senioritylevel',function(){
+		// 	seniorityLevel = $('select#senioritylevel option:selected').val();
+		// 	// dataRetriving();
+		// });
 
-		$(document).on('click','#searchFinalBtn',function(){
-			keyword = $('#searchby').val();
-			if(keyword == ''){}
-			else{
+		// $(document).on('click','#searchFinalBtn',function(){
+		// 	keyword = $('#searchby').val();
+		// 	if(keyword == ''){}
+		// 	else{
 				// dataRetriving();
-			}
-		});
+			// }
+		// });
 
-		function dataRetriving()
-		{
-			var originalURL = '{{url()->current()}}?',price = $('#amount').val();
-			if(parseInt(seniorityLevel) > 0){
-				originalURL += 'seniority='+seniorityLevel+'&';
-			}
-			if(keyword != ''){
-				originalURL += 'keyword='+keyword+'&';
-			}
-			originalURL += 'price='+price+'&';
-			originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
-			window.location.href = originalURL;
-		}
+		// function dataRetriving()
+		// {
+		// 	var originalURL = '{{url()->current()}}?',price = $('#amount').val();
+		// 	if(parseInt(seniorityLevel) > 0){
+		// 		originalURL += 'seniority='+seniorityLevel+'&';
+		// 	}
+		// 	if(keyword != ''){
+		// 		originalURL += 'keyword='+keyword+'&';
+		// 	}
+		// 	originalURL += 'price='+price+'&';
+		// 	originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
+		// 	window.location.href = originalURL;
+		// }
 
 		var mentorId = 0;
 		$(document).on('click','.messageToMentor',function(){
