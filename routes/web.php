@@ -64,6 +64,13 @@ Route::get('payment/bokking/success','StripePaymentController@thankyouPageToSHow
 
 Route::get('terms-and-condition','Site\WebsiteController@termsAndCondition')->name('terms.condition');
 Route::get('policy','Site\WebsiteController@policy')->name('policy');
+
+
+
+// Cron Routes
+Route::get('create_teacher_slot','CronController@teacherSlot');
+
+
 // Route::get('stripe/{Id}/success','StripePaymentController@successTransaction')->name('stripe.success');
 
 // Auth::routes();

@@ -79,7 +79,7 @@ class WebsiteController extends Controller
         $data = (object)[];
         $data->faq = \App\Models\Faq::get();
         $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_page')->get();
-        $data->mentor = Mentor::limit(10)->get();
+        $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(10)->get();
     	return view('website.singUpMentor',compact('data'));
     }
 
@@ -97,7 +97,7 @@ class WebsiteController extends Controller
     		$mentor->email = $req->email;
     		$mentor->password = Hash::make($req->password);
             $mentor->status = 1;
-            $mentor->charge_per_hour = 100;
+            $mentor->charge_per_hour = 40;
             $mentor->carrier_started = date('Y-m-d');
     		$mentor->save();
     		$errors['signup'] = 'Registration Successfull';
@@ -139,7 +139,7 @@ class WebsiteController extends Controller
         if(!empty($req->timeoftheweek)){
 
         }
-        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->orderBy('name')->get();
+        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('name')->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {
             $mentor->timeShift = $this->getIndivisualSlots($mentor);
@@ -200,7 +200,7 @@ class WebsiteController extends Controller
         }
         $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
         $mentorId = base64_decode($mentorId);
-        $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->whereIsDeleted(0)->first();
+        $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->first();
         if($mentor){
             $days = AvailableDay::get();
             $mentor->timeShift = $this->getIndivisualSlots($mentor);
@@ -225,7 +225,7 @@ class WebsiteController extends Controller
     {
         $data = (object)[];
         $data->faq = \App\Models\Faq::get();
-        $data->mentor = Mentor::limit(6)->get();
+        $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(6)->get();
         $data->news = \App\Models\News::limit(3)->orderBy('id','DESC')->get();
     	return view('website.aboutUs',compact('data'));
     }

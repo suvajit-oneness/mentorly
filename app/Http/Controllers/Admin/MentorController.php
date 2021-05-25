@@ -94,6 +94,8 @@ class MentorController extends BaseController
         $mentor->password = Hash::make($req->password);
         $mentor->status = 1;
         $mentor->is_verified = 1;
+        $mentor->carrier_started = date('Y-m-d');
+        $mentor->charge_per_hour = 40;
         $mentor->save();
         Session::flash('message', 'Mentor added successfully!');
         return redirect(route('admin.mentor.index'));
@@ -113,5 +115,26 @@ class MentorController extends BaseController
         if ($mentor) {
             return response()->json(array('message'=>'Mentor status successfully updated'));
         }
+    }
+
+    public function updateVerificationStage(Request $req)
+    {
+        // dd($req->all());
+        $rules = [
+            'currentStatus' => 'required|in:0,1',
+            'mentorId' => 'required|min:1|numeric',
+        ];
+        $validate = validator()->make($req->all(),$rules);
+        if(!$validate->fails()){
+            $currentStatus = 1;
+            $mentor = Mentor::findOrFail($req->mentorId);
+            if($req->currentStatus == 1){
+                $currentStatus = 0;
+            }
+            $mentor->is_verified = $currentStatus;
+            $mentor->save();
+            return response()->json(['error' => false,'currentStatus'=>$currentStatus,'message'=>'status updated Success']);
+        }
+        return response()->json(['error' => true,'message' => $validate->errors()->first()]);
     }
 }

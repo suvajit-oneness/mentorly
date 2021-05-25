@@ -27,6 +27,9 @@
                                 <th> Email Id </th>
                                 <th> Phone No </th>
                                 <th> Designation </th>
+                                <th> Charge per hour </th>
+                                <th> Experience </th>
+                                <th> verified</th>
                                 <th> Created At </th>
                                 <th> Status </th>
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
@@ -40,6 +43,12 @@
                                     <td>{{ $mentor->email }}</td>
                                     <td>{{ $mentor->mobile }}</td>
                                     <td>{{ $mentor->designation }}</td>
+                                    <td>$ {{$mentor->charge_per_hour}}</td>
+                                    <td>{{dateDifferenceFromNow($mentor->carrier_started)}}</td>
+                                    <td>
+                                        <span>@if($mentor->is_verified == 1){{('Yes')}}@else{{('No')}}@endif</span>
+                                        <input type="checkbox" name="verified" data-mentor="{{$mentor->id}}" data-currentStatus="{{$mentor->is_verified}}" class="verifiedToggle" @if($mentor->is_verified == 1){{('checked')}}@endif>
+                                    </td>
                                     <td>{{ date("d-M-Y",strtotime($mentor->created_at)) }}</td>
                                     <td class="text-center">
                                     <div class="toggle-button-cover margin-auto">
@@ -93,8 +102,6 @@
                 }
             });
         });
-    </script>
-    <script type="text/javascript">
         $('input[id="toggle-block"]').change(function() {
             var mentor_id = $(this).data('mentor_id');
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -120,5 +127,27 @@
                 }
               });
         });
+
+        $(document).on('click','.verifiedToggle',function(){
+            var thisCheckbox = $(this),currentStatus = thisCheckbox.attr('data-currentStatus'),mentorId = thisCheckbox.attr('data-mentor');
+            $.ajax({
+                url : '{{route('admin.mentor.verified.update')}}',
+                type : 'post',
+                data : {currentStatus:currentStatus,mentorId:mentorId,_token:'{{csrf_token()}}'},
+                success:function(data){
+                    if(data.error == false){
+                        thisCheckbox.attr('data-currentStatus',data.currentStatus);
+                        if(data.currentStatus == 1){
+                            thisCheckbox.closest('td').find('span').text('Yes');
+                        }else{
+                            thisCheckbox.closest('td').find('span').text('No');
+                        }
+                    }else{
+                        swal('Error',data.message);
+                    }
+                }
+            });
+        });
+        
     </script>
 @endpush

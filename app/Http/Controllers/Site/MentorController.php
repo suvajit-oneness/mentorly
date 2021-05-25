@@ -131,7 +131,7 @@ class MentorController extends Controller
     {
         if(get_guard() == 'mentor'){
             $mentor = Auth::guard('mentor')->user();
-            $timeShift = AvailableShift::where('mentorId',$mentor->id)->orderBy('date','DESC')->get();
+            $timeShift = AvailableShift::where('mentorId',$mentor->id)->where('date','>=',date('Y-m-d'))->orderBy('date','ASC')->get();
             return view('mentor.ShiftAvailable',compact('timeShift'));
         }
         return back();
