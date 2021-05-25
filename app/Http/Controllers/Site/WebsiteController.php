@@ -225,7 +225,7 @@ class WebsiteController extends Controller
     {
         $data = (object)[];
         $data->faq = \App\Models\Faq::get();
-        $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(6)->get();
+        $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(4)->get();
         $data->news = \App\Models\News::limit(3)->orderBy('id','DESC')->get();
     	return view('website.aboutUs',compact('data'));
     }
