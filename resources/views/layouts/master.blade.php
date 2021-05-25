@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <title>{{config('app.name', 'Laravel')}} - @yield('title')</title>
+  <link rel="icon" href="{{asset('design/images/logo.png')}}" type="image/gif" sizes="any">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
@@ -59,116 +60,34 @@
             });
         });
         
-        // accordian
-        // jQuery(document).ready(function($){
-        //     // Acordeon
-        //     $('.dropdown-toggle').click(function(e) {
-        //         e.preventDefault();
-        //         var $this = $(this);
-        //         if ($this.hasClass('dropdown-active')) {
-        //             $this.removeClass('dropdown-active');
-        //             $this.next().slideUp(350);
-        //         } else {
-        //             $this.toggleClass('dropdown-active');
-        //             $this.next().slideToggle(350);
-        //             $('.dropdown-toggle').not($(this)).removeClass('dropdown-active');
-        //             $('.dropdown-inner').not($(this).next()).slideUp('600');
-        //         }
-        //     });
-        // });
-
-        // jQuery(document).ready(function($){
-        //     jQuery('.ham').click(function(e){
-        //         jQuery('.menu-wrap').toggleClass('slide');
-        //         e.stopPropagation();
-        //     });
-        //     jQuery(document).click(function(e){
-        //         jQuery('.menu-wrap').removeClass('slide');
-        //         e.stopPropagation();
-        //     });
-        // });
-
-    // logo slider
-    // $('.logo-slider').slick({
-    //   centerMode: false,
-    //   centerPadding: '60px',
-    //   slidesToShow: 5,
-    //   arrows:true,
-    //   nextArrow: '<span class="next"><img src="images/next-arrow.png"></span>',
-    //   prevArrow: '<span class="pre"><img src="images/pre-arrow.png"></span>',
-    //   responsive: [
-    //     {
-    //       breakpoint: 768,
-    //       settings: {
-    //         arrows: false,
-    //         centerMode: true,
-    //         centerPadding: '40px',
-    //         slidesToShow: 3
-    //       }
-    //     },
-    //     {
-    //       breakpoint: 480,
-    //       settings: {
-    //         arrows: false,
-    //         centerMode: true,
-    //         centerPadding: '40px',
-    //         slidesToShow: 1
-    //       }
-    //     }
-    //   ]
-    // });
-
-    $('.mentor-slider').slick({
-      centerMode: false,
-      centerPadding: '60px',
-      slidesToShow: 3,
-      dots: true,
-      arrows:false,
-      responsive: [
-        {
-          breakpoint: 768,
-          settings: {
-            arrows: false,
-            centerMode: true,
-            centerPadding: '40px',
-            slidesToShow: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            arrows: false,
-            centerMode: true,
-            centerPadding: '40px',
-            slidesToShow: 1
-          }
-        }
-      ]
-    });
-
-    
-
-    // success story slider
-    // $('.profile-slider').slick({
-    //   centerMode: false,
-    //   centerPadding: '60px',
-    //   slidesToShow:1,
-    //   arrows:true,
-    //   dots: true,
-    //   speed: 300,
-    //   nextArrow: '<span class="next-arrow"><img src="images/next-arrow-white.png"></span>',
-    //   prevArrow: '<span class="pre-arrow"><img src="images/pre-arrow-white.png"></span>'
-    // });
-
-
-
-        
+        $('.mentor-slider').slick({
+          centerMode: false,
+          centerPadding: '60px',
+          slidesToShow: 3,
+          dots: true,
+          arrows:false,
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 2
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 1
+              }
+            }
+          ]
+        });
     </script>
-
-
-
-
-
     @yield('script')
 </body>
 </html>
