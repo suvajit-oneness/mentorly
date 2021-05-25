@@ -8,7 +8,7 @@
 			Online Finance tutors & teachers
 			<span><i>{{count($mentors)}}</i> tutors avalable</span>
 			@if(url()->full() != url()->current())
-				<a href="{{url()->current()}}" class="btn btn-danger">Reset Filter</a>
+				<a href="{{url()->current()}}" class="btn btn-danger btn-sm ml-auto">Reset Filter</a>
 			@endif
 		</div>
 

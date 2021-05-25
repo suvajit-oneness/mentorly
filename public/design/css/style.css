@@ -1109,9 +1109,9 @@ text-transform: capitalize;
     padding: 0 0 0 0px;
  }
 .profile-name {
-    font-size: 23px;
+    font-size: 18px;
     font-family: GT Walsheim Pro;
-    font-weight: 400;
+    font-weight: bold;
     display: block;
     color: #000;
     margin-bottom: 10px;
