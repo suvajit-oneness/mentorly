@@ -9,7 +9,7 @@
 		<div class="mentor-slider">
 			@foreach($data->mentor as $key => $mentor)
 				<div class="mentor-grid-inner">
-					<a href="#">
+					<a href="javascript:void(0)">
 						<figure>
 							<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
 						</figure>
@@ -35,7 +35,6 @@
 				</div>
 			@endforeach
 		</div>
-
 	</div>
 </section>
 
@@ -54,7 +53,7 @@
 								{{date('M d Y',strtotime($news->created_at))}}
 							</div>
 							<h3>{!! $news->description !!}</h3>
-							<a href="#" class="prinery-btm blue-btm" >Read More</a>
+							<a href="javascript:void(0)" class="prinery-btm blue-btm" >Read More</a>
 						</figcaption>
 					</div>
 				</li>

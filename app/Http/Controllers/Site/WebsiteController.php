@@ -122,18 +122,24 @@ class WebsiteController extends Controller
 
     public function findMentors(Request $req)
     {
-        $mentors = Mentor::orderBy('name')->with('reviews');
+        $mentors = Mentor::with('reviews');
         if(!empty($req->seniority) &&  $req->seniority > 0){
             $mentors = $mentors->whereSeniorityId($req->seniority);
-        }
-        if(!empty($req->keyword)){
-            $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
         }
         if(!empty($req->price)){
             $range = explode('-',removeDollerSign($req->price));
             $mentors = $mentors->whereBetween('mentors.charge_per_hour',$range);
         }
-        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->get();
+        if(!empty($req->keyword)){
+            $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
+        }
+        if(!empty($req->timeoftheday)){
+            
+        }
+        if(!empty($req->timeoftheweek)){
+
+        }
+        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->orderBy('name')->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {
             $mentor->timeShift = $this->getIndivisualSlots($mentor);
@@ -186,30 +192,6 @@ class WebsiteController extends Controller
         return view('website.policy',compact('data'));
     }
 
-    // public function getShowTimeShift($mentor,$days)
-    // {
-    //     $shifting = [];
-    //     $time = ['Morning'=>['06:00','12:00'],'Afternoon' =>['12:00','18:00'],'Evening'=>['18:00','00:00'],'Night'=>['00:00','06:00']];
-    //     foreach($time as $key => $t){
-    //         $weeklyShift = [];
-    //         foreach ($days as $day) {
-    //             $getData = AvailableShift::where('mentorId',$mentor->id)->where('available_days_id',$day->id)->whereBetween('time_shift',$t)->where('available',1)->get();
-    //             $weeklyShift[] = [
-    //                 'day' => $day->day,
-    //                 'short_day' => $day->short_day,
-    //                 'available' => count($getData),
-    //             ];
-    //         }
-    //         $shifting[]=[
-    //             'mentorId' => $mentor->id,
-    //             'shift' => $t[0].'-'.$t[1],
-    //             'shift_name' => $key,
-    //             'days' => $weeklyShift,
-    //         ];
-    //     }
-    //     return $shifting;
-    // }
-
     public function mentorDetails(Request $req,$mentorId)
     {
         $date = date('Y-m-d');
@@ -235,7 +217,6 @@ class WebsiteController extends Controller
                 ];
             }
             return view('mentor.details',compact('mentor','daysData','days','originalDate','date','timezone'));
-            // return view('mentor.viewFullAvailability',compact('mentor','daysData','originalDate','date','timezone'));
         }
         return 'Invalid Request <a href="/">Go back</a>';
     }

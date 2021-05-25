@@ -12,6 +12,7 @@
 			@endif
 		</div>
 
+		<!-- Search Filter -->
 		<form>
 			<div class="filter-place">
 				<div class="grid-box">
@@ -180,27 +181,28 @@
 					</div>
 				</div>
 			</div>
-			<input type="submit" name="">
+
+			<div class="short-search-place">
+				<div class="short-by-holder">
+					<label>Sort By: </label>
+					<select name="sort_by" id="sort_by">
+						<option value="relevance">Relevance</option>
+						<option value="popularity">Popularity</option>
+						<option value="highestfirst">Highest First</option>
+						<option value="lowestfirst">Lowest First</option>
+						<option value="numberofreviews">Number of Reviews</option>
+						<option value="bestrating">Best Rating</option>
+					</select>
+				</div>
+				<div class="search-holder">
+					<input type="text" id="searchby" name="searchby" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
+					<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-success btn-sm ml-auto">Apply Filter</button>
 		</form>
-
-		<div class="short-search-place">
-			<div class="short-by-holder">
-				<label>Sort By: </label>
-				<select name="sort_by" id="sort_by">
-					<option value="relevance">Relevance</option>
-					<option value="popularity">Popularity</option>
-					<option value="highestfirst">Highest First</option>
-					<option value="lowestfirst">Lowest First</option>
-					<option value="numberofreviews">Number of Reviews</option>
-					<option value="bestrating">Best Rating</option>
-				</select>
-			</div>
-			<div class="search-holder">
-				<input type="text" id="searchby" name="searchby" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
-				<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
-			</div>
-		</div>
-
+		<!-- Search Filter End -->
+		
 		<div class="profile-wrapper">
 			<div class="profile-holder">
 				@foreach($mentors as $key => $mentor)
