@@ -4,16 +4,26 @@
 	
 <section class="gray-wrapper">
 	<div class="container-xl">
-		<div class="title-place">
+		<!--<div class="title-place">
 			Online Finance tutors & teachers
 			<span><i>{{count($mentors)}}</i> tutors avalable</span>
 			@if(url()->full() != url()->current())
 				<a href="{{url()->current()}}" class="btn btn-danger btn-sm ml-auto">Reset Filter</a>
 			@endif
-		</div>
+		</div>-->
 
 		<!-- Search Filter -->
 		<form>
+		
+			<div class="title-place">
+				Online Finance tutors & teachers
+				<span><i>{{count($mentors)}}</i> tutors avalable</span>
+				<button type="submit" class="btn btn-success btn-sm ml-auto">Apply Filter</button>
+				@if(url()->full() != url()->current())
+					<a href="{{url()->current()}}" class="btn btn-danger btn-sm ml-1">Reset Filter</a>
+				@endif
+			</div>
+		
 			<div class="filter-place">
 				<div class="grid-box">
 					<span>Industry</span>
@@ -199,7 +209,6 @@
 					<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success btn-sm ml-auto">Apply Filter</button>
 		</form>
 		<!-- Search Filter End -->
 		
