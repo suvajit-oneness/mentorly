@@ -5,7 +5,7 @@
 <section class="wedo-section">
 	<div class="container">
 		<div class="contact-place">
-			<div class="contact-image" style="background: url('design/images/contact-bg.jpg')"></div>
+			<div class="contact-image" style="background: url('{{asset('design/images/contact-bg.jpg')}}')"></div>
 			<div class="contact-details">
 				<h2 class="medium-heading deepblue">{{$contact->title}}</h2>
 				<ul class="address-list">
