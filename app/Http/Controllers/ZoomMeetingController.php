@@ -94,6 +94,25 @@ class ZoomMeetingController extends Controller
 	    return back()->withInput($req->all())->withErrors($error);
 	}
 
+	public function cancelMeeting(Request $req,$zoomMeetingId)
+	{
+		try {
+			$zoom = ZoomMeeting::findOrFail($zoomMeetingId);
+			$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);
+			$response = $client->request("DELETE", "/v2/meetings/$zoom->meetingId", [
+		        "headers" => [
+		            "Authorization" => "Bearer " . $this->generateToken(),
+		        ]
+		    ]);
+		    if (204 == $response->getStatusCode()) {
+		    	$zoom->delete();
+		    	return back()->with('Status','Meeting Cancelled Success');
+		    }
+		} catch (Exception $e) {
+			return back()->with('Status','Something went wrong please try after some time');
+		}
+	}
+
 	public function deleteZoomMeeting(Request $req,$meeting_id)
 	{
 		$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);

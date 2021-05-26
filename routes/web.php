@@ -56,6 +56,7 @@ Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
 
 Route::get('user/zoom/meeting','ZoomMeetingController@list')->name('user.zoom.meeting');
+Route::get('user/zoom/meeting/{meetingId}/cancel','ZoomMeetingController@cancelMeeting')->name('user.zoom.meeting.cancel');
 
 // STRIPE Payment Routes
 Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');

@@ -22,6 +22,7 @@
 									<th>Start Time</th>
 									<th>Agenda</th>
 									<th>Join URL</th>
+									<th>Action</th>
 								</tr>
 								@foreach($data as $zoom)
 									<tr>
@@ -34,6 +35,7 @@
 										<td>{{$zoom->start_time}}</td>
 										<td>@if(!empty($zoom->agenda)){{$zoom->agenda}}@else{{'N/A'}}@endif</td>
 										<td><a href="{{$zoom->join_url}}" target="_blank" class="zoomBtn">Join</a></td>
+										<td><a href="{{route('user.zoom.meeting.cancel',$zoom->id)}}">Cancel</a></td>
 									</tr>
 								@endforeach
 							</table>
