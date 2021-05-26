@@ -19,3 +19,4 @@ composer.lock
 *.zip
 /public/banners/*
 /public/upload/*
+.DS_Store
