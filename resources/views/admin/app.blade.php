@@ -77,6 +77,13 @@
           }
         });
 
+        function isNumberKey(evt){  
+            if(evt.charCode >= 48 && evt.charCode <= 57){  
+                return true;  
+            }  
+            return false;  
+        }
+
         @if(Session::has('Success'))
             swal('Success','{{Session::get('Success')}}');
         @elseif(Session::has('Errors'))

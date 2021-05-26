@@ -43,6 +43,7 @@ Route::post('message/submit/to_mentor','Site\MentorController@messageSubmitToMen
 Route::get('mentor/shift/availability','Site\MentorController@mentorAvailabilitySettingView')->name('mentor.availability.setting');
 Route::post('mentor/shift/availability','Site\MentorController@saveMentorAvailabilitySetting')->name('mentor.availability.setting.save');
 
+Route::get('mentor/mentee/message/log','Site\MentorController@messageLog')->name('user.message.log');
 Route::get('booking/history','Site\MenteeController@purchasHistory')->name('booking.history');
 Route::get('mentor/booking/request','Site\MentorController@seeBookingDetails')->name('mentor.booking.request');
 

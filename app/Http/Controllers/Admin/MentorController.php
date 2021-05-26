@@ -10,25 +10,14 @@ use App\Models\Mentor;use Hash;use Session;
 
 class MentorController extends BaseController
 {
-    /**
-     * @var MentorContract
-     */
+
     protected $mentorRepository;
 
-
-    /**
-     * PageController constructor.
-     * @param MentorContract $mentorRepository
-     */
     public function __construct(MentorContract $mentorRepository)
     {
         $this->mentorRepository = $mentorRepository;
         
     }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
 
     public function index()
     {
@@ -60,10 +49,6 @@ class MentorController extends BaseController
         return redirect(route('admin.mentor.index'));
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function delete($id)
     {
         $mentor = $this->mentorRepository->deleteMentor($id);
@@ -86,6 +71,8 @@ class MentorController extends BaseController
             'email' => 'required|email|string|unique:mentors',
             'mobile' => 'required|numeric|digits:10',
             'password' => 'required|string|min:8|confirmed',
+            'charge_per_hour' => 'required|min:1|numeric',
+            'carrier_started' => 'required|date',
         ]);
         $mentor = new Mentor;
         $mentor->name = $req->name;
@@ -94,18 +81,13 @@ class MentorController extends BaseController
         $mentor->password = Hash::make($req->password);
         $mentor->status = 1;
         $mentor->is_verified = 1;
-        $mentor->carrier_started = date('Y-m-d');
-        $mentor->charge_per_hour = 40;
+        $mentor->carrier_started = date('Y-m-d',strtotime($req->carrier_started));
+        $mentor->charge_per_hour = $req->charge_per_hour;
         $mentor->save();
         Session::flash('message', 'Mentor added successfully!');
         return redirect(route('admin.mentor.index'));
     }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
+    
     public function updateStatus(Request $request){
 
         $params = $request->except('_token');
@@ -119,7 +101,6 @@ class MentorController extends BaseController
 
     public function updateVerificationStage(Request $req)
     {
-        // dd($req->all());
         $rules = [
             'currentStatus' => 'required|in:0,1',
             'mentorId' => 'required|min:1|numeric',

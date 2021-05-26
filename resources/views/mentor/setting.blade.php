@@ -5,7 +5,7 @@
 <section class="gray-wrapper">
 	<div class="container">
 		<div class="setting-wrapper">
-			<h2 class="page-heading">Fill in your Mentor Profile</h2>
+			<h2 class="page-heading">Keep your profile UpToDate</h2>
 			<div class="row m-0 mt-5">
 				<div class="col-12 col-md-2 p-0">
 					@include('mentor.settingSidebar')

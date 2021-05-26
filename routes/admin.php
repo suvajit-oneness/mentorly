@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::get('/profile', 'Admin\ProfileController@index')->name('admin.profile');
 		Route::post('/profile', 'Admin\ProfileController@update')->name('admin.profile.update');
 		Route::post('/changepassword', 'Admin\ProfileController@changePassword')->name('admin.profile.changepassword');
-		
+
 		Route::group(['prefix'  => 'banner'], function() {
 			Route::get('/', 'Admin\BannerController@index')->name('admin.banner.index');
 			Route::get('/create', 'Admin\BannerController@create')->name('admin.banner.create');
@@ -104,7 +104,6 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('update/{id}','Admin\MentorController@updateMentor')->name('admin.mentor.update');
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
-
 			Route::post('verified/update','Admin\MentorController@updateVerificationStage')->name('admin.mentor.verified.update');
 		});
 

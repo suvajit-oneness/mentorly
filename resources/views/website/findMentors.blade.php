@@ -367,7 +367,7 @@
 			}else{
 				submitBtn.attr('disabled',true);
 				$.ajax({
-					url : '{{Route('message.submit.to.mentor')}}',
+					url : '{{route('message.submit.to.mentor')}}',
 					type: 'post',
 					data: {message:message,mentorId:mentorId,'_token':'{{csrf_token()}}'},
 					success:function(data){

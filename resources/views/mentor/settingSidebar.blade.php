@@ -9,6 +9,6 @@
 		<li><a href="{{route('mentor.booking.request')}}" class="{{Route::currentRouteName()=='mentor.booking.request'?'active':''}}" >Booking Confimed</a></li>
 		<li><a href="{{route('mentor.availability.setting')}}" class="{{Route::currentRouteName()=='mentor.availability.setting'?'active':''}}">Set Availability </a></li>
 	@endif
-
+	<li><a href="{{route('user.message.log')}}" class="{{Route::currentRouteName()=='user.message.log'?'active':''}}">Your Message</a></li>
 	<li><a href="{{route('user.zoom.meeting')}}" class="{{Route::currentRouteName()=='user.zoom.meeting'?'active':''}}">Zoom Meeting</a></li>
 </ul>

@@ -47,6 +47,18 @@
                             <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control" required>
                         </div>
 
+                        <div class="form-group">
+                            <label>Charge per Hour ($)</label>
+                            <input type="text" name="charge_per_hour" placeholder="Charge per Hour ($)" class="form-control" required onkeypress="return isNumberKey(event)" maxlength="5" value="{{old('charge_per_hour')}}">
+                            @error('charge_per_hour')<span class="text-danger">{{$message}}</span>@enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Carrier Started</label>
+                            <input type="date" name="carrier_started" class="form-control" required onkeypress="return false;" value="{{old('carrier_started')}}">
+                            @error('carrier_started')<span class="text-danger">{{$message}}</span>@enderror
+                        </div>
+
                         <input type="submit" name="" value="Create" class="btn">
                     </form>
                 </div>

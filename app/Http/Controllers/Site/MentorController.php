@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
-use App\Models\User;use Hash;use App\Models\MessageToMentor;
+use App\Models\User;use Hash;use App\Models\MessageLog;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
+use App\Models\MessageToMentor;
+
+
 class MentorController extends Controller
 {
     public function setting(Request $req)
@@ -96,19 +99,43 @@ class MentorController extends Controller
         $validator = validator()->make($req->all(),$rules);
         if(!$validator->fails()){
             $user = Auth::guard(get_guard())->user();
-            $message = new MessageToMentor();
-            $message->mentorId = $req->mentorId;
-            $message->userId = $user->id;
+            $message = new MessageLog();
+            $message->message_from = $user->id;
             if(get_guard() == 'web'){
-                $message->mentorOrMentee = 'mentee,'.$user->id;
+                $message->message_from_guard = 'web';
             }else{
-                $message->mentorOrMentee = 'mentor,'.$user->id;
+                $message->message_from_guard = 'mentor';
             }
+            $message->message_to = $req->mentorId;
+            $message->message_to_guard = 'mentor';
             $message->message = $req->message;
             $message->save();
             return response()->json(['error'=>false,'message'=>'message Submitted Successfully']);
         }
         return response()->json(['error'=>true,'message'=>'Something went wrong please try after some time']);
+    }
+
+    public function sendMessageUniversal(Request $req)
+    {
+        $rules = [
+            'senderId' => 'required|min:1|numeric',
+            'senderGuard' => 'required|string|in:web,mentor',
+            'receiverId' => 'required|min:1|numeric',
+            'receiverGuard' => 'required|string|in:web,mentor',
+            'message' => 'required|string|max:255',
+        ];
+        $validator = validate()->make($req->all(),$rules);
+        if(!$validator->fails()){
+            $message = new MessageLog();
+            $message->message_from = $req->senderId;
+            $message->message_from_guard = $req->senderGuard;
+            $message->message_to = $req->receiverId;
+            $message->message_to_guard = $req->receiverGuard;
+            $message->message = $req->message;
+            $message->save();
+            return response()->json(['error'=>false,'message'=>'message Submitted Successfully','data'=>$message]);
+        }
+        return response()->json(['error'=>true,'message' => $validator->errors()->first()]);
     }
 
     public function settingPasswordUpdate(Request $req,$userType)
@@ -164,6 +191,35 @@ class MentorController extends Controller
                 return back()->with('success','Data Saved Success');
             }
         }
+    }
+
+    public function messageLog(Request $req)
+    {
+        $guard = get_guard();
+        $user = Auth::guard($guard)->user();
+        $data = [];
+        $data = MessageLog::where(function ($query) use (&$user,&$guard) {
+            $query->where('message_from', $user->id)->where('message_from_guard',$guard);
+        })->orWhere(function($query) use (&$user,&$guard) {
+            $query->where('message_to', $user->id)->where('message_to_guard',$guard);
+        })->get();
+        foreach ($data as $key => $msg) {
+            if($msg->message_from_guard == 'web'){
+                $msg->sender = User::where('id',$msg->message_from)->first();
+            }elseif($msg->message_from_guard == 'mentor'){
+                $msg->sender = Mentor::where('id',$msg->message_from)->first();
+            }else{
+                $msg->sender = (object)[];
+            }
+            if($msg->message_to_guard == 'web'){
+                $msg->receiver = User::where('id',$msg->message_to)->first();
+            }elseif($msg->message_to_guard == 'mentor'){
+                $msg->receiver = Mentor::where('id',$msg->message_to)->first();
+            }else{
+                $msg->receiver = (object)[];
+            }
+        }
+        return view('mentee/messageLogs',compact('data','guard'));
     }
 
     public function holdBookingRequest(Request $req)
