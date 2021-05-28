@@ -5,7 +5,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login', 'Admin\LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Admin\LoginController@login')->name('admin.login.post');
 	Route::get('logout', 'Admin\LoginController@logout')->name('admin.logout');
-	
+
 	//admin password reset routes
     Route::post('/password/email','Admin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
     Route::get('/password/reset','Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
@@ -28,7 +28,7 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::post('/adminuser', 'Admin\AdminUserController@updateAdminUser')->name('admin.adminuser.update');
 	    Route::get('/settings', 'Admin\SettingController@index')->name('admin.settings');
 		Route::post('/settings', 'Admin\SettingController@update')->name('admin.settings.update');
-		
+
 		Route::get('/profile', 'Admin\ProfileController@index')->name('admin.profile');
 		Route::post('/profile', 'Admin\ProfileController@update')->name('admin.profile.update');
 		Route::post('/changepassword', 'Admin\ProfileController@changePassword')->name('admin.profile.changepassword');
@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/{id}/delete', 'Admin\BannerController@delete')->name('admin.banner.delete');
 			Route::post('updateStatus', 'Admin\BannerController@updateStatus')->name('admin.banner.updateStatus');
 		});
-		
+
 		Route::group(['prefix' => 'faq'], function() {
 			Route::get('/', 'Admin\FaqController@index')->name('admin.faq.index');
 			Route::get('/create', 'Admin\FaqController@create')->name('admin.faq.create');
@@ -126,6 +126,16 @@ Route::group(['prefix' => 'admin'], function () {
 
 		Route::group(['prefix' => 'transaction'],function(){
 			Route::get('logs','Admin\TrasactionLogController@index')->name('admin.transaction.index');
+		});
+        Route::group(['prefix' => 'contact'],function(){
+			Route::get('/','Admin\ContactController@index')->name('admin.contact.index');
+            Route::get('/{id}/delete', 'Admin\ContactController@delete')->name('admin.contact.delete');
+            Route::get('/trashed', 'Admin\ContactController@trashed')->name('admin.contact.trashed');
+		});
+        Route::group(['prefix' => 'slot'],function(){
+			Route::get('/','Admin\MentorSlotBookedController@index')->name('admin.slot.index');
+            Route::get('/{id}/delete', 'Admin\MentorSlotBookedController@delete')->name('admin.slot.delete');
+			Route::get('/trashed','Admin\MentorSlotBookedController@trashed')->name('admin.slot.trashed');
 		});
 	});
 });

@@ -22,6 +22,7 @@
                                 <th>Payment Mode</th>
                                 <th>Description</th>
                                 <th>Purpose of the Payment</th>
+                                <th>Slot Id</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                             {{('Other')}}
                                         @endif
                                     </td>
+                                    <td>{{ !empty($dat->slot) ? $dat->slot->id:'' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

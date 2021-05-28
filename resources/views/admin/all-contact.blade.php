@@ -1,14 +1,13 @@
 @extends('admin.app')
-@section('title') {{ $pageTitle }} @endsection
+@section('title') All Contacts @endsection
 @section('content')
 <div class="fixed-row">
     <div class="app-title">
         <div class="active-wrap">
-            <h1><i class="fa fa-file"></i> {{ $pageTitle }}</h1>
-            <p>{{ $subTitle }}</p>
+            <h1><i class="fa fa-file"></i> All Contacts</h1>
+            <p>and Feedbacks</p>
         </div>
-        <!-- <a href="" class="btn btn-primary pull-right">Add New</a> -->
-        <a href="{{route('admin.mentor.create')}}" class="btn btn-primary pull-right">Add New</a>
+        <a href="{{route('admin.contact.trashed')}}" class="btn btn-primary pull-right">Trashed</a>
     </div>
 </div>
     @include('admin.partials.flash')
@@ -23,49 +22,27 @@
                     <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th> Id </th>
                                 <th> Name </th>
                                 <th> Email Id </th>
                                 <th> Phone No </th>
-                                <th> Designation </th>
-                                <th> Charge per hour </th>
-                                <th> Experience </th>
-                                <th> verified</th>
+                                <th> Message</th>
                                 <th> Created At </th>
-                                <th> Status </th>
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($mentor as $key => $mentor)
+                            @foreach($contacts as $key => $contact)
                                 <tr>
-                                    <td>{{ $mentor->id }}</td>
-                                    <td>{{ $mentor->name }}</td>
-                                    <td>{{ $mentor->email }}</td>
-                                    <td>{{ $mentor->mobile }}</td>
-                                    <td>{{ $mentor->designation }}</td>
-                                    <td>$ {{$mentor->charge_per_hour}}</td>
-                                    <td>{{dateDifferenceFromNow($mentor->carrier_started)}}</td>
-                                    <td>
-                                        <span>@if($mentor->is_verified == 1){{('Yes')}}@else{{('No')}}@endif</span>
-                                        <input type="checkbox" name="verified" data-mentor="{{$mentor->id}}" data-currentStatus="{{$mentor->is_verified}}" class="verifiedToggle" @if($mentor->is_verified == 1){{('checked')}}@endif>
-                                    </td>
-                                    <td>{{ date("d-M-Y",strtotime($mentor->created_at)) }}</td>
-                                    <td class="text-center">
-                                    <div class="toggle-button-cover margin-auto">
-                                        <div class="button-cover">
-                                            <div class="button-togglr b2" id="button-11">
-                                                <input id="toggle-block" type="checkbox" name="status" class="checkbox" data-mentor_id="{{ $mentor['id'] }}" {{ $mentor['status'] == 1 ? 'checked' : '' }}>
-                                                <div class="knobs"><span>Inactive</span></div>
-                                                <div class="layer"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
+                                    <td>{{ $contact->id }}</td>
+                                    <td>{{ $contact->title }}</td>
+                                    <td>{{ $contact->email }}</td>
+                                    <td>{{ $contact->mobile }}</td>
+                                    <td> </td>
+                                    <td>{{ date("d-M-Y",strtotime($contact->created_at)) }}</td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Second group">
-                                        <a href="{{route('admin.mentor.edit',$mentor->id)}}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-edit"></i></a>
-                                        <a href="javascript:void(0)" data-id="{{$mentor['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
+                                        <a href="javascript:void(0)" data-id="{{$contact['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                                 </tr>
@@ -97,7 +74,7 @@
             },
             function(isConfirm){
               if (isConfirm) {
-                window.location.href = "mentor/"+mentorid+"/delete";
+                window.location.href = "contact/"+mentorid+"/delete";
                 } else {
                   swal("Cancelled", "Record is safe", "error");
                 }

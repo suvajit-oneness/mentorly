@@ -8,6 +8,7 @@
                 <p>{{ $subTitle }}</p>
             </div>
             <!-- <a href="" class="btn btn-primary pull-right">Add New</a> -->
+            <a href="{{ route('admin.user.create') }}" class="btn btn-primary pull-right">Add New</a>
         </div>
     </div>
 
@@ -16,7 +17,7 @@
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
-                    <a href="{{route('admin.user.create')}}" class="float-right">Add User</a>
+                    {{-- <a href="{{route('admin.user.create')}}" class="float-right">Add User</a> --}}
                     @if(Session::has('message'))
                         <p class="alert alert-success">{{ Session::get('message') }}</p>
                     @endif
@@ -115,7 +116,7 @@
                 },
                 error: function(response)
                 {
-                    
+
                   swal("Error!", response.message, "error");
                 }
             });
