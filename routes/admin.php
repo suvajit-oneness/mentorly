@@ -130,12 +130,17 @@ Route::group(['prefix' => 'admin'], function () {
         Route::group(['prefix' => 'contact'],function(){
 			Route::get('/','Admin\ContactController@index')->name('admin.contact.index');
             Route::get('/{id}/delete', 'Admin\ContactController@delete')->name('admin.contact.delete');
-            Route::get('/trashed', 'Admin\ContactController@trashed')->name('admin.contact.trashed');
+            // Route::get('/trashed', 'Admin\ContactController@trashed')->name('admin.contact.trashed');
 		});
         Route::group(['prefix' => 'slot'],function(){
 			Route::get('/','Admin\MentorSlotBookedController@index')->name('admin.slot.index');
             Route::get('/{id}/delete', 'Admin\MentorSlotBookedController@delete')->name('admin.slot.delete');
-			Route::get('/trashed','Admin\MentorSlotBookedController@trashed')->name('admin.slot.trashed');
+			// Route::get('/trashed','Admin\MentorSlotBookedController@trashed')->name('admin.slot.trashed');
+		});
+        Route::group(['prefix' => 'message'],function(){
+			Route::get('/','Admin\MessageController@allMessages')->name('admin.message.index');
+            Route::get('/{id}/delete', 'Admin\MentorSlotBookedController@delete')->name('admin.message.delete');
+			// Route::get('/trashed','Admin\MentorSlotBookedController@trashed')->name('admin.message.trashed');
 		});
 	});
 });

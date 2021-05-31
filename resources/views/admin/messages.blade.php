@@ -1,11 +1,11 @@
 @extends('admin.app')
-@section('title') All Contacts @endsection
+@section('title') All Messages @endsection
 @section('content')
 <div class="fixed-row">
     <div class="app-title">
         <div class="active-wrap">
-            <h1><i class="fa fa-file"></i> All Contacts</h1>
-            <p>and Feedbacks</p>
+            <h1><i class="fa fa-file"></i> All Messages</h1>
+            <p>Mantee and Mentors</p>
         </div>
         {{-- <a href="{{route('admin.contact.trashed')}}" class="btn btn-primary pull-right">Trashed</a> --}}
     </div>
@@ -23,26 +23,24 @@
                         <thead>
                             <tr>
                                 <th> Id </th>
-                                <th> Name </th>
-                                <th> Email Id </th>
-                                <th> Phone No </th>
+                                <th> From </th>
+                                <th> To </th>
                                 <th> Message</th>
                                 <th> Created At </th>
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($contacts as $key => $contact)
+                            @foreach($messages as $key => $message)
                                 <tr>
-                                    <td>{{ $contact->id }}</td>
-                                    <td>{{ $contact->title }}</td>
-                                    <td>{{ $contact->email }}</td>
-                                    <td>{{ $contact->mobile }}</td>
-                                    <td> </td>
-                                    <td>{{ date("d-M-Y",strtotime($contact->created_at)) }}</td>
+                                    <td>{{ $message->id }}</td>
+                                    <td>{{ !empty($message->message_from) ? $message->user->name:'' }}</td>
+                                    <td>{{ !empty($message->message_to) ? $message->mentor->name:'' }}</td>
+                                    <td>{{ $message->message }}</td>
+                                    <td>{{ date("d-M-Y",strtotime($message->created_at)) }}</td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Second group">
-                                        <a href="javascript:void(0)" data-id="{{$contact['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
+                                        <a href="javascript:void(0)" data-id="{{$message['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                                 </tr>
