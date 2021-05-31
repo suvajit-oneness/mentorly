@@ -72,7 +72,7 @@
             },
             function(isConfirm){
               if (isConfirm) {
-                window.location.href = "contact/"+mentorid+"/delete";
+                window.location.href = "message/"+mentorid+"/delete";
                 } else {
                   swal("Cancelled", "Record is safe", "error");
                 }
