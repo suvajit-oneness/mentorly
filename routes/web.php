@@ -1,6 +1,15 @@
 <?php
 use Illuminate\Http\Request;
 
+
+Route::get('messages', function () {
+    return view('messages.pages.app');
+});
+
+
+
+
+
 Route::get('command', function () {
 	/* php artisan migrate */
     \Artisan::call('migrate:fresh --seed');
@@ -89,7 +98,7 @@ Route::get('create_teacher_slot','CronController@teacherSlot');
 //     Route::get('post-ads','Site\AdsController@craeteAds')->name('user.post.ad');
 //     Route::post('getCategoryFields', 'Site\AdsController@getCategoryFields')->name('user.customform.getCategoryFields');
 //     Route::post('ad-submit','Site\AdsController@storeAds')->name('adsubmit');
-    
+
 //     Route::post('getCategoryFieldValues', 'Site\AdsController@getCategoryFieldValues')->name('ads.customform.getValues');
 //     Route::post('getRateValues', 'Site\AdsController@getRateValues')->name('ads.customform.getRateValues');
 //     Route::get('edit-ads/{id}','Site\AdsController@editAds');
@@ -98,7 +107,7 @@ Route::get('create_teacher_slot','CronController@teacherSlot');
 //     Route::post('storereportabuse','Site\AdsController@storeReportAbuse')->name('storereportabuse');
 //     Route::get('update-free-package/{ad_id}/{id}','Site\PaymentController@updateFreePackage');
 // });
-    
+
     // Route::get('/',function(){
     //     return redirect('/login');
     // });
