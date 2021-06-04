@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
 use App\Models\User;use Hash;use App\Models\MessageLog;
+use App\Models\Conversation;use App\Models\Message;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
 use App\Models\MessageToMentor;
@@ -118,6 +119,7 @@ class MentorController extends Controller
     public function sendMessageUniversal(Request $req)
     {
         $rules = [
+            'conversationId' => 'nullable|numeric|min:1',
             'senderId' => 'required|min:1|numeric',
             'senderGuard' => 'required|string|in:web,mentor',
             'receiverId' => 'required|min:1|numeric',
@@ -126,12 +128,23 @@ class MentorController extends Controller
         ];
         $validator = validate()->make($req->all(),$rules);
         if(!$validator->fails()){
-            $message = new MessageLog();
-            $message->message_from = $req->senderId;
-            $message->message_from_guard = $req->senderGuard;
-            $message->message_to = $req->receiverId;
-            $message->message_to_guard = $req->receiverGuard;
+            $conversation = Conversation::where('message_from',$req->senderId)->where('message_from_guard',$req->senderGuard)->where('message_to',$req->receiverId)->where('message_to_guard',$req->receiverGuard)->first();
+            if(!$conversation){
+                $conversation = Conversation::where('message_to',$req->senderId)->where('message_to_guard',$req->senderGuard)->where('message_from',$req->receiverId)->where('message_from_guard',$req->receiverGuard)->first();
+                if(!$conversation){
+                    $conversation = new Conversation();
+                    $conversation->message_from = $req->senderId;
+                    $conversation->message_from_guard = $req->senderGuard;
+                    $conversation->message_to = $req->receiverId;
+                    $conversation->message_to_guard = $req->receiverGuard;
+                    $conversation->save();
+                }
+            }
+            $message = new Message();
             $message->message = $req->message;
+            $message->conversation_id = $conversation->id;
+            $message->from_id = $req->senderId;
+            $message->from_guard = $req->senderGuard;
             $message->save();
             return response()->json(['error'=>false,'message'=>'message Submitted Successfully','data'=>$message]);
         }
@@ -197,29 +210,56 @@ class MentorController extends Controller
     {
         $guard = get_guard();
         $user = Auth::guard($guard)->user();
-        $data = [];
-        $data = MessageLog::where(function ($query) use (&$user,&$guard) {
+        $data = Conversation::where(function ($query) use (&$user,&$guard) {
             $query->where('message_from', $user->id)->where('message_from_guard',$guard);
         })->orWhere(function($query) use (&$user,&$guard) {
             $query->where('message_to', $user->id)->where('message_to_guard',$guard);
         })->get();
         foreach ($data as $key => $msg) {
-            if($msg->message_from_guard == 'web'){
-                $msg->sender = User::where('id',$msg->message_from)->first();
-            }elseif($msg->message_from_guard == 'mentor'){
-                $msg->sender = Mentor::where('id',$msg->message_from)->first();
-            }else{
-                $msg->sender = (object)[];
-            }
-            if($msg->message_to_guard == 'web'){
-                $msg->receiver = User::where('id',$msg->message_to)->first();
-            }elseif($msg->message_to_guard == 'mentor'){
-                $msg->receiver = Mentor::where('id',$msg->message_to)->first();
-            }else{
-                $msg->receiver = (object)[];
+            if($msg->message_from == $user->id && $msg->message_from_guard == $guard){
+                if($msg->message_to_guard == 'web'){
+                    $msg->opponent = User::where('id',$msg->message_to)->first();
+                    $msg->oppenentguard = 'web';
+                }elseif($msg->message_to_guard == 'mentor'){
+                    $msg->opponent = Mentor::where('id',$msg->message_to)->first();
+                    $msg->oppenentguard = 'mentor';
+                }else{
+                    $msg->opponent = (object)[];
+                    $msg->oppenentguard = '';
+                }
+            }elseif($msg->message_to == $user->id && $msg->message_to_guard == $guard){
+                if($msg->message_from_guard == 'web'){
+                    $msg->opponent= User::where('id',$msg->message_from)->first();
+                    $msg->oppenentguard = 'web';
+                }elseif($msg->message_from_guard == 'mentor'){
+                    $msg->opponent = Mentor::where('id',$msg->message_from)->first();
+                    $msg->oppenentguard = 'mentor';
+                }else{
+                    $msg->opponent = (object)[];
+                    $msg->oppenentguard = '';
+                }
             }
         }
+        // dd($data);
         return view('mentee/messageLogs',compact('data','guard'));
+    }
+
+    public function getMessagesById(Request $req)
+    {
+        $data = Message::where('conversation_id', $req->conversation_id)->get();
+        foreach ($data as $key => $value) {
+            if($value->from_guard == 'web'){
+                $value->userDetails = User::where('id',$value->from_id)->first();
+                $value->userGuard = 'web';
+            }elseif($value->from_guard == 'mentor'){
+                $value->userDetails = Mentor::where('id',$value->from_id)->first();
+                $value->userGuard = 'mentor';
+            }else{
+                $value->userDetails = (object)[];
+                $value->userGuard = '';
+            }
+        }
+        return response()->json(['error' => false, 'message' => 'Chats Data', 'data' => $data]);
     }
 
     public function holdBookingRequest(Request $req)

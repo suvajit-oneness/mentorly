@@ -40,7 +40,7 @@
                         <span class="header-profile-image" data-toggle="dropdown" ><img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor1.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"></span>
                         <div class="dropdown-menu dropdown-menu-right">
                             <ul class="profile-dropdown">
-                                <li><a href="#">Messages</a></li>
+                                <li><a href="{{route('user.message.log')}}">Messages</a></li>
                                 <li><a href="#">My Lessons</a></li>
                                 <li><a href="#">Invite a friend </a></li>
                                 <li><a href="{{route('mentor.mentee.setting')}}">Settings</a></li>

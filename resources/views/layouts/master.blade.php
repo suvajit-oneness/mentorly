@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset('design/css/slick.css')}}"/>
   <link rel="stylesheet" type="text/css" href="{{asset('design/css/slick-theme.css')}}"/>
   <link rel="stylesheet" href="{{asset('design/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('design/css/message.css')}}">
   @yield('css')
 </head>
 <body>

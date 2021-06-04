@@ -2,9 +2,9 @@
 use Illuminate\Http\Request;
 
 
-Route::get('messages', function () {
-    return view('messages.pages.app');
-});
+// Route::get('messages', function () {
+//     return view('messages.pages.app');
+// });
 
 
 
@@ -139,3 +139,6 @@ Route::get('create_teacher_slot','CronController@teacherSlot');
 
 // Route::post('/pay-per-click-submit', 'Site\ShowController@payPerClickSubmit')->name('site.show.payPerClickSubmit');
 // Route::post('/store-package-information', 'Site\PackageController@storePackageInformation')->name('site.package.storepackageinfo');
+
+
+Route::post('/get-messages-by-id', 'Site\MentorController@getMessagesById')->name('get.messages.by.id');
