@@ -112,7 +112,6 @@ class MentorController extends Controller
 
     public function sendMessageUniversal(Request $req)
     {
-        // dd($req->all());
         $rules = [
             'conversationId' => 'nullable|numeric|min:1',
             'senderId' => 'required|min:1|numeric',
@@ -243,6 +242,7 @@ class MentorController extends Controller
     {
         $data = Message::where('conversation_id', $req->conversation_id)->get();
         foreach ($data as $key => $value) {
+            $value->time = $value->created_at->diffForHumans();
             if($value->from_guard == 'web'){
                 $value->userDetails = User::where('id',$value->from_id)->first();
                 $value->userGuard = 'web';

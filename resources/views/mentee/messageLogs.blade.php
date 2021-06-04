@@ -25,10 +25,10 @@
 				<input type="hidden" id="logged_in_guard" value="{{get_guard()}}">
 				<div class="chat_list {{$item->id}}" id="{{$item->id}}" onclick="getMessages(this.id); return false;">
 					<div class="chat_people">
-					  <div class="chat_img"> <img src="" alt="{{$item->opponent->name}}"> </div>
+					  <div class="chat_img"> <img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor1.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"> </div>
 					  <div class="chat_ib">
-						<h5>{{$item->opponent->name}} <span class="chat_date">{{date('M d, Y', strtotime($item->created_at))}}</span></h5>
-						{{-- <p>{{$item->last_message->message}}</p> --}}
+						<h5>{{$item->opponent->name}} <span class="chat_date">{{$item->last_message->created_at->diffForHumans()}}</span></h5>
+						<p>{{$item->last_message->message}}</p>
 					  </div>
 					</div>
 				  </div>
@@ -86,9 +86,15 @@
 					var type_msg = '';
 					$.each(data.data, function(i, val) {
 						if (($('#logged_in_id').val() == val.from_id) && ($('#logged_in_guard').val() == val.from_guard)) {
-							msg_history += '<div class="outgoing_msg"><div class="sent_msg"><p>'+val.message+'</p><span class="time_date"> 11:01 AM    |    June 9</span> </div></div>';
+							msg_history += '<div class="outgoing_msg"><div class="sent_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span> </div></div>';
 						} else {
-							msg_history += '<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="'+val.userDetails.name+'"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+val.message+'</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>';
+							msg_history += '<div class="incoming_msg"><div class="incoming_msg_img">'; 
+							if (val.userDetails.image == '') {
+								msg_history += "<img src={{asset('design/images/mentor1.jpg')}}>";
+							} else {
+								msg_history += "<img src='{{asset('')}}/'"+val.userDetails.image+">";
+							}
+							msg_history +='</div><div class="received_msg"><div class="received_withd_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span></div></div></div>';
 							msg_history += '<input type="hidden" id="receiverId" value="'+val.from_id+'">';
 							msg_history += '<input type="hidden" id="receiverGuard" value="'+val.from_guard+'">';
 							msg_history += '<input type="hidden" id="conversationId" value="'+val.conversation_id+'">';
@@ -98,32 +104,34 @@
 					type_msg += "<div class='type_msg'><div class='input_msg_write'><form id='sendMessageForm'><input type='text' class='write_msg' placeholder='Type a message' id='my_message' value=''/><button class='msg_send_btn' type='submit'><i class='fa fa-paper-plane'></i></button></form></div></div>";
 					$('.mesgs').append(msg_history);
 					$('.mesgs').append(type_msg);
-					$('#sendMessageForm').submit(function(evt) {
-						var conversationId = $('#conversationId').val();
-						evt.preventDefault();
-						$.ajax({
-							url: "{{route('send.message.universal')}}",
-							type: "POST",
-							data: {
-								'_token': '{{csrf_token()}}',
-								'receiverId': $('#receiverId').val(),
-								'receiverGuard': $('#receiverGuard').val(),
-								'senderId': $('#logged_in_id').val(),
-								'senderGuard': $('#logged_in_guard').val(),
-								'message': $('#my_message').val(),
-							},
-							success:function(data) {
-								$('#sendMessageForm').trigger("reset");
-								alert(data.message);
-								getMessages(conversationId);
-							}
-						})
-					})
 				}
 			})
 		};
 		
-		
+		$(document).on('submit','#sendMessageForm',function(evt){
+			var conversationId = $('#conversationId').val();
+			evt.preventDefault();
+			$.ajax({
+				url: "{{route('send.message.universal')}}",
+				type: "POST",
+				data: {
+					'_token': '{{csrf_token()}}',
+					'receiverId': $('#receiverId').val(),
+					'receiverGuard': $('#receiverGuard').val(),
+					'senderId': $('#logged_in_id').val(),
+					'senderGuard': $('#logged_in_guard').val(),
+					'message': $('#my_message').val(),
+				},
+				success:function(data) {
+					$('#sendMessageForm').trigger("reset");
+					alert(data.message);
+					getMessages(conversationId);
+				}
+			})
+		});
+		// $('#sendMessageForm').submit(function(evt) {
+			
+		// });
 		
 	</script>
 @stop

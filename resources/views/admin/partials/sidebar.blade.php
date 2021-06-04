@@ -116,12 +116,12 @@
                         <i class="icon fa fa-circle-o"></i>Mentor Booked Slots
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="treeview-item {{ sidebar_open(['admin.message.*']) }}"
                         href="{{ route('admin.message.index') }}">
                         <i class="icon fa fa-circle-o"></i>Messages
                     </a>
-                </li>
+                </li> --}}
                 <li>
                     <a class="treeview-item {{ sidebar_open(['admin.contact.*']) }}"
                         href="{{ route('admin.contact.index') }}">
