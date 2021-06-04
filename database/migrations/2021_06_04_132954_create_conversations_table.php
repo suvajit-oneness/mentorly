@@ -16,9 +16,9 @@ class CreateConversationsTable extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('message_from');
-            $table->string('message_from_guard');
+            $table->string('message_from_guard',20);
             $table->bigInteger('message_to');
-            $table->string('message_to_guard');
+            $table->string('message_to_guard',20);
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

@@ -18,7 +18,7 @@ class CreateMessagesTable extends Migration
             $table->bigInteger('conversation_id');
             $table->longText('message');
             $table->bigInteger('from_id');
-            $table->text('from_guard');
+            $table->string('from_guard',20);
             $table->tinyInteger('is_seen')->comment('0: Viewed, 1: Not Viewd')->default(0);
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
