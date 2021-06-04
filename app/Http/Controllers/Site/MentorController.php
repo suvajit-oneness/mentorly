@@ -97,19 +97,15 @@ class MentorController extends Controller
         ];
         $validator = validator()->make($req->all(),$rules);
         if(!$validator->fails()){
-            $user = Auth::guard(get_guard())->user();
-            $message = new MessageLog();
-            $message->message_from = $user->id;
-            if(get_guard() == 'web'){
-                $message->message_from_guard = 'web';
-            }else{
-                $message->message_from_guard = 'mentor';
-            }
-            $message->message_to = $req->mentorId;
-            $message->message_to_guard = 'mentor';
-            $message->message = $req->message;
-            $message->save();
-            return response()->json(['error'=>false,'message'=>'message Submitted Successfully']);
+            $guard = get_guard();$user = Auth::guard($guard)->user();
+            $request = new Request([
+                'senderId'   => $user->id,
+                'senderGuard'   => $guard,
+                'receiverId'   => $req->mentorId,
+                'receiverGuard'   => 'mentor',
+                'message'   => $req->message,
+            ]);
+            return $this->sendMessageUniversal($request);
         }
         return response()->json(['error'=>true,'message'=>'Something went wrong please try after some time']);
     }
@@ -124,7 +120,7 @@ class MentorController extends Controller
             'receiverGuard' => 'required|string|in:web,mentor',
             'message' => 'required|string|max:255',
         ];
-        $validator = validate()->make($req->all(),$rules);
+        $validator = validator()->make($req->all(),$rules);
         if(!$validator->fails()){
             $conversation = Conversation::where('message_from',$req->senderId)->where('message_from_guard',$req->senderGuard)->where('message_to',$req->receiverId)->where('message_to_guard',$req->receiverGuard)->first();
             if(!$conversation){
