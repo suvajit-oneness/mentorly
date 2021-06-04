@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use Auth;
 use App\Models\TimeZone;use App\Models\Mentor;
-use App\Models\User;use Hash;use App\Models\MessageLog;
+use App\Models\User;use Hash;
 use App\Models\Conversation;use App\Models\Message;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
-use App\Models\MessageToMentor;
-
 
 class MentorController extends Controller
 {
