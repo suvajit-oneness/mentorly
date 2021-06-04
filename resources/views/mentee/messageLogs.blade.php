@@ -23,7 +23,7 @@
 				@foreach ($data as $item)
 				<input type="hidden" id="logged_in_id" value="{{Auth::guard(get_guard())->user()->id}}">
 				<input type="hidden" id="logged_in_guard" value="{{get_guard()}}">
-				<div class="chat_list {{$item->id}}" id="{{$item->id}}" onclick="getMessages(this.id)">
+				<div class="chat_list {{$item->id}}" id="{{$item->id}}" onclick="getMessages(this.id); return false;">
 					<div class="chat_people">
 					  <div class="chat_img"> <img src="" alt="{{$item->opponent->name}}"> </div>
 					  <div class="chat_ib">
@@ -69,7 +69,7 @@
 
 @section('script')
 	<script type="text/javascript">
-		function getMessages(id){
+		function getMessages(id) {
 			$("div.chat_list").removeClass("active_chat");
 			$("div.chat_list."+id).addClass("active_chat");
 			$.ajax({
@@ -89,15 +89,42 @@
 							msg_history += '<div class="outgoing_msg"><div class="sent_msg"><p>'+val.message+'</p><span class="time_date"> 11:01 AM    |    June 9</span> </div></div>';
 						} else {
 							msg_history += '<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="'+val.userDetails.name+'"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+val.message+'</p><span class="time_date"> 11:01 AM    |    June 9</span></div></div></div>';
+							msg_history += '<input type="hidden" id="receiverId" value="'+val.from_id+'">';
+							msg_history += '<input type="hidden" id="receiverGuard" value="'+val.from_guard+'">';
+							msg_history += '<input type="hidden" id="conversationId" value="'+val.conversation_id+'">';
 						}
 					})
 					msg_history += '</div>';
-					type_msg += "<div class='type_msg'><div class='input_msg_write'><form><input type='text' class='write_msg' placeholder='Type a message' /><button class='msg_send_btn' type='button'><i class='fa fa-paper-plane'></i></button></form></div></div>";
+					type_msg += "<div class='type_msg'><div class='input_msg_write'><form id='sendMessageForm'><input type='text' class='write_msg' placeholder='Type a message' id='my_message' value=''/><button class='msg_send_btn' type='submit'><i class='fa fa-paper-plane'></i></button></form></div></div>";
 					$('.mesgs').append(msg_history);
 					$('.mesgs').append(type_msg);
+					$('#sendMessageForm').submit(function(evt) {
+						var conversationId = $('#conversationId').val();
+						evt.preventDefault();
+						$.ajax({
+							url: "{{route('send.message.universal')}}",
+							type: "POST",
+							data: {
+								'_token': '{{csrf_token()}}',
+								'receiverId': $('#receiverId').val(),
+								'receiverGuard': $('#receiverGuard').val(),
+								'senderId': $('#logged_in_id').val(),
+								'senderGuard': $('#logged_in_guard').val(),
+								'message': $('#my_message').val(),
+							},
+							success:function(data) {
+								$('#sendMessageForm').trigger("reset");
+								alert(data.message);
+								getMessages(conversationId);
+							}
+						})
+					})
 				}
 			})
-		}
+		};
+		
+		
+		
 	</script>
 @stop
 @endsection

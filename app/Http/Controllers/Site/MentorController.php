@@ -112,6 +112,7 @@ class MentorController extends Controller
 
     public function sendMessageUniversal(Request $req)
     {
+        // dd($req->all());
         $rules = [
             'conversationId' => 'nullable|numeric|min:1',
             'senderId' => 'required|min:1|numeric',
