@@ -124,7 +124,6 @@
 				},
 				success:function(data) {
 					$('#sendMessageForm').trigger("reset");
-					alert(data.message);
 					getMessages(conversationId);
 				}
 			})
