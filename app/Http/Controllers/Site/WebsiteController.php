@@ -133,20 +133,34 @@ class WebsiteController extends Controller
         if(!empty($req->keyword)){
             $mentors = $mentors->where('mentors.name','like','%'.$req->keyword.'%');
         }
+        if(!empty($req->industry)){
+
+        }
         if(!empty($req->timeoftheday)){
-            
+            $timeoftheday = $req->timeoftheday;
+            $mentors = $mentors->leftjoin('available_shifts','mentors.id','=','available_shifts.mentorId')
+                ->where(function ($query)use($timeoftheday){
+                    $firstData = explode('-',$timeoftheday[0]);
+                    $query->whereBetween('available_shifts.time_shift',$firstData)->where('available_shifts.date','>=',date('Y-m-d'));
+                    foreach ($timeoftheday as $key => $time) {
+                        if($key == 0){continue;}
+                        $otherData = explode('-',$time);
+                        $query->orWhereBetween('available_shifts.time_shift',$otherData)->where('available_shifts.date','>=',date('Y-m-d'));
+                    }
+                });
         }
         if(!empty($req->timeoftheweek)){
 
         }
-        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('name')->get();
+        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('mentors.name')->groupBy('mentors.id')->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {
             $mentor->timeShift = $this->getIndivisualSlots($mentor);
         }
         $seniority = Seniority::whereStatus(1)->get();
         $request = $req->all();
-    	return view('website.findMentors',compact('mentors','seniority','request','days'));
+        $industry = \App\Models\Industry::get();
+    	return view('website.findMentors',compact('mentors','seniority','request','days','industry'));
     }
 
     public function getIndivisualSlots($mentor)

@@ -4,17 +4,7 @@
 	
 <section class="gray-wrapper">
 	<div class="container-xl">
-		<!--<div class="title-place">
-			Online Finance tutors & teachers
-			<span><i>{{count($mentors)}}</i> tutors avalable</span>
-			@if(url()->full() != url()->current())
-				<a href="{{url()->current()}}" class="btn btn-danger btn-sm ml-auto">Reset Filter</a>
-			@endif
-		</div>-->
-
-		<!-- Search Filter -->
 		<form>
-		
 			<div class="title-place">
 				Online Finance tutors & teachers
 				<span><i>{{count($mentors)}}</i> tutors avalable</span>
@@ -27,12 +17,10 @@
 			<div class="filter-place">
 				<div class="grid-box">
 					<span>Industry</span>
-					<select>
-						<option value="finance">Finance</option>
-						<option value="healthcare">Healthcare</option>
-						<option value="consulting">Consulting</option>
-						<option value="engineering">engineering</option>
-						<option value="publicpolicy">public policy</option>
+					<select name="industry">
+						@foreach($industry as $key => $ind)
+							<option value="{{$ind->id}}" @if(!empty($request['industry']) && $request['industry'] == $ind->id){{('selected')}}@endif>{{$ind->title}}</option>
+						@endforeach
 					</select>
 				</div>
 				<div class="grid-box">
@@ -61,9 +49,10 @@
 					<div class="mul-select-dropdown">
 						<h5>Time of the day</h5>
 						<ul class="day-list">
+							<?php $timeoftheDay = (!empty($request['timeoftheday'])) ? $request['timeoftheday'] : [];?>
 							<li>
 								<label>
-									<input type="checkbox" value="6-9" name="timeoftheday" />
+									<input type="checkbox" value="06:00-09:00" name="timeoftheday[]" @if(in_array('06:00-09:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/morning.png')}}"></figure>
 									<span class="time-n">6-9</span>
@@ -73,7 +62,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="9-12" name="timeoftheday[]"/>
+									<input type="checkbox" value="09:00-12:00" name="timeoftheday[]" @if(in_array('09:00-12:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/late-morning.png')}}"></figure>
 									<span class="time-n">9-12</span>
@@ -82,7 +71,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="12-15" name="timeoftheday[]"/>
+									<input type="checkbox" value="12:00-15:00" name="timeoftheday[]" @if(in_array('12:00-15:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/afternoon.png')}}"></figure>
 									<span class="time-n">12-15</span>
@@ -91,7 +80,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="15-18" name="timeoftheday[]"/>
+									<input type="checkbox" value="15:00-18:00" name="timeoftheday[]" @if(in_array('15:00-18:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/afternoon.png')}}"></figure>
 									<span class="time-n">15-18</span>
@@ -100,7 +89,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="18-21" name="timeoftheday[]"/>
+									<input type="checkbox" value="18:00-21:00" name="timeoftheday[]" @if(in_array('18:00-21:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/evening.png')}}"></figure>
 									<span class="time-n">18-21</span>
@@ -109,7 +98,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="21-24" name="timeoftheday[]"/>
+									<input type="checkbox" value="21:00-24:00" name="timeoftheday[]" @if(in_array('21:00-24:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/evening.png')}}"></figure>
 									<span class="time-n">21-24</span>
@@ -118,7 +107,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="0-3" name="timeoftheday[]"/>
+									<input type="checkbox" value="00:00-03:00" name="timeoftheday[]" @if(in_array('00:00-03:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/night.png')}}"></figure>
 									<span class="time-n">0-3</span>
@@ -127,7 +116,7 @@
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="3-6" name="timeoftheday[]"/>
+									<input type="checkbox" value="03:00-06:00" name="timeoftheday[]" @if(in_array('03:00-06:00',$timeoftheDay)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<figure><img src="{{asset('design/images/late-night.png')}}"></figure>
 									<span class="time-n">3-6</span>
@@ -138,51 +127,52 @@
 
 						<h5>Time of the week</h5>
 						<ul class="day-list week-list">
+							<?php $timeoftheWeek = (!empty($request['timeoftheweek'])) ? $request['timeoftheweek'] : [];?>
 							<li>
 								<label>
-									<input type="checkbox" value="sun" name="timeoftheweek[]" />
+									<input type="checkbox" value="sun" name="timeoftheweek[]" @if(in_array('sun',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Sun</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="mon" name="timeoftheweek[]"/>
+									<input type="checkbox" value="mon" name="timeoftheweek[]" @if(in_array('mon',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">mon</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="tue" name="timeoftheweek[]"/>
+									<input type="checkbox" value="tue" name="timeoftheweek[]" @if(in_array('tue',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Tue</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="wed" name="timeoftheweek[]"/>
+									<input type="checkbox" value="wed" name="timeoftheweek[]" @if(in_array('wed',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Wed</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="thu" name="timeoftheweek[]"/>
+									<input type="checkbox" value="thu" name="timeoftheweek[]" @if(in_array('thu',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Thu</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="fri" name="timeoftheweek[]"/>
+									<input type="checkbox" value="fri" name="timeoftheweek[]" @if(in_array('fri',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Fri</span>
 								</label>
 							</li>
 							<li>
 								<label>
-									<input type="checkbox" value="sat" name="timeoftheweek[]"/>
+									<input type="checkbox" value="sat" name="timeoftheweek[]" @if(in_array('sat',$timeoftheWeek)){{('checked')}}@endif/>
 									<div class="overlay"></div>
 									<span class="week">Sat</span>
 								</label>
@@ -276,9 +266,7 @@
 					</div>
 				@endforeach
 			</div>
-
 		</div>
-
 	</div>
 </section>
 
@@ -308,40 +296,6 @@
 
 @section('script')
 	<script type="text/javascript">
-		// var seniorityLevel = 0,keyword = '';
-		// @if(!empty($request['seniority']) && $request['seniority'] > 0)
-		// 	seniorityLevel = parseInt('{{$request["seniority"]}}');
-		// @endif
-		// @if(!empty($request['keyword']))
-			// keyword = "{{$request['keyword']}}";
-		// @endif
-		// $(document).on('change','select#senioritylevel',function(){
-		// 	seniorityLevel = $('select#senioritylevel option:selected').val();
-		// 	// dataRetriving();
-		// });
-
-		// $(document).on('click','#searchFinalBtn',function(){
-		// 	keyword = $('#searchby').val();
-		// 	if(keyword == ''){}
-		// 	else{
-				// dataRetriving();
-			// }
-		// });
-
-		// function dataRetriving()
-		// {
-		// 	var originalURL = '{{url()->current()}}?',price = $('#amount').val();
-		// 	if(parseInt(seniorityLevel) > 0){
-		// 		originalURL += 'seniority='+seniorityLevel+'&';
-		// 	}
-		// 	if(keyword != ''){
-		// 		originalURL += 'keyword='+keyword+'&';
-		// 	}
-		// 	originalURL += 'price='+price+'&';
-		// 	originalURL = originalURL.substring(0, originalURL.length-1); // removing last character from String
-		// 	window.location.href = originalURL;
-		// }
-
 		var mentorId = 0;
 		$(document).on('click','.messageToMentor',function(){
 			var checkGuard = '{{get_guard()}}';$('#errorMessage').empty();
@@ -383,38 +337,33 @@
 		});
 
 		// price range
-	$(function() {
-		$( "#slider-range" ).slider({
-  			range: true,
-  			min: 30,
-  			max: 2000,
-  			values: [ 30, 2000 ],
-  			@if(!empty($request['price']))
-  				<?php $range = explode('-',removeDollerSign($request['price'])); ?>
-  				values: [ {{$range[0]}}, {{$range[1]}} ],
-  			@endif
-  			slide: function( event, ui ) {
-				$( "#amount" ).val( "$" + ui.values[ 0 ] + "-$" + ui.values[ 1 ] );
-				// $( "#amount" ).val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
-  			}
+		$(function() {
+			$( "#slider-range" ).slider({
+	  			range: true,
+	  			min: 30,
+	  			max: 2000,
+	  			values: [ 30, 2000 ],
+	  			@if(!empty($request['price']))
+	  				<?php $range = explode('-',removeDollerSign($request['price'])); ?>
+	  				values: [ {{$range[0]}}, {{$range[1]}} ],
+	  			@endif
+	  			slide: function( event, ui ) {
+					$( "#amount" ).val( "$" + ui.values[ 0 ] + "-$" + ui.values[ 1 ] );
+	  			}
+			});
+			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + "-$" + $( "#slider-range" ).slider( "values", 1 ));
 		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + "-$" + $( "#slider-range" ).slider( "values", 1 ));
-	});
 
-	$(function() {
-		$('.price-drropdown').click(function(){
-			$('.dropdown-custom').toggleClass('show');
-			if($('.dropdown-custom').hasClass('show')){}
-			else{
-				// dataRetriving();
-			}
+		$(function() {
+			$('.price-drropdown').click(function(){
+				$('.dropdown-custom').toggleClass('show');
+				if($('.dropdown-custom').hasClass('show')){}
+				else{}
+			});
+			$('.multiselect-dropdown').click(function(){
+				$('.mul-select-dropdown').toggleClass('show');
+			});
 		});
-		$('.multiselect-dropdown').click(function(){
-			$('.mul-select-dropdown').toggleClass('show');
-		});
-	});
 	</script>
-	
-	
 @stop
 @endsection
