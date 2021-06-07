@@ -18,6 +18,7 @@
 				<div class="grid-box">
 					<span>Industry</span>
 					<select name="industry">
+						<option value="" selected="" hidden="">Select Industry</option>
 						@foreach($industry as $key => $ind)
 							<option value="{{$ind->id}}" @if(!empty($request['industry']) && $request['industry'] == $ind->id){{('selected')}}@endif>{{$ind->title}}</option>
 						@endforeach
@@ -26,7 +27,7 @@
 				<div class="grid-box">
 					<span>Seniority </span>
 					<select name="seniority" id="senioritylevel">
-						<option value="">Select Seniority</option>
+						<option value="" selected="" hidden="">Select Seniority</option>
 						@foreach($seniority as $senior)
 							<option value="{{$senior->id}}" @if(!empty($request['seniority']) && $request['seniority'] == $senior->id){{('selected')}}@endif>{{$senior->title}}</option>
 						@endforeach
@@ -195,7 +196,7 @@
 					</select>
 				</div>
 				<div class="search-holder">
-					<input type="text" id="searchby" name="searchby" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
+					<input type="text" id="keyword" name="keyword" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
 					<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
 				</div>
 			</div>
