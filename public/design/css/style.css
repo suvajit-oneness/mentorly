@@ -1254,10 +1254,10 @@ text-transform: capitalize;
     margin-left: -1px;
 }
 .cell-light {
-    background:#429bbf;
+    background: #323a9a;
 }
 .cell-deep {
-    background: #345c6c;
+    background: #e7eef1;
 }
 .avality-button {
     font-family: GT Walsheim Pro;
