@@ -54,6 +54,11 @@ Route::get('logout','Site\WebsiteController@logout');
 Route::get('user/zoom/meeting','ZoomMeetingController@list')->name('user.zoom.meeting');
 Route::get('user/zoom/meeting/{meetingId}/cancel','ZoomMeetingController@cancelMeeting')->name('user.zoom.meeting.cancel');
 
+Route::group(['prefix' => 'mentor'],function(){
+	Route::get('experience/log','Site\MentorController@yourExperience')->name('mentor.experience.log');
+	Route::post('experience/log','Site\MentorController@yourExperienceSave')->name('mentor.experience.log.update');
+});
+
 // STRIPE Payment Routes
 Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');
 Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');

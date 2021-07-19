@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','mentors')
+@section('title','Profile')
 @section('content')
 
 <section class="gray-wrapper">
@@ -111,6 +111,15 @@
 										<label class="col-md-4">About</label>
 										<div class="col-md-8">
 										  <textarea name="about" class="input-style" placeholder="About You max (200) Character">{{$user->about}}</textarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="row align-items-center">
+										<label class="col-md-4">Your Resume in PDF</label>
+										<div class="col-md-8">
+										  	<input type="text" name="resume" class="input-style" value="">
 										</div>
 									</div>
 								</div>

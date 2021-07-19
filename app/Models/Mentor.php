@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Mentor extends Authenticatable
 {
     use SoftDeletes;
@@ -54,5 +55,10 @@ class Mentor extends Authenticatable
     public function reviews()
     {
         return $this->hasMany('App\Models\Review','mentor_id','id')->select('reviews.*','users.name','users.email','users.image')->where('reviews.status',1)->where('reviews.is_deleted',0)->leftjoin('users','reviews.user_id','=','users.id');
+    }
+
+    public function resume()
+    {
+        return $this->hasMany('App\Models\MentorExperienceLog','mentorId','id')->orderBy('type','DESC')->orderBy('start','DESC');
     }
 }

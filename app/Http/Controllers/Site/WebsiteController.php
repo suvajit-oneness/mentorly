@@ -56,10 +56,12 @@ class WebsiteController extends Controller
             if(Hash::check($req->password,$user->password)){
                 if($req->loginType == 'mentor'){
                     Auth::guard('mentor')->login($user);
+                    $mentor = Auth::guard('mentor')->user();
+                    return redirect(route('mentor.details',base64_encode($mentor->id)).'?date='.date('Y-m-d'));
                 }else{
                     Auth::login($user);
+                    return redirect('/');
                 }
-                return redirect('/');
             }else{
                 $errors['password'] = 'you have entered wrong password';
             }

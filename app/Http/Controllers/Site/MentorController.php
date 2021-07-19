@@ -9,6 +9,7 @@ use App\Models\User;use Hash;
 use App\Models\Conversation;use App\Models\Message;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
+use App\Models\MentorExperienceLog;
 
 class MentorController extends Controller
 {
@@ -48,6 +49,45 @@ class MentorController extends Controller
     		$user->save();
     		return back()->with('Success','Profile Updated SuccessFully');
     	}
+    }
+
+    public function yourExperience(Request $req)
+    {
+        $mentor = Auth::guard('mentor')->user();
+        return view('mentor.settingExperience',compact('mentor'));
+    }
+
+    public function yourExperienceSave(Request $req)
+    {
+        $req->validate([
+            'start' => ['required','array'],
+            'start.*' => ['required','date'],
+            'end' => ['required','array'],
+            'end.*' => ['required','date'],
+            'type' => ['required','array'],
+            'type.*' => ['required','in:1,2'],
+            'name' => ['required','array'],
+            'name.*' => ['required','string','max:255'],
+        ]);
+        $insertData = [];
+        if(get_guard() == 'mentor'){
+            $mentor = Auth::guard('mentor')->user();
+            MentorExperienceLog::where('mentorId',$mentor->id)->delete();
+            foreach($req->start as $key => $data){
+                $insertData[] = [
+                    'mentorId' => $mentor->id,
+                    'start' => date('Y-m-d',strtotime($req->start[$key])),
+                    'end' => date('Y-m-d',strtotime($req->end[$key])),
+                    'type' => $req->type[$key],
+                    'name' => $req->name[$key],
+                ];
+            }
+            if(count($insertData) > 0){
+                MentorExperienceLog::insert($insertData);
+                return back()->with('Success','Data Saved Success');
+            }
+        }
+
     }
 
     public function settingEmail(Request $req)
@@ -195,7 +235,7 @@ class MentorController extends Controller
             }
             if(count($insertData) > 0){
                 AvailableShift::insert($insertData);
-                return back()->with('success','Data Saved Success');
+                return back()->with('Success','Data Saved Success');
             }
         }
     }

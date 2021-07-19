@@ -16,13 +16,11 @@ class MentorController extends BaseController
     public function __construct(MentorContract $mentorRepository)
     {
         $this->mentorRepository = $mentorRepository;
-        
     }
 
     public function index()
     {
         $mentor = $this->mentorRepository->listMentors();
-
         $this->setPageTitle('Mentor', 'List of all Mentor');
         return view('admin.mentor.index', compact('mentor'));
     }

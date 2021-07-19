@@ -100,25 +100,22 @@
 				</div>
 				@endif
 
-				<!-- <div class="mentor-det-details no-flex resume-place">
+				@php $resume = $mentor->resume; @endphp
+				@if(count($resume) > 0)
+				<div class="mentor-det-details no-flex resume-place">
 					<h2 class="medium-heading">Resume</h2>
-
 					<ul class="edu-list">
+						@foreach($resume as $index => $res)
 						<li>
-							<div class="year">2015 — 2019</div>
+							<div class="year">{{date('Y',strtotime($res->start))}} — {{date('Y',strtotime($res->end))}}</div>
 							<div class="study">
-								Kwansei Gakuin University Integrated Psychological Sciences
+								{{$res->name}}
 							</div>
-						</li>
-						<li>
-							<div class="year">2015 — 2019</div>
-							<div class="study">
-								Kwansei Gakuin University Integrated Psychological Sciences
-							</div>
-						</li>
-					</ul>
-				</div> -->
-
+						</li><hr>
+						@endforeach
+					</ul>					
+				</div>
+				@endif
 			</div>
 			<div class="right-panel">
 				<div class="calender">

@@ -21,6 +21,5 @@ class MenteeController extends Controller
 	    	$purchase = $purchase->with('slot_details')->with('mentor')->orderBy('id','Desc')->get();
 	    	return view('mentee.purchaseHistory',compact('purchase'));
     	}
-  
     }
 }
