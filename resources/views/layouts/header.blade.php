@@ -24,7 +24,7 @@
                 @if(get_guard() != '' && get_guard() != 'admin')
                     <ul class="headedr-two-list">
                         <li>
-                            <a href="#">
+                            <a href="{{route('user.message.log')}}">
                                 <img src="{{asset('design/images/message.png')}}">
                                 <span>15</span>
                             </a>
