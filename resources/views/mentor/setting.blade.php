@@ -114,15 +114,6 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="form-group">
-									<div class="row align-items-center">
-										<label class="col-md-4">Your Resume in PDF</label>
-										<div class="col-md-8">
-										  	<input type="text" name="resume" class="input-style" value="">
-										</div>
-									</div>
-								</div>
 								
 							@endif
 							<div class="form-group">
