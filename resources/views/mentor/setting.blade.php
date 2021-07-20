@@ -92,7 +92,7 @@
 									<div class="row align-items-center">
 										<label class="col-md-4">Designation</label>
 										<div class="col-md-8">
-										  	<input type="text" name="designation" class="input-style" value="{{$user->designation}}">
+										  	<input type="text" name="designation" class="input-style" value="{{$user->designation}}" placeholder="Your Designation">
 										</div>
 									</div>
 								</div>

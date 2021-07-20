@@ -26,15 +26,17 @@ class WebsiteController extends Controller
 
     public function showLoginFormForMentor(Request $req)
     {
-        if(Auth::user()){
+        $guard = get_guard();
+        if($guard != ''){
             return redirect('/');
         }
-    	return view('website.mentorLogin');
+        return view('website.mentorLogin');
     }
 
     public function showLoginFormForMentee(Request $req)
     {
-        if(Auth::user()){
+        $guard = get_guard();
+        if($guard != ''){
             return redirect('/');
         }
         return view('website.menteeLogin');
@@ -57,10 +59,14 @@ class WebsiteController extends Controller
                 if($req->loginType == 'mentor'){
                     Auth::guard('mentor')->login($user);
                     $mentor = Auth::guard('mentor')->user();
-                    return redirect(route('mentor.details',base64_encode($mentor->id)).'?date='.date('Y-m-d'));
+                    if($mentor->status == 1 && $mentor->is_verified == 1 && $mentor->is_deleted == 0){
+                        return redirect(route('mentor.details',base64_encode($mentor->id)).'?date='.date('Y-m-d'));
+                    }
+                    return redirect(route('mentor.mentee.setting'));
                 }else{
                     Auth::login($user);
-                    return redirect('/');
+                    return redirect(route('mentors.find'));
+                    // return redirect('/');
                 }
             }else{
                 $errors['password'] = 'you have entered wrong password';
@@ -73,11 +79,19 @@ class WebsiteController extends Controller
 
     public function signupFormMentee(Request $req)
     {
+        $guard = get_guard();
+        if($guard != ''){
+            return redirect('/');
+        }
     	return view('website.singUpMentee');
     }
 
     public function signupFormMentor(Request $req)
     {
+        $guard = get_guard();
+        if($guard != ''){
+            return redirect('/');
+        }
         $data = (object)[];
         $data->faq = \App\Models\Faq::get();
         $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_page')->get();
@@ -102,8 +116,7 @@ class WebsiteController extends Controller
             $mentor->charge_per_hour = 40;
             $mentor->carrier_started = date('Y-m-d');
     		$mentor->save();
-    		$errors['signup'] = 'Registration Successfull';
-    		return back()->withErrors($errors);
+            Auth::guard('mentor')->login($mentor);
     	}
     	elseif($req->registration_type == 'mentee'){
     		$req->validate([
@@ -117,9 +130,9 @@ class WebsiteController extends Controller
     		$mentee->email = $req->email;
     		$mentee->password = Hash::make($req->password);
     		$mentee->save();
-    		$errors['signup'] = 'Registration Successfull';
-    		return back()->withErrors($errors);
+            Auth::guard('web')->login($mentee);
     	}
+        return redirect(route('mentor.mentee.setting'));
     }
 
     public function findMentors(Request $req)

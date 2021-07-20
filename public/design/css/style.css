@@ -31,6 +31,9 @@ body {
 a{
 	transition: all 0.5s ease-out;
 }
+.time_stot_active{
+    background-color: #002ca9 !important;
+}
 
 a:hover {
 	text-decoration: none;
@@ -1820,6 +1823,7 @@ text-transform: capitalize;
 }
 .time-slot {
     padding: 4px 0;
+    background-color: #84b5ff;
 }
 .time-slot a {
     font-family: GT Walsheim Pro;

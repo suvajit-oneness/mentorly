@@ -13,7 +13,7 @@
 						<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
 					</div>
 					<div class="mentor-bio">
-						<h3 class="profile-name mb-0">{{$mentor->name}}.</h3>
+						<h3 class="profile-name mb-0">@php if(get_guard() == 'mentor' && (Auth::guard('mentor')->user()->id == $mentor->id)) echo "Welcome" @endphp {{$mentor->name}}.</h3>
 						<span class="small-info">Certified developer with {{dateDifferenceFromNow($mentor->carrier_started)}} experience.</span>
 						<div class="inerview-taken mt-3">
 							<span><img src="{{asset('design/images/company.png')}}"></span>  Twitch
@@ -57,13 +57,16 @@
 								@foreach($daysData as $day)
 									<div class="time-avali">
 										@foreach($day['available'] as $slot)
-											<div class="time-slot">
+											
 												@if($slot['available'] == 2)
-													<a href="javascript:void(0)" class="text-danger">{{$slot['time_shift']}}</a>
+												<div class="time-slot time_stot_active">
+													<a href="javascript:void(0)" style="color: #fff">{{$slot['time_shift']}}</a>
+												</div>
 												@else
-													<a href="javascript:void(0)" class="slotBooking text-success" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
+												<div class="time-slot">
+													<a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
+												</div>
 												@endif
-											</div>
 										@endforeach
 									</div>
 								@endforeach

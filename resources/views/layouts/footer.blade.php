@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-lg-5">
-                <h2 class="page-heading white-color">Get poid to reach <br> online</h2>
+                <h2 class="page-heading white-color">Get paid to reach <br> online</h2>
                 <p class="white-color">Earn money sharing your expert knowledge with mentees. Sign up to start mentoring online with MentorMatch</p>
                 <a href="#" class="prinery-btm blue-btm">Get Started</a>
             </div>

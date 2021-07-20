@@ -42,7 +42,7 @@
 							</div>
 							<div class="disclaimer-place">
 								By clicking Sign up, you agree to mentorly <br>
-								<a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+								<a href="{{route('terms.condition')}}">Terms of Service</a> and <a href="{{route('policy')}}">Privacy Policy</a>
 							</div>
 						</div>
 					</form>
