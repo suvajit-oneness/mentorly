@@ -32,7 +32,7 @@ function dateDifferenceFromNow($startdate)
 function sendMail($data,$template,$to,$subject){
     Mail::send($template, $data, function($message)use ($data,$to,$subject) {
         $message->to($to, $data['name'])->subject($subject);
-        $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
+        $message->from('onenesstechsolution@gmail.com','Mentorly');
     });
 }
 
