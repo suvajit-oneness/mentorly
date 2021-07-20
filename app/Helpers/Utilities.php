@@ -30,15 +30,10 @@ function dateDifferenceFromNow($startdate)
     return $year.' Year ';
 }
 
-function sendMail($name,$email,$template){
-    $data = array(
-        'name' => $name,
-        'email' => $email,
-    );
-    Mail::send($template, $data, function($message)use ($data) {
-        $message->to($data['email'], $data['name'])->subject
-        ('Reset Password');
-        $message->from('email@email.com','Our Post Code');
+function sendMail($data,$template,$to,$subject){
+    Mail::send($template, $data, function($message)use ($data,$to,$subject) {
+        $message->to($to, $data['name'])->subject($subject);
+        $message->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'));
     });
 }
 
