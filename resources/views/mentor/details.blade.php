@@ -227,7 +227,7 @@
 		$(document).on('click','.slotBooking',function(){
 			var guard = '{{get_guard()}}';
 			if(guard == '' || guard == 'admin'){
-				alert('you have to perform login before sending message');
+				alert('you have to perform login before booking slot');
 			}else{
 				var slot = $(this).attr('data-slot'),slotId = $(this).attr('data-slotid');
 				swal({

@@ -4,10 +4,10 @@ use Illuminate\Http\Request;
 
 
 //user password reset routes
-Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
-Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('user.password.request');
-Route::post('password/reset','Auth\ResetPasswordController@reset');
-Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('password.reset');
+// Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
+// Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('user.password.request');
+// Route::post('password/reset','Auth\ResetPasswordController@reset');
+// Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Auth::routes(['verify' => true,'login'=>false]);
 
@@ -73,6 +73,7 @@ Route::post('/get-messages-by-id', 'Site\MentorController@getMessagesById')->nam
 
 // Cron Routes
 Route::get('create_teacher_slot','CronController@teacherSlot');
+
 
 Route::get('testmail',function(){
 $data = [

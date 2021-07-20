@@ -328,6 +328,7 @@ class MentorController extends Controller
         try{
             DB::beginTransaction();
                 $slot = AvailableShift::where('id',$req->slotId)->first();
+                $mentor = Mentor::where('id',$slot->mentorId)->first();
                 $user = Auth::guard($req->userType)->user();
                 $slotBooked = new MentorSlotBooked();
                 $slotBooked->mentorId = $slot->mentorId;
@@ -339,6 +340,19 @@ class MentorController extends Controller
                 $slot->available = 2;
                 $slot->save();
                 $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
+
+                $dataMentee = [
+                    'name' => $user->name,
+                    'content' => 'Your mentorly session has been booked with "Mr.'.$mentor->name.'" on '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                ];
+                sendMail($dataMentee,'email/menteeBooking',$user->email,'Session Booked successfully !!!');
+
+                $dataMentor = [
+                    'name' => $mentor->name,
+                    'content' => 'Your Have been booked for a mentorly session by '.$user->name.'.',
+                    'content2' => 'The session is scheduled on '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                ];
+                sendMail($dataMentor,'email/mentorBooking',$mentor->email,'New Session Booked - confirmed');
             DB::commit();
             return redirect(route('mentor.booked.success').'?transactionId='.$req->transactionId);
         }catch(Exception $e){

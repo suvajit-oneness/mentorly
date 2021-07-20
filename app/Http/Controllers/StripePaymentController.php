@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Stripe;use Session;use App\Models\StripeTransaction;
-use App\Models\Mentor;use Auth;
+use App\Models\Mentor;use Auth,App\Models\AvailableShift;
 
 class StripePaymentController extends Controller
 {
@@ -39,6 +39,7 @@ class StripePaymentController extends Controller
         ]);
         if($payment->status == 'succeeded'){
             $user = Auth::guard($req->userType)->user();
+            $slot = AvailableShift::where('id',$req->slotId)->first();
         	$stripe = new StripeTransaction;
         	$stripe->transactionId = $payment->id;
         	$stripe->balance_transaction = $payment->balance_transaction;
@@ -50,8 +51,12 @@ class StripePaymentController extends Controller
         	$stripe->exp_year = $payment->payment_method_details->card->exp_year;
         	$stripe->last4 = $payment->payment_method_details->card->last4;
         	$stripe->save();
+            $dataMentee = [
+                'name' => $user->name,
+                'content' => 'We have received your payment $'.$req->amount.' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+            ];
+            sendMail($dataMentee,'email/menteeSlotPayment',$user->email,'Payment Successful for Mentorly Session !!');
             return redirect(route('stripe.payment.success').'?slotId='.$req->slotId.'&userType='.$req->userType.'&transactionId='.$stripe->id);
-        	// return redirect(route('stripe.success',base64_encode($stripe->id)));
         }
         return back();
     }

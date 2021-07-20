@@ -16,8 +16,7 @@ if (!function_exists('sidebar_open')) {
                 }
             }
         }
-
-    return $open ? 'active' : '';
+        return $open ? 'active' : '';
     }
 }
 

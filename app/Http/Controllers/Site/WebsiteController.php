@@ -62,6 +62,11 @@ class WebsiteController extends Controller
         }
         if($user){
             if(Hash::check($req->password,$user->password)){
+                $data = [
+                    'name' => $user->name,
+                    'content' => 'You have Successfully login to the Website',
+                ];
+                sendMail($data,'email/login',$user->email,'Login Success');
                 if($req->loginType == 'mentor'){
                     Auth::guard('mentor')->login($user);
                     $mentor = Auth::guard('mentor')->user();
@@ -129,6 +134,11 @@ class WebsiteController extends Controller
             $mentor->carrier_started = date('Y-m-d');
     		$mentor->save();
             Auth::guard('mentor')->login($mentor);
+            $data = [
+                'name' => 'User',
+                'content' => 'Please complete your profile to get started',
+            ];
+            sendMail($data,'email/mentorRegistration',$mentor->email,'Congratulation - Successful Registration !!!');
     	}
     	elseif($req->registration_type == 'mentee'){
     		$req->validate([
@@ -143,6 +153,11 @@ class WebsiteController extends Controller
     		$mentee->password = Hash::make($req->password);
     		$mentee->save();
             Auth::guard('web')->login($mentee);
+            $data = [
+                'name' => 'User',
+                'content' => 'Please complete your profile to get started',
+            ];
+            sendMail($data,'email/menteeRegistration',$mentee->email,'Congratulation - Successful Registration !!!');
     	}
         return redirect(route('mentor.mentee.setting'));
     }
@@ -293,7 +308,11 @@ class WebsiteController extends Controller
             $user = User::where('email',$req->email)->first();
         }
         if($user){
-            // sendMail($user->name,$user->email,'email/forgot_password');
+            $data = [
+                'name' => $user->name,
+                'password_reset_link' => url('/'),
+            ];
+            sendMail($data,'email/forgot_password',$user->email,'Reset Password');
             $error['success'] = 'reset password mail has been sent';
             return back()->withInput($req->all())->withErrors($error);            
         }
