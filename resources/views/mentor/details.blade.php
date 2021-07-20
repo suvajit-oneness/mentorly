@@ -110,7 +110,7 @@
 					<ul class="edu-list">
 						@foreach($resume as $index => $res)
 						<li>
-							<div class="year">{{date('M, Y',strtotime($res->start))}} — {{date('M, Y',strtotime($res->end))}}</div>
+							<div class="year">{{date('M, Y',strtotime($res->start))}} — {{($res->end != '0000-00-00' ? date('M, Y',strtotime($res->end)) : 'Till Now')}}</div>
 							<div class="study">
 								{{$res->name}}
 							</div>
