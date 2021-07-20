@@ -21,6 +21,19 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
+/* ========== Changes made ========== */
+.navigation-right{
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.header-profile{
+    margin: 0 10px;
+}
+
 /*===Style Start
 =================*/
 body {
@@ -181,7 +194,7 @@ max-width: 40px;
 .headedr-two-list li {}
 .headedr-two-list li a {
     display: block;
-    padding: 0 10px;
+    /*padding: 0 10px;*/
     position: relative;
 }
 .headedr-two-list li a span {
@@ -2232,6 +2245,13 @@ border: 1px solid #bfbfbf;
 }
 
 @media(max-width:991px) {
+
+    .navigation{
+        justify-content: flex-end;
+    }
+    .navigation-right{
+        width: 100%;
+    }
     .ham {
         max-width:27px;
         width: 100%;

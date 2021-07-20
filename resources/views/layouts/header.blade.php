@@ -18,6 +18,7 @@
                 </div>
 
                 @if(get_guard() != '' && get_guard() != 'admin')
+                <div class="navigation-right">
                     <ul class="headedr-two-list">
                         <li>
                             <a href="{{route('user.message.log')}}">
@@ -49,6 +50,7 @@
                         <span></span>
                         <span></span>
                     </div>
+                </div>
                 @else
                     <ul class="menu-btm">
                         <li><a href="{{url('mentor/login')}}" class="prinery-btm blue-btm">Mentor LogIn</a></li>
