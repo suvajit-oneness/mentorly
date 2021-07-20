@@ -249,7 +249,7 @@ class WebsiteController extends Controller
             for($i = 0; $i < 7;$i++){
                 $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
                 $day = date('D',strtotime($originalDay.'+'.$i.' days'));
-                $getSlots = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->get();
+                $getSlots = AvailableShift::where('mentorId',$mentor->id)->whereIn('available',[1,2])->where('date',$date)->get();
                 $daysData[] = [
                     'date' => $date,
                     'day' => $day,
