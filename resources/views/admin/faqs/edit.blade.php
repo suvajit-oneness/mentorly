@@ -17,6 +17,15 @@
                     @csrf
                     <div class="tile-body">
                         <div class="form-group">
+                            <label class="control-label" for="name">For Which Page <span class="m-l-5 text-danger"> *</span></label>
+                            <select class="form-control @error('forwhichpage') is-invalid @enderror" name="forwhichpage">
+                                <option value="homepage" @if($targetFaq->forwhichpage == 'homepage') {{('selected')}} @endif>Home Page</option>
+                                <option value="becomeonmentor" @if($targetFaq->forwhichpage == 'becomeonmentor') {{('selected')}} @endif>Become a Mentor Page</option>
+                            </select>
+                            @error('forwhichpage') {{ $message ?? '' }} @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label class="control-label" for="name">Title <span class="m-l-5 text-danger"> *</span></label>
                             <input class="form-control @error('name') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('name', $targetFaq->title) }}"/>
                             <input type="hidden" name="id" value="{{ $targetFaq->id }}">

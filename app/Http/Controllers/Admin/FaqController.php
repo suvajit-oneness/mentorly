@@ -54,6 +54,7 @@ class FaqController extends BaseController
     public function store(Request $request)
     {
         $this->validate($request, [
+            'forwhichpage' => 'required|in:becomeonmentor,homepage',
             'title'      =>  'required|max:191',
             'description'     =>  'required'
         ]);
@@ -88,6 +89,7 @@ class FaqController extends BaseController
     public function update(Request $request)
     {
         $this->validate($request, [
+            'forwhichpage' => 'required|in:becomeonmentor,homepage',
             'title'      =>  'required|max:191',
             'description'     =>  'required'
         ]);

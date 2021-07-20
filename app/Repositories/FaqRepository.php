@@ -65,6 +65,7 @@ class FaqRepository extends BaseRepository implements FaqContract
             $collection = collect($params);
             
             $faq = new Faq;
+            $faq->forwhichpage = $collection['forwhichpage'];
             $faq->title = $collection['title'];
             $faq->description = $collection['description'];
             $faq->status = $collection->has('status') ? 1 : 0;
@@ -88,6 +89,7 @@ class FaqRepository extends BaseRepository implements FaqContract
         $faq = $this->findFaqById($params['id']);
         
         $faq->title = $collection['title'];
+        $faq->forwhichpage = $collection['forwhichpage'];
         $faq->description = $collection['description'];
         $faq->status = $collection->has('status') ? 1 : 0;
         $faq->save();

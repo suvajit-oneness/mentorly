@@ -18,8 +18,16 @@
                     @csrf
                     <div class="tile-body">
                         <div class="form-group">
+                            <label class="control-label" for="name">For Which Page <span class="m-l-5 text-danger"> *</span></label>
+                            <select class="form-control @error('forwhichpage') is-invalid @enderror" name="forwhichpage">
+                                <option value="homepage">Home Page</option>
+                                <option value="becomeonmentor">Become a Mentor Page</option>
+                            </select>
+                            @error('forwhichpage') {{ $message ?? '' }} @enderror
+                        </div>
+                        <div class="form-group">
                             <label class="control-label" for="name">Title <span class="m-l-5 text-danger"> *</span></label>
-                            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}"/>
+                            <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}" placeholder="Faq Title" />
                             @error('title') {{ $message ?? '' }} @enderror
                         </div>
                     </div>

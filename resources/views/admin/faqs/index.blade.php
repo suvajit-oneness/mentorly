@@ -18,7 +18,7 @@
                     <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th> For Page</th>
                                 <th> Title </th>
                                 <th> Description </th>
                                 <th> Status </th>
@@ -28,7 +28,7 @@
                         <tbody>
                             @foreach($faq as $key => $faq)
                                 <tr>
-                                    <td>{{ $faq->id }}</td>
+                                    <td> @if($faq->forwhichpage == 'homepage') {{('Home Page')}} @else {{('Become Mentor')}} @endif</td>
                                     <td>{{ $faq->title }}</td>
                                     <td>{!! $faq->description !!}</td>
                                     <td class="text-center">

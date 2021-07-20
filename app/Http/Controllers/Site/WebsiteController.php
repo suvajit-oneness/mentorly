@@ -14,7 +14,7 @@ class WebsiteController extends Controller
     public function index(Request $req)
     {
         $data = (object)[];
-        $data->faq = \App\Models\Faq::get();
+        $data->faq = \App\Models\Faq::where('forwhichpage','homepage')->get();
         $data->whereourmentor_work = \App\Models\FrontendSetting::where('key','where_our_mentor_work_at')->get();
         $data->whatwedo = \App\Models\FrontendSetting::where('key','what_we_do')->get();
         $data->focusonSkill = \App\Models\FrontendSetting::where('key','focus_ontheskill_you_need')->get();
@@ -28,6 +28,9 @@ class WebsiteController extends Controller
     {
         $guard = get_guard();
         if($guard != ''){
+            if($guard == 'admin'){
+                return redirect('/admin');
+            }
             return redirect('/');
         }
         return view('website.mentorLogin');
@@ -37,6 +40,9 @@ class WebsiteController extends Controller
     {
         $guard = get_guard();
         if($guard != ''){
+            if($guard == 'admin'){
+                return redirect('/admin');
+            }
             return redirect('/');
         }
         return view('website.menteeLogin');
@@ -81,6 +87,9 @@ class WebsiteController extends Controller
     {
         $guard = get_guard();
         if($guard != ''){
+            if($guard == 'admin'){
+                return redirect('/admin');
+            }
             return redirect('/');
         }
     	return view('website.singUpMentee');
@@ -90,10 +99,13 @@ class WebsiteController extends Controller
     {
         $guard = get_guard();
         if($guard != ''){
+            if($guard == 'admin'){
+                return redirect('/admin');
+            }
             return redirect('/');
         }
         $data = (object)[];
-        $data->faq = \App\Models\Faq::get();
+        $data->faq = \App\Models\Faq::where('forwhichpage','becomeonmentor')->get();
         $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_page')->get();
         $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(10)->get();
     	return view('website.singUpMentor',compact('data'));
@@ -291,7 +303,7 @@ class WebsiteController extends Controller
 
     public function logout(Request $req)
     {
-    	$auth = $this->get_guard();
+    	$auth = get_guard();
         Auth::guard($auth)->logout();
     	return redirect('/');
     }

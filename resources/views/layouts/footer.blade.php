@@ -1,15 +1,17 @@
-
-<section class="get-paid" style="background: url('http://demo91.co.in/dev/mentorly/public/design/images/footer-top.jpg') no-repeat center center; background-size: cover;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-5">
-                <h2 class="page-heading white-color">Get paid to reach <br> online</h2>
-                <p class="white-color">Earn money sharing your expert knowledge with mentees. Sign up to start mentoring online with MentorMatch</p>
-                <a href="#" class="prinery-btm blue-btm">Get Started</a>
+@php $guard = get_guard(); @endphp
+@if($guard == '')
+    <section class="get-paid" style="background: url('http://demo91.co.in/dev/mentorly/public/design/images/footer-top.jpg') no-repeat center center; background-size: cover;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-5">
+                    <h2 class="page-heading white-color">Get paid to reach <br> online</h2>
+                    <p class="white-color">Earn money sharing your expert knowledge with mentees. Sign up to start mentoring online with MentorMatch</p>
+                    <a href="{{route('singup.mentor')}}" class="prinery-btm blue-btm">Get Started</a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+@endif
 
 <footer>
     <div class="footer-inner">
@@ -20,13 +22,12 @@
             <h4 class="footer-title">Company</h4>
             <ul class="footer-list">
                 <li><a href="{{route('mentors.find')}}">Find Mentors</a></li>
-                @if(get_guard() == '' || get_guard() != 'mentor')
+                @if($guard == '' || $guard != 'mentor')
                     <li><a href="{{route('singup.mentor')}}">Become a Mentor </a></li>
                 @endif
                 <li><a href="javascript:void(0)">Careers</a></li>
                 <li><a href="{{route('aboutus')}}">About Us</a></li>
                 <li><a href="{{route('contactus')}}">Contact</a></li>
-
             </ul>
         </div>
         <div class="footer-gid">
