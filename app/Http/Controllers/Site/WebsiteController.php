@@ -251,7 +251,7 @@ class WebsiteController extends Controller
     public function mentorDetails(Request $req,$mentorId)
     {
         $date = date('Y-m-d');
-        if(!empty($req->date)){
+        if(!empty($req->date) && (date('Y-m-d',strtotime($req->date)) > $date)){
             $date = date('Y-m-d',strtotime($req->date));
         }
         $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
