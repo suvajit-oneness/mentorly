@@ -2484,8 +2484,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-primary {
   color: #FFF;
-  background-color: #e0a32a;
-  border-color: #e0a32a;
+  background-color: #101023;
+    border-color: #a2a2a2;
 }
 
 .btn-primary:hover {
@@ -13091,7 +13091,7 @@ li.treeview.is-expanded {
   color: #fff;
 }
 .treeview-item.active, .treeview-item:hover, .treeview-item:focus {
-  background: #805904;
+  background: #ccc5b7;
   text-decoration: none;
   color: #fff;
 }
@@ -13692,7 +13692,7 @@ li.treeview.is-expanded {
 }
 
 .material-half-bg .cover {
-  background-color: #E0A216;
+  background-color: #1cb3d3;
   height: 50vh;
 }
 

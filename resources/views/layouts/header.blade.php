@@ -34,7 +34,7 @@
                         </li> -->
                     </ul>
                     <div class="header-profile">
-                        <span class="header-profile-image" data-toggle="dropdown" ><img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor1.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"></span>
+                        <span class="header-profile-image" data-toggle="dropdown" ><img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor5.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"></span>
                         <div class="dropdown-menu dropdown-menu-right">
                             <ul class="profile-dropdown">
                                 <li><a href="{{route('user.message.log')}}">Messages</a></li>
