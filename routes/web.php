@@ -27,6 +27,12 @@ Route::post('/mentor/mentee/login','Site\WebsiteController@postLogin');
 Route::get('forget/password/{userType}','Site\WebsiteController@showForgetPassword')->name('both.forget.password');
 Route::post('forget/password/{userType}','Site\WebsiteController@postForgetPassword')->name('both.forget.password.post');
 
+// reset password link generate //
+Route::get('resetPassword/{userid?}','Site\WebsiteController@userResetPassword')->name('resetPassword');
+Route::post('updatepassword','Site\WebsiteController@userUpdatePassword')->name('updatepassword');
+
+
+
 // mentors Route
 Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');
 Route::post('mentor/mentee/setting','Site\MentorController@settingAccountUpdate')->name('mentor.mentee.account_update');

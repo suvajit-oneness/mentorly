@@ -8,6 +8,11 @@ use App\Models\User;use Hash;use App\Models\Review;
 use App\Models\Mentor;use Auth;use App\Models\ContactUs;
 use App\Models\Seniority;use App\Models\AvailableDay;
 use App\Models\AvailableShift;
+use Illuminate\Support\Str;
+//use Illuminate\Contracts\Encryption\DecryptException;
+
+use Illuminate\Support\Facades\Crypt;
+
 
 class WebsiteController extends Controller
 {
@@ -296,6 +301,7 @@ class WebsiteController extends Controller
         return view('website.forget_password',compact('userType'));
     }
 
+
     public function postForgetPassword(Request $req,$userType)
     {
         $req->validate([
@@ -308,10 +314,13 @@ class WebsiteController extends Controller
             $user = User::where('email',$req->email)->first();
         }
         if($user){
+            //$token = Str::random(64);
+            $user_id = Crypt::encryptString($user->id);
             $data = [
                 'name' => $user->name,
-                'password_reset_link' => url('/'),
+                'password_reset_link' => route('resetPassword',$user_id),
             ];
+
             sendMail($data,'email/forgot_password',$user->email,'Reset Password');
             $error['success'] = 'reset password mail has been sent';
             return back()->withInput($req->all())->withErrors($error);            
@@ -319,6 +328,24 @@ class WebsiteController extends Controller
         $error['email'] = 'the email provided is not registered with us';
         return back()->withInput($req->all())->withErrors($error);
     }
+
+    public function userResetPassword($userid)
+    {
+        return view('website.reset_password',compact('userid'));
+    }
+
+    public function userUpdatePassword(Request $request)
+    {
+        $userid = $request->userid;
+        $password = $request->password;
+        $realuserid= Crypt::decryptString($userid);
+        Mentor::where('id',$realuserid)->update(['password' => Hash::make($password)]);
+        return redirect('mentor/login')->with('message', 'Your password has been changed successfully!');
+
+    }
+
+
+
 
     public function logout(Request $req)
     {
