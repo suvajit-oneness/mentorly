@@ -21,24 +21,59 @@
 									<th>Mobile</th>
 									<th>Booking Amount</th>
 									<th>Booking Slot</th>
+									<th>Status</th>
+									<th>Change Status</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach($booking as $book)
-									<tr>
-										<td>{{$book->id}}</td>
-										<td>{{date('Y-m-d h:i:s',strtotime($book->created_at))}}</td>
-										<td>{{($book->userDetails) ? $book->userDetails->name : 'N/A'}}</td>
-										<td>{{($book->userDetails) ? $book->userDetails->email : 'N/A'}}</td>
-										<td>{{($book->userDetails) ? $book->userDetails->mobile : 'N/A'}}</td>
-										<td>{{$book->price}}</td>
-										<td>@if($book->slot_details){{$book->slot_details->date}} - {{$book->slot_details->time_shift}}@endif</td>
-									</tr>
+								<tr>
+									<td>{{$book->id}}</td>
+									<td>{{date('Y-m-d h:i:s',strtotime($book->created_at))}}</td>
+									<td>{{($book->userDetails) ? $book->userDetails->name : 'N/A'}}</td>
+									<td>{{($book->userDetails) ? $book->userDetails->email : 'N/A'}}</td>
+									<td>{{($book->userDetails) ? $book->userDetails->mobile : 'N/A'}}</td>
+									<td>{{$book->price}}</td>
+									<td>@if($book->slot_details){{$book->slot_details->date}} - {{$book->slot_details->time_shift}}@endif</td>
+									<td>
+										@if($book->bookingStatus==0)
+										<span style="color: blue;">
+											Pending
+										</span>
+										@elseif($book->bookingStatus==1)
+										<span style="color: green;">
+											Approved
+										</span>
+										@elseif($book->bookingStatus==2)
+										<span style="color: red;">
+											Rejected
+										</span>
+										@endif
+									</td>
+									<td>
+										@if($book->bookingStatus!=1)
+										<a href="{{route('booking.request.approve',$book->id)}}" onclick="return confirm('Are you sure to active this ?	')">
+										<button class="btn-success">Approve</button>
+										</a>
+										@endif
+										@if($book->bookingStatus!=2)
+										<a href="{{route('booking.request.reject',$book->id)}}" onclick="return confirm('Are you sure to Reject this ?	')">
+										<button class="btn-danger">Reject</button>
+										</a>
+										@endif
+										@if($book->bookingStatus!=3)
+										<a href="{{route('booking.request.reschedule',['id'=>$book->id,
+											'mentorId'=>base64_encode($book->mentorId)])}}" onclick="return confirm('Are you sure to Reschedule this ?	')">
+										<button class="btn-warning">Reschedule</button>
+										</a>
+										@endif
+									</td>
+								</tr>
 								@endforeach
 							</tbody>
 						</table>
 						@else
-							<h4>You donot have any Confirmed Booking</h4>
+						<h4>You donot have any Confirmed Booking</h4>
 						@endif
 					</div>
 				</div>
@@ -47,6 +82,6 @@
 	</div>
 </section>
 @section('script')
-	<script type="text/javascript"></script>
+<script type="text/javascript"></script>
 @stop
 @endsection

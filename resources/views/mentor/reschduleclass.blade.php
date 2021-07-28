@@ -8,26 +8,7 @@
 		<div class="mentor-details-wrapper">
 			<div class="left-panel">
 
-				<div class="mentor-det-details">
-					<div class="det-photo">
-						<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
-					</div>
-					<div class="mentor-bio">
-						<h3 class="profile-name mb-0">@php if(get_guard() == 'mentor' && (Auth::guard('mentor')->user()->id == $mentor->id)) echo "Welcome" @endphp {{$mentor->name}}.</h3>
-						<span class="small-info">Certified developer with {{dateDifferenceFromNow($mentor->carrier_started)}} experience.</span>
-						<div class="inerview-taken mt-3">
-							<span><img src="{{asset('design/images/company.png')}}"></span>  Twitch
-						</div>
-						<div class="inerview-taken mt-3">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  0 interviews given
-						</div>
-					</div>
-				</div>
 
-				<div class="mentor-det-details no-flex">
-					<h2 class="medium-heading">About the mentor</h2>
-					<p>{{$mentor->about}}</p>
-				</div>
 
 				<div class="mentor-det-details no-flex available-place">
 					<h2 class="medium-heading">Mentor availability</h2>
@@ -78,85 +59,11 @@
 
 				</div>
 
-				@if(count($mentor->reviews) > 0)
-				<div class="mentor-det-details no-flex reviews-place">
-					<h2 class="medium-heading">Reviews <span>({{count($mentor->reviews)}})</span></h2>
-
-					<ul class="review-list">
-						@foreach($mentor->reviews as $key => $review)
-						<li>
-							<div class="box">
-								<div class="box-inner justify-content-start">
-									<div class="viewer-image">
-										<img src="@if($review->user->image == ''){{asset('design/images/mentor2.jpg')}}@else{{$review->user->image}}@endif">
-									</div>
-									<div class="reviewer-content">
-										<h3 class="profile-name mb-0">{{$review->user->name}}</h3>
-										<small class="small-info date-text d-block text-muted" style="font-size:13px;">{{date('M, d Y',strtotime($review->created_at))}}</small>
-										<div class="comment mt-1">
-											<p>{{$review->review}}.</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						@endforeach
-					</ul>
-				</div>
-				@endif
 
 				@php $resume = $mentor->resume; @endphp
-				@if(count($resume) > 0)
-				<div class="mentor-det-details no-flex resume-place">
-					<h2 class="medium-heading">Resume</h2>
-					<ul class="edu-list">
-						@foreach($resume as $index => $res)
-						<li>
-							<div class="year">{{date('M, Y',strtotime($res->start))}} — {{($res->end != '0000-00-00' ? date('M, Y',strtotime($res->end)) : 'Till Now')}}</div>
-							<div class="study">
-								{{$res->name}}
-							</div>
-						</li><hr>
-						@endforeach
-					</ul>					
-				</div>
-				@endif
+				
 			</div>
-			<div class="right-panel">
-				<div class="calender">
-					<div class="row-grid">
-						<div class="row-title"></div>
-						<div class="row-cell">
-							@foreach($days as $day)
-								<div class="cell">{{$day->short_day}}</div>
-							@endforeach
-						</div>
-					</div>
-					@foreach($mentor->timeShift as $timeShift)
-						<div class="row-grid">
-							<div class="row-title">
-								<span class="daytime">{{$timeShift['shift_name']}}</span>
-								<span class="time">{{$timeShift['shift']}}</span>
-							</div>
-							<div class="row-cell">
-								@foreach($timeShift['days'] as $av_day)
-									<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
-								@endforeach
-							</div>
-						</div>
-					@endforeach
-				</div>
-
-				<div class="show-review">
-					<span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} reviews)</a>
-				</div>
-
-				<div class="button-place">
-					<a href="javascript:void(0)" class="prinery-btm blue-btm bookMentorButton">Book mentor</a>
-					<a href="javascript:void(0)" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm messageToMentor">Message</a>
-				</div>
-
-			</div>
+			
 		</div>
 
 	</div>

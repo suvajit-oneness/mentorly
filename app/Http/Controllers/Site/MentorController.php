@@ -428,4 +428,119 @@ class MentorController extends Controller
             return view('mentor.bookingConfirmedMentee',compact('mentor','booking'));
         }
     }
+
+
+
+    public function approveBookingrequest(Request $req,$id)
+    {
+        $bookingStatus = 1;
+        $data = array(
+            'bookingStatus' => 1
+        );
+        DB::table('mentor_slot_bookeds')->where('id',$id)->update($data);   
+        return redirect(route('mentor.booking.request'));
+        
+    }
+
+
+    public function rejectBookingrequest(Request $req,$id)
+    {
+        $bookingStatus = 1;
+        $data = array(
+            'bookingStatus' => 2
+        );
+        DB::table('mentor_slot_bookeds')->where('id',$id)->update($data);   
+        return redirect(route('mentor.booking.request'));
+    }
+
+
+
+    public function getIndivisualSlots($mentor)
+    {
+        $shifting = [];
+        $time = ['Morning'=>['06:00','11:59'],'Afternoon' =>['12:00','17:59'],'Evening'=>['18:00','23:59'],'Night'=>['00:00','05:59']];
+        $originalDate = date('Y-m-d');
+        foreach($time as $key => $t){
+            $weeklyShift = [];
+            for ($loop=0; $loop < 7; $loop++) {
+                $date = date('Y-m-d',strtotime($originalDate.'+'.$loop.' days'));
+                $day = date('D',strtotime($originalDate.'+'.$loop.' days'));
+                $getData = AvailableShift::where('mentorId',$mentor->id)->where('date',$date)->whereBetween('time_shift',$t)->get();
+                $weeklyShift[] = [
+                    'day' => $day,
+                    'date' => $date,
+                    'short_day' => $day,
+                    'available' => count($getData),
+                    'data' => $getData,
+                ];
+            }
+            $shifting[]=[
+                'mentorId' => $mentor->id,
+                'shift' => $t[0].'-'.$t[1],
+                'shift_name' => $key,
+                'days' => $weeklyShift,
+            ];
+        }
+        return $shifting;
+    }
+
+    
+
+    public function rescheduleBookingrequest(Request $req,$id,$mentorId)
+    {
+        $date = date('Y-m-d');
+        if(!empty($req->date) && (date('Y-m-d',strtotime($req->date)) > $date)){
+            $date = date('Y-m-d',strtotime($req->date));
+        }
+        $originalDate = date('Y-m-d',strtotime($date));$originalDay = date('D',strtotime($date));
+        $mentorId = base64_decode($mentorId);
+        $mentor = Mentor::where('id',$mentorId)->with('reviews')->whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->first();
+        if($mentor){
+            $days = AvailableDay::get();
+            $mentor->timeShift = $this->getIndivisualSlots($mentor);
+            $daysData = [];$timezone = TimeZone::get();
+            for($i = 0; $i < 7;$i++){
+                $date = date('Y-m-d',strtotime($originalDate.'+'.$i.' days'));
+                $day = date('D',strtotime($originalDay.'+'.$i.' days'));
+                $getSlots = AvailableShift::where('mentorId',$mentor->id)->whereIn('available',[1,2])->where('date',$date)->get();
+                $daysData[] = [
+                    'date' => $date,
+                    'day' => $day,
+                    'short_date' => date('d',strtotime($date)),
+                    'available' => $getSlots,
+                ];
+            }
+            return view('mentor.reschduleclass',compact('mentor','daysData','days','originalDate','date','timezone'));
+        }
+        return 'Invalid Request <a href="/">Go back</a>';
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

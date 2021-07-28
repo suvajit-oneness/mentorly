@@ -47,7 +47,18 @@ Route::post('mentor/shift/availability','Site\MentorController@saveMentorAvailab
 
 Route::get('mentor/mentee/message/log','Site\MentorController@messageLog')->name('user.message.log');
 Route::get('booking/history','Site\MenteeController@purchasHistory')->name('booking.history');
+Route::get('booking/mylessons','Site\MenteeController@myLesson')->name('booking.mylessons');
+
+
+
 Route::get('mentor/booking/request','Site\MentorController@seeBookingDetails')->name('mentor.booking.request');
+Route::get('mentor/booking/request/approve/{id?}','Site\MentorController@approveBookingrequest')->name('booking.request.approve');
+Route::get('mentor/booking/request/reject/{id?}','Site\MentorController@rejectBookingrequest')->name('booking.request.reject');
+Route::get('mentor/booking/request/reschedule/{id?}/{mentorId?}','Site\MentorController@rescheduleBookingrequest')->name('booking.request.reschedule');
+
+
+
+
 
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');

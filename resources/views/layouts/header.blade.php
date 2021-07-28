@@ -32,6 +32,10 @@
                                 <span>8</span>
                             </a>
                         </li> -->
+                        <li>
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span>8</span>
+                        </li>
                     </ul>
                     <div class="header-profile">
                         <span class="header-profile-image" data-toggle="dropdown" ><img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor5.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"></span>
