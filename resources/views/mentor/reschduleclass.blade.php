@@ -135,6 +135,7 @@
 
 		$(document).on('click','.slotBooking',function(){
 			var guard = '{{get_guard()}}';
+			var existingSlotId = '{{ Request::segment(5) }}';
 			if(guard == '' || guard == 'admin'){
 				alert('you have to perform login before booking slot');
 			}else{
@@ -149,10 +150,11 @@
 				.then((willDelete) => {
 				  	if (willDelete) {
 				  		$.ajax({
-							url : '{{Route('mentor.booking.slot')}}',
+							url : '{{Route('mentor.booking.reschduleslot')}}',
 							type: 'post',
-							data: {slotId:slotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
+							data: {slotId:slotId,existingSlotId:existingSlotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
 							success:function(data){
+								console.log(data);
 								if(data.error == false){
 									window.location.href=data.redirectURL;
 								}else{

@@ -318,6 +318,37 @@ class MentorController extends Controller
         }
     }
 
+
+
+    public function bookRescheduleClass(Request $req)
+    {
+        DB::beginTransaction();
+        try{
+            $oldSlotBooked = MentorSlotBooked::findOrFail($req->existingSlotId);
+            $oldSlotBooked->bookingStatus = 3;
+            $oldSlotBooked->save();
+            $newBookingSlot = $oldSlotBooked->replicate();
+            $newBookingSlot->bookingStatus = 1;
+            $newBookingSlot->rescheduleStatus = 1;
+            $newBookingSlot->availableShiftId = $req->slotId;
+            $newBookingSlot->created_at = date('Y-m-d H:i:s');
+            $newBookingSlot->updated_at = date('Y-m-d H:i:s');
+            $newBookingSlot->save();
+            DB::commit();
+            //return response()->json(['data'=>$newBookingSlot,'data2'=>$oldSlotBooked]);
+            return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('mentor.booking.request')]);
+        }catch(Exception $e){
+            DB::rollback();
+            return response()->json(['error'=> true,'message'=>'Something went wrong please try after some time']);
+        }
+        
+    }
+
+
+
+
+
+
     public function stripeBookingConfirmed(Request $req)
     {
         $req->validate([
@@ -415,7 +446,7 @@ class MentorController extends Controller
         $guard = get_guard();
         if($guard == 'mentor'){
             $mentor = Auth::guard($guard)->user();
-            $booking = MentorSlotBooked::where('mentorId',$mentor->id)->with('slot_details')->orderBy('id','desc')->get();
+            $booking = MentorSlotBooked::where('mentorId',$mentor->id)->where('bookingStatus','!=','3')->with('slot_details')->orderBy('id','desc')->get();
             foreach ($booking as $userType) {
                 $user = [];
                 if($userType->userType == 'mentee'){

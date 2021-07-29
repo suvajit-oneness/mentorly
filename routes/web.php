@@ -64,6 +64,7 @@ Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.f
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
 // Route::get('mentor/full/availability/{mentorId}','Site\MentorController@viewFullAvailability')->name('mentor.full.availability');
 Route::post('mentor/booking/request','Site\MentorController@holdBookingRequest')->name('mentor.booking.slot');
+Route::post('mentor/booking/request','Site\MentorController@bookRescheduleClass')->name('mentor.booking.reschduleslot');
 Route::get('about-us','Site\WebsiteController@aboutUs')->name('aboutus');
 Route::get('contact-us','Site\WebsiteController@contactUs')->name('contactus');
 Route::get('logout','Site\WebsiteController@logout');
