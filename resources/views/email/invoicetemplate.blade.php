@@ -18,12 +18,13 @@
 	</style>
 	<![endif]-->
 </head>
+
 <body style="background-color:#efefef;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
   <table style="width:570px; margin:50px auto 10px;background-color:#fff;padding:30px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px #1cb3d3;">
     <thead>
       <tr>
-        <th style="text-align:left;"><a href="#"><img style="max-width: 150px;" src="./img/logo.png" alt="bachana tours"></a></th>
-        <th style="text-align:right;font-weight:400; font-size: 13px;">29th July, 2021</th>
+        <th style="text-align:left;"><a href="#"><img style="max-width: 150px;" src="{{url('/')}}/design/img/logo.png" alt="Mentorly"></a></th>
+        <th style="text-align:right;font-weight:400; font-size: 13px;">{{$todayDate}}</th>
       </tr>
     </thead>
     <tbody>
@@ -37,11 +38,9 @@
             <td style="height:35px;"></td>
         </tr>
         <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
-          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Invoice ID - </span><b style="color:green;font-weight:normal;margin:0">abcd1234567890</b></p>
-          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Class Name - </span> abcd1234567890</p>
-          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Slot - </span> Test</p>
-          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Mentor Name - </span> Jon Dow</p>
-          <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Amount - </span> Rs. 6000.00</p>
+          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Transanction ID - </span><b style="color:green;font-weight:normal;margin:0">{{$transactionId}}</b></p>
+          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Details - </span> {{$content}}</p>
+          <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Amount - </span>$ {{$amount}}</p>
         </td>
       </tr>
       <tr>
@@ -62,10 +61,10 @@
             <td class="text-footer1 pb10" style="color:#ababab; font-family:Arial, sans-serif; font-size:12px; line-height:13px; text-align:left; vertical-align:middle; padding-bottom:5px; padding-top: 20px;">© 2021 mentorly. All rights reserved</td>
             
             <td class="text-footer1 pb10" style="color:#ababab; font-family:Arial, sans-serif; font-size:10px; line-height:13px; text-align:right; vertical-align:middle; padding-bottom:5px; padding-top: 20px;">
-                <a href="" class="margin-right:5px;"><img src="./img/fb.png"></a>
-                <a href="" class="margin-right:5px;"><img src="./img/tw.png"></a>
-                <a href="" class="margin-right:5px;"><img src="./img/in.png"></a>
-                <a href="" class="margin-right:5px;"><img src="./img/insta.png"></a>
+                <a href="" class="margin-right:5px;"><img src="{{url('/')}}/design/img/fb.png"></a>
+                <a href="" class="margin-right:5px;"><img src="{{url('/')}}/design/img/tw.png"></a>
+                <a href="" class="margin-right:5px;"><img src="{{url('/')}}/design/img/in.png"></a>
+                <a href="" class="margin-right:5px;"><img src="{{url('/')}}/design/img/insta.png"></a>
             </td>
         </tr>
     </tfooter>

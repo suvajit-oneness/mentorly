@@ -152,7 +152,7 @@
 				</div>
 
 				<div class="button-place">
-					<a href="javascript:void(0)" class="prinery-btm blue-btm bookMentorButton">Book mentor</a>
+					
 					<a href="javascript:void(0)" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm messageToMentor">Message</a>
 				</div>
 

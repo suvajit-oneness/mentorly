@@ -77,6 +77,7 @@ Route::group(['prefix' => 'mentor'],function(){
 	Route::post('experience/log','Site\MentorController@yourExperienceSave')->name('mentor.experience.log.update');
 });
 
+Route::get('slot/booking/invoice','StripePaymentController@invoiceshow');
 // STRIPE Payment Routes
 Route::get('slot/booking/stripe', 'StripePaymentController@bookingSlotstripe')->name('slot.booking.stripe');
 Route::post('slot/booking/stripe', 'StripePaymentController@bookingStripePost')->name('slot.booking.stripe.post');

@@ -35,7 +35,7 @@ class StripePaymentController extends Controller
             "amount" => 100 * $req->amount,
             "currency" => "usd",
             "source" => $req->stripeToken,
-            "description" => "Test payment from itsolutionstuff.com."
+            "description" => "Mentorly Payment for Booking Slot"
         ]);
         if($payment->status == 'succeeded'){
             $user = Auth::guard($req->userType)->user();
@@ -53,8 +53,14 @@ class StripePaymentController extends Controller
         	$stripe->save();
             $dataMentee = [
                 'name' => $user->name,
+                'amount' => $req->amount,
+                'todayDate' => date('M-d-y'),
+                'transactionId' => $stripe->id,
                 'content' => 'We have received your payment $'.$req->amount.' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
             ];
+
+       // return view('email/invoicetemplate',compact('dataMentee'));
+
             sendMail($dataMentee,'email/menteeSlotPayment',$user->email,'Payment Successful for Mentorly Session !!');
             return redirect(route('stripe.payment.success').'?slotId='.$req->slotId.'&userType='.$req->userType.'&transactionId='.$stripe->id);
         }
@@ -69,4 +75,25 @@ class StripePaymentController extends Controller
     	$stripe = StripeTransaction::findOrfail($req->transactionId);
     	return view('stripe.thankyou',compact('stripe'));
     }
+
+
+
+    public function invoiceshow()
+    {
+        $dataMentee = [
+                'name' => 'souvik',
+                'amount' => '5000',
+                'todayDate' => '07-30-2021',
+                'transactionId' => '123456',
+                'content' => 'test content',
+            ];
+
+        return view('email/invoicetemplate',compact('dataMentee'));
+
+    }
+
+
+
+
+
 }
