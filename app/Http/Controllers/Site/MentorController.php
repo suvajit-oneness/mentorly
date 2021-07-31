@@ -334,6 +334,17 @@ class MentorController extends Controller
             $newBookingSlot->created_at = date('Y-m-d H:i:s');
             $newBookingSlot->updated_at = date('Y-m-d H:i:s');
             $newBookingSlot->save();
+
+
+            $data = array(
+                    'userId' => $oldSlotBooked->bookedUserId,
+                    'mentorId' =>  $oldSlotBooked->mentorId,
+                    'msg' => 'R',
+                    'reschduleslot' =>  $req->slotId,
+                    'isread' =>0
+                );
+            DB::table('notifications')->insert($data);
+
             DB::commit();
             //return response()->json(['data'=>$newBookingSlot,'data2'=>$oldSlotBooked]);
             return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('mentor.booking.request')]);
@@ -370,6 +381,15 @@ class MentorController extends Controller
                 $slotBooked->save();
                 $slot->available = 2;
                 $slot->save();
+                // notification tbl insert //
+                $data = array(
+                    'userId' => $user->id,
+                    'mentorId' => $slot->mentorId,
+                    'msg' => 'Your mentorly session has been booked with "Mr.'.$mentor->name.'" on '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                    'isread' =>0
+                );
+                DB::table('notifications')->insert($data);
+
                 $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
 
                 $dataMentee = [
