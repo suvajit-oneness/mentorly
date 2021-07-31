@@ -14,12 +14,9 @@
 
 
 					<div class="settings-details p-1" style="max-width: none;">
-
-
-					<nav aria-label="breadcrumb">
-					  <div class="table-responsive zoomTable">
-							<h5>Next Lesson</h5>
-							@if(count($recentlesson) > 0)
+						<h5>Next Lesson</h5>
+						<div class="table-responsive zoomTable">
+							@if(count($nextlesson) > 0)
 							<table class="table table-hover table-sm table-bordered">
 								<thead>
 									<tr>
@@ -33,15 +30,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($recentlesson as $pur)
+									@foreach($nextlesson as $pur)
 										<tr>
-											<td>{{$pur->id}}</td>
-											<td>{{date('Y-m-d h:i:s',strtotime($pur->created_at))}}</td>
-											<td>{{$pur->mentor->name}}</td>
-											<td>{{$pur->mentor->email}}</td>
-											<td>{{$pur->mentor->mobile}}</td>
-											<td>{{$pur->price}}</td>
-											<td>{{$pur->slot_details->date}} - {{$pur->slot_details->time_shift}}</td>
+											<td>{{$pur->slotbookid}}</td>
+											<td><?php echo date('m-d-y',strtotime($pur->created_at)) ?></td>
+											<td>{{$pur->name}}</td>
+											<td>{{$pur->email}}</td>
+											<td>{{$pur->mobile}}</td>
+											<td>$ {{$pur->amount/100}}</td>
+											<td>{{$pur->date}} - {{$pur->time_shift}}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -50,6 +47,10 @@
 								<h4 class="text-center p-3">You donot have any Booking</h4>
 							@endif
 						</div>
+
+
+					<nav aria-label="breadcrumb">
+					 
 					</nav>
 
 
@@ -71,13 +72,15 @@
 								<tbody>
 									@foreach($recentlesson as $pur)
 										<tr>
-											<td>{{$pur->id}}</td>
-											<td>{{date('Y-m-d h:i:s',strtotime($pur->created_at))}}</td>
-											<td>{{$pur->mentor->name}}</td>
-											<td>{{$pur->mentor->email}}</td>
-											<td>{{$pur->mentor->mobile}}</td>
-											<td>{{$pur->price}}</td>
-											<td>{{$pur->slot_details->date}} - {{$pur->slot_details->time_shift}}</td>
+											<td>{{$pur->slotbookid}}</td>
+											<td><?php echo date('m-d-y',strtotime($pur->created_at)) ?></td>
+											<td>{{$pur->name}}</td>
+											<td>{{$pur->email}}</td>
+											<td>{{$pur->mobile}}</td>
+											<td>$ {{$pur->amount/100}}</td>
+											<td>{{$pur->date}} - {{$pur->time_shift}}</td>
+
+											
 										</tr>
 									@endforeach
 								</tbody>
