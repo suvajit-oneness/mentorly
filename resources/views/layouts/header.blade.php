@@ -115,18 +115,15 @@
                                  $fromdetails = DB::table('notifications')
                                  ->join('available_shifts','notifications.existingSlotid','=','available_shifts.id')
                                  ->where('existingSlotid',$crows->existingSlotid)->get();
+                                 $frmdate = "";
+                                    $frmtime = "";
                                  if(!empty($fromdetails))
                                  {
                                         foreach($fromdetails as $fromdetailsrow)
                                          {
-                                             $frmdate = $fromdetailsrow->date;
-                                             $frmtime = $fromdetailsrow->time_shift;
+                                            $frmdate = $fromdetailsrow->date;
+                                            $frmtime = $fromdetailsrow->time_shift;
                                          }
-
-                                 }else{
-                                    $frmdate = "";
-                                    $frmtime = "";
-
                                  }
                                  
 
