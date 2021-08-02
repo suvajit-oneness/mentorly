@@ -116,7 +116,7 @@
                                  ->join('available_shifts','notifications.existingSlotid','=','available_shifts.id')
                                  ->where('existingSlotid',$crows->existingSlotid)->get();
                                  $frmdate = "";
-                                    $frmtime = "";
+                                 $frmtime = "";
                                  if(!empty($fromdetails))
                                  {
                                         foreach($fromdetails as $fromdetailsrow)
