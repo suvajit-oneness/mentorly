@@ -12,7 +12,7 @@ use App\Models\AvailableDay;
 use App\Models\AvailableShift;
 use Illuminate\Support\Str;
 //use Illuminate\Contracts\Encryption\DecryptException;
-
+use DB;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -211,6 +211,9 @@ class WebsiteController extends Controller
         $industry = \App\Models\Industry::get();
     	return view('website.findMentors',compact('mentors','seniority','request','days','industry'));
     }
+
+
+   
 
     public function getIndivisualSlots($mentor)
     {

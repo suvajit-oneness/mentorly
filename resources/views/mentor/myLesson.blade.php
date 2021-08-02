@@ -33,7 +33,7 @@
 									@foreach($nextlesson as $pur)
 										<tr>
 											<td>{{$pur->slotbookid}}</td>
-											<td><?php echo date('m-d-y',strtotime($pur->created_at)) ?></td>
+											<td><?php echo date('m-d-y',strtotime($pur->classbooked)) ?></td>
 											<td>{{$pur->name}}</td>
 											<td>{{$pur->email}}</td>
 											<td>{{$pur->mobile}}</td>
@@ -73,7 +73,7 @@
 									@foreach($recentlesson as $pur)
 										<tr>
 											<td>{{$pur->slotbookid}}</td>
-											<td><?php echo date('m-d-y',strtotime($pur->created_at)) ?></td>
+											<td><?php echo date('m-d-y',strtotime($pur->classbooked)) ?></td>
 											<td>{{$pur->name}}</td>
 											<td>{{$pur->email}}</td>
 											<td>{{$pur->mobile}}</td>

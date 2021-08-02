@@ -331,6 +331,7 @@ class MentorController extends Controller
             $newBookingSlot->bookingStatus = 1;
             $newBookingSlot->rescheduleStatus = 1;
             $newBookingSlot->availableShiftId = $req->slotId;
+            $newBookingSlot->ReschduleAgainstClassid = $oldSlotBooked->id;
             $newBookingSlot->created_at = date('Y-m-d H:i:s');
             $newBookingSlot->updated_at = date('Y-m-d H:i:s');
             $newBookingSlot->save();
@@ -341,6 +342,7 @@ class MentorController extends Controller
                     'mentorId' =>  $oldSlotBooked->mentorId,
                     'msg' => 'R',
                     'reschduleslot' =>  $req->slotId,
+                    'existingSlotid' =>  $oldSlotBooked->availableShiftId,
                     'isread' =>0
                 );
             DB::table('notifications')->insert($data);

@@ -33,46 +33,46 @@ class MenteeController extends Controller
                 if($guard == 'web'){$userType = 'mentee';}
                 elseif($guard == 'mentor'){$userType = 'mentor';}
 
-
                 if($userType=="mentor")
                 {
 
-                    $recentlesson = DB::table('mentor_slot_bookeds')->select('*','mentor_slot_bookeds.id as slotbookid')
+                    $recentlesson = DB::table('mentor_slot_bookeds')->select('*','mentor_slot_bookeds.id as slotbookid','mentor_slot_bookeds.created_at as classbooked')
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
-                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')->get();
+                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')->limit('20')->get();
 
 
                     $today = date('Y-m-d');
                     $nextlesson = DB::table('mentor_slot_bookeds')
-                    ->select('*','mentor_slot_bookeds.id as slotbookid')
+                    ->select('*','mentor_slot_bookeds.id as slotbookid','mentor_slot_bookeds.created_at as classbooked')
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
                     ->where('available_shifts.date','>',$today)
-                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')->orderBy('slotbookid','asc')
-                    ->limit('1')->get();
+                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')->orderBy('slotbookid','desc')
+                    ->limit('5')->get();
 
                     return view('mentor.myLesson',compact('recentlesson','nextlesson'));
 
                 }elseif($userType=="mentee"){
 
-                    $recentlesson = DB::table('mentor_slot_bookeds')->select('*','mentor_slot_bookeds.id as slotbookid')
+                    $recentlesson = DB::table('mentor_slot_bookeds')->select('*','mentor_slot_bookeds.id as slotbookid',
+                        'mentor_slot_bookeds.created_at as classbooked')
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
-                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')->get();
+                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')->limit('20')->get();
 
 
                     $today = date('Y-m-d');
                     $nextlesson = DB::table('mentor_slot_bookeds')
-                    ->select('*','mentor_slot_bookeds.id as slotbookid')
+                    ->select('*','mentor_slot_bookeds.id as slotbookid','mentor_slot_bookeds.created_at as classbooked')
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
                     ->where('available_shifts.date','>',$today)
-                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')->orderBy('slotbookid','asc')->limit('1')->get();
+                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')->orderBy('slotbookid','desc')->limit('5')->get();
                     return view('mentee.menteemyLesson',compact('recentlesson','nextlesson'));
 
                 }

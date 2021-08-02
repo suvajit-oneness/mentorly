@@ -95,11 +95,13 @@
                         $countnotification = DB::table('notifications')->where('mentorId',$userid)
                                     ->orderBy('id','desc')->get();
                         $reschdulebody = "You have reschduled a class ";
+                        $withmentee = " with mentee. ";
                         }else{
                          $userid =  Auth::guard(get_guard())->user()->id;
                         $countnotification = DB::table('notifications')->where('userId',$userid)
                                     ->orderBy('id','desc')->get();
                         $reschdulebody = "Your class has been reschduled ";
+                        $withmentee = "";
 
                         }
                         ?>
@@ -107,14 +109,36 @@
                         <div class="card shadow-sm card_notifi">
                             <small>{{date('m-d-y',strtotime($crows->created_at))}}</small>
                              <?php if($crows->msg=="R")  { 
+
+
+                                // echo $crows->existingSlotid; 
+                                 $fromdetails = DB::table('notifications')
+                                 ->join('available_shifts','notifications.existingSlotid','=','available_shifts.id')
+                                 ->where('existingSlotid',$crows->existingSlotid)->get();
+                                 if(!empty($fromdetails))
+                                 {
+                                        foreach($fromdetails as $fromdetailsrow)
+                                         {
+                                             $frmdate = $fromdetailsrow->date;
+                                             $frmtime = $fromdetailsrow->time_shift;
+                                         }
+
+                                 }else{
+                                    $frmdate = "";
+                                    $frmtime = "";
+
+                                 }
+                                 
+
+                                // to date //
                                 $details = DB::table('notifications')
                                 ->join('available_shifts','notifications.reschduleslot','=','available_shifts.id')
                                 ->where('reschduleslot',$crows->reschduleslot)->first();
-                                echo $reschdulebody.$details->date." at ". $details->time_shift;
+                                echo $reschdulebody." ".$frmdate." ".$frmtime. " to ".$details->date." at ". $details->time_shift;
                                 ?>
 
                                 <?php }else{ ?>
-                                <h6>{{$crows->msg}}</h6>
+                                <h6>{{$crows->msg}} {{$withmentee}}</h6>
                                 <?php } ?>
                             </p>
                         </div>
