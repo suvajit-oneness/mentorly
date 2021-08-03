@@ -187,16 +187,19 @@
 				<div class="short-by-holder">
 					<label>Sort By: </label>
 					<select name="sort_by" id="sort_by">
-						<option value="relevance">Relevance</option>
-						<option value="popularity">Popularity</option>
 						<option value="highestfirst">Highest First</option>
 						<option value="lowestfirst">Lowest First</option>
 						<option value="numberofreviews">Number of Reviews</option>
 						<option value="bestrating">Best Rating</option>
 					</select>
 				</div>
+				<datalist id="mentorList">
+					@foreach($mentorList as $mentor)
+						<option value="{{$mentor->name}}">
+					@endforeach
+				</datalist>
 				<div class="search-holder">
-					<input type="text" id="keyword" name="keyword" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif">
+					<input type="text" id="keyword" name="keyword" placeholder="Search by, Name, Keyword, or Company" value="@if(!empty($request['keyword'])){{$request['keyword']}}@endif" list="mentorList" autocomplete="off">
 					<span><img src="{{asset('design/images/magnifire.png')}}" id="searchFinalBtn"></span>
 				</div>
 			</div>
@@ -206,7 +209,7 @@
 		<div class="profile-wrapper">
 			<div class="profile-holder">
 				@foreach($mentors as $key => $mentor)
-					<div class="showhim">
+					<div class="showhim MentorListSorting" heighest="{{$mentor->charge_per_hour}}" lowest="{{$mentor->charge_per_hour}}" reviews="{{count($mentor->reviews)}}" rating="{{avgRatingOfMentors($mentor->reviews)}}">
 						<div class="profile-details-box">
 							<div class="profile-first">
 								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}">
@@ -310,6 +313,21 @@
 				$('#messageToMentorModal #mentorName').text('( '+mentorName+' )');
 				$('#messageToMentorModal #mentorMessage').val('');
 				$('#messageToMentorModal').modal('show');
+			}
+		});
+
+		$(document).on('change','#sort_by',function(){
+			var currentValue = $(this).val();
+			alert(currentValue);
+		});
+
+		var datalist = document.querySelector('datalist');
+		datalist.id = "";
+		$(document).on('input','#keyword',function(e){
+			var input = $(this).val();
+			datalist.id = '';
+			if(input != '' && input.length >= 1){
+				datalist.id = 'mentorList';
 			}
 		});
 

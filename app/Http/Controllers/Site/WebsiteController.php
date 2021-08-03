@@ -201,7 +201,7 @@ class WebsiteController extends Controller
         if(!empty($req->timeoftheweek)){
 
         }
-        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('mentors.name')->groupBy('mentors.id')->get();
+        $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('mentors.charge_per_hour','DESC')->groupBy('mentors.id')->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {
             $mentor->timeShift = $this->getIndivisualSlots($mentor);
@@ -209,7 +209,8 @@ class WebsiteController extends Controller
         $seniority = Seniority::whereStatus(1)->get();
         $request = $req->all();
         $industry = \App\Models\Industry::get();
-    	return view('website.findMentors',compact('mentors','seniority','request','days','industry'));
+        $mentorList = Mentor::whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->groupBy('name')->get();
+    	return view('website.findMentors',compact('mentors','seniority','request','days','industry','mentorList'));
     }
 
 

@@ -309,7 +309,7 @@ class MentorController extends Controller
         }else{
             $slot = AvailableShift::where('id',$req->slotId)->where('mentorId',$req->mentorId)->where('available',1)->first();
             if($slot){
-                if($guard == 'web'){$userType='mentee';}elseif($guard == 'mentor'){$userType='mentor';}
+                if($guard == 'web'){$userType='web';}elseif($guard == 'mentor'){$userType='mentor';}
                 $slot->available = 3;
                 $slot->save();
                 return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('slot.booking.stripe').'?slotId='.base64_encode($slot->id).'&userType='.base64_encode($guard).'&mentorId='.base64_encode($req->mentorId)]);
@@ -324,6 +324,7 @@ class MentorController extends Controller
     {
         DB::beginTransaction();
         try{
+             $guard = get_guard();
             $oldSlotBooked = MentorSlotBooked::findOrFail($req->existingSlotId);
             $oldSlotBooked->bookingStatus = 3;
             $oldSlotBooked->save();
@@ -334,17 +335,20 @@ class MentorController extends Controller
             $newBookingSlot->ReschduleAgainstClassid = $oldSlotBooked->id;
             $newBookingSlot->created_at = date('Y-m-d H:i:s');
             $newBookingSlot->updated_at = date('Y-m-d H:i:s');
+
             $newBookingSlot->save();
 
 
             $data = array(
                     'userId' => $oldSlotBooked->bookedUserId,
+                    'userType' => $oldSlotBooked->userType,
                     'mentorId' =>  $oldSlotBooked->mentorId,
                     'msg' => 'R',
                     'reschduleslot' =>  $req->slotId,
                     'existingSlotid' =>  $oldSlotBooked->availableShiftId,
                     'isread' =>0
                 );
+            
             DB::table('notifications')->insert($data);
 
             DB::commit();
@@ -386,9 +390,10 @@ class MentorController extends Controller
                 // notification tbl insert //
                 $data = array(
                     'userId' => $user->id,
+                    'userType' => $req->userType,
                     'mentorId' => $slot->mentorId,
-                    'msg' => 'Your mentorly session has been booked with "Mr.'.$mentor->name.'" on '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
-                    'isread' =>0
+                    'msg' => ' on '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                    'isread' => 0
                 );
                 DB::table('notifications')->insert($data);
 

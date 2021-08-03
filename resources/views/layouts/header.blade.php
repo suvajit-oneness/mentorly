@@ -1,4 +1,17 @@
 <header>
+    @php
+        $guard = get_guard();$notification = [];
+        if($guard != ''){
+            $user = Auth::guard($guard)->user();
+            $notification = \App\Models\Notification::select('*');
+            if($guard == 'mentor'){
+                $notification = $notification->where('mentorId',$user->id);
+            }elseif($guard == 'web'){
+                $notification = $notification->where('userId',$user->id)->where('userType',$guard);
+            }
+            $notification = $notification->orderBy('id','DESC')->get();
+        }
+    @endphp
     <div class="container">
         <div class="inner-header">
             <a href="{{url('/')}}" class="logo">
@@ -8,7 +21,7 @@
                 <div class="menu-wrap">
                     <ul class="menu">
                         <li><a href="{{route('mentors.find')}}">Find Mentors</a></li>
-                        @if(get_guard() == '' || get_guard() != 'mentor')
+                        @if($guard == '' || $guard != 'mentor')
                         <li><a href="{{route('singup.mentor')}}">Become a Mentor </a></li>
                         @endif
                         <!-- <li><a href="#">Careers</a></li> -->
@@ -17,7 +30,7 @@
                     </ul>
                 </div>
 
-                @if(get_guard() != '' && get_guard() != 'admin')
+                @if($guard != '' && $guard != 'admin')
 
 
                 <div class="navigation-right">
@@ -28,12 +41,6 @@
                                 <!-- <span>15</span> -->
                             </a>
                         </li>
-                        <!-- <li>
-                            <a href="#">
-                                <img src="{{asset('design/images/notification.png')}}">
-                                <span>8</span>
-                            </a>
-                        </li> -->
                         
 
 
@@ -41,24 +48,7 @@
                     <li>
                         <a href="javascript:void(0);" id="toggle" onclick="openNav()" class="mr-1 ml-3">
                             <img src="{{url('/')}}/design/images/notification.png">
-                            <span class="countter_bell">
-                                <?php
-                        $guard = get_guard();
-                        if($guard == 'mentor')
-                        {
-                          $userid = Auth::guard(get_guard())->user()->id;
-                          $countnotification = DB::table('notifications')->where('mentorId',$userid)->count();
-                          echo $countnotification;
-                        }else{
-                            $userid =   Auth::guard(get_guard())->user()->id;
-                            $countnotification = DB::table('notifications')->where('userId',$userid)->count();
-                             echo $countnotification;
-                        }
-                        ?>
-
-
-
-                            </span>
+                            <span class="countter_bell">{{count($notification)}}</span>
                         </a>
                     </li>
 
@@ -85,60 +75,29 @@
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     </div>
                     <div class="p-3 scroll-noti">
-
-                        <?php 
-                        $guard = get_guard();
-                        if($guard == 'mentor')
-                        { 
-
-                        $userid =  Auth::guard(get_guard())->user()->id;
-                        $countnotification = DB::table('notifications')->where('mentorId',$userid)
-                                    ->orderBy('id','desc')->get();
-                        $reschdulebody = "You have reschduled a class ";
-                        $withmentee = " with mentee. ";
-                        }else{
-                         $userid =  Auth::guard(get_guard())->user()->id;
-                        $countnotification = DB::table('notifications')->where('userId',$userid)
-                                    ->orderBy('id','desc')->get();
-                        $reschdulebody = "Your class has been reschduled ";
-                        $withmentee = "";
-
-                        }
-                        ?>
-                        @foreach($countnotification as  $crows)
-                        <div class="card shadow-sm card_notifi">
-                            <small>{{date('m-d-y',strtotime($crows->created_at))}}</small>
-                             <?php if($crows->msg=="R")  { 
-
-
-                                // echo $crows->existingSlotid; 
-                                 $fromdetails = DB::table('notifications')
-                                 ->join('available_shifts','notifications.existingSlotid','=','available_shifts.id')
-                                 ->where('existingSlotid',$crows->existingSlotid)->get();
-                                 $frmdate = "";
-                                 $frmtime = "";
-                                 if(!empty($fromdetails))
-                                 {
-                                        foreach($fromdetails as $fromdetailsrow)
-                                         {
-                                            $frmdate = $fromdetailsrow->date;
-                                            $frmtime = $fromdetailsrow->time_shift;
-                                         }
-                                 }
-                                 
-
-                                // to date //
-                                $details = DB::table('notifications')
-                                ->join('available_shifts','notifications.reschduleslot','=','available_shifts.id')
-                                ->where('reschduleslot',$crows->reschduleslot)->first();
-                                echo $reschdulebody." ".$frmdate." ".$frmtime. " to ".$details->date." at ". $details->time_shift;
-                                ?>
-
-                                <?php }else{ ?>
-                                <h6>{{$crows->msg}} {{$withmentee}}</h6>
-                                <?php } ?>
-                            </p>
-                        </div>
+                        @foreach($notification as $noti)
+                            @php
+                                $msg = '';
+                                if($guard == 'web'){
+                                    $msg = 'Your Mentor Session has been booked '.$noti->msg;
+                                    if($noti->msg == 'R'){
+                                        $reshdule = $noti->reshedule;
+                                        $existing = $noti->existing_slot;
+                                        $msg = 'Your Mentor session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
+                                    }
+                                }elseif($guard == 'mentor'){
+                                    $msg = 'Your Mentee Session has been booked '.$noti->msg;
+                                    if($noti->msg == 'R'){
+                                        $reshdule = $noti->reshedule;
+                                        $existing = $noti->existing_slot;
+                                        $msg = 'Your Mentee session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
+                                    }
+                                }
+                            @endphp
+                            <div class="card shadow-sm card_notifi">
+                                <small>{{date('m-d-y',strtotime($noti->created_at))}}</small>
+                                <h6>{{$msg}}</h6>
+                            </div>
                         @endforeach
                     </div>
                 </div>

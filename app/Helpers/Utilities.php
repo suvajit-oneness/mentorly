@@ -30,10 +30,17 @@ function dateDifferenceFromNow($startdate)
 }
 
 function sendMail($data,$template,$to,$subject){
-    Mail::send($template, $data, function($message)use ($data,$to,$subject) {
+    $newMail = new \App\Models\EmailLog();
+    $newMail->from = 'onenesstechsolution@gmail.com';
+    $newMail->to = $to;
+    $newMail->subject = $subject;
+    $newMail->view_file = $template;
+    $newMail->payload = json_encode($data);
+    $newMail->save();
+   /* Mail::send($template, $data, function($message)use ($data,$to,$subject) {
         $message->to($to, $data['name'])->subject($subject);
         $message->from('onenesstechsolution@gmail.com','Mentorly');
-    });
+    });*/
 }
 
 if (!function_exists('imageResizeAndSave')) {
