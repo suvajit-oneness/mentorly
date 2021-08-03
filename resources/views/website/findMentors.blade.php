@@ -318,6 +318,7 @@
 
 		$(document).on('change','#sort_by',function(){
 			var currentValue = $(this).val();
+			$('#lowest').show();
 			alert(currentValue);
 		});
 

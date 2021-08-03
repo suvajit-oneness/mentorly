@@ -40,7 +40,9 @@ class MenteeController extends Controller
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
-                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')->limit('20')->get();
+                    ->where('mentor_slot_bookeds.mentorId',$user->id)->where('bookingStatus','!=','3')
+                    ->orderBy('mentor_slot_bookeds.id','desc')->skip(5)
+                    ->limit('20')->get();
 
 
                     $today = date('Y-m-d');
@@ -62,7 +64,9 @@ class MenteeController extends Controller
                     ->join('stripe_transactions','mentor_slot_bookeds.stripeTransactionId','=','stripe_transactions.id')
                     ->join('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')
                     ->join('users','mentor_slot_bookeds.mentorId','=','users.id')
-                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')->limit('20')->get();
+                    ->where('bookedUserId',$user->id)->where('bookingStatus','!=','3')
+                    ->orderBy('mentor_slot_bookeds.id','desc')->skip(5)
+                    ->limit('20')->get();
 
 
                     $today = date('Y-m-d');
