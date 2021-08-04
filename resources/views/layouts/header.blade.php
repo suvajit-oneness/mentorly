@@ -83,21 +83,27 @@
                                     if($noti->msg == 'R'){
                                         $reshdule = $noti->reshedule;
                                         $existing = $noti->existing_slot;
-                                        $msg = 'Your Mentor session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
+                                        if($reshdule && $existing){
+                                            $msg = 'Your Mentor session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;    
+                                        }
                                     }
                                 }elseif($guard == 'mentor'){
                                     $msg = 'Your Mentee Session has been booked '.$noti->msg;
                                     if($noti->msg == 'R'){
                                         $reshdule = $noti->reshedule;
                                         $existing = $noti->existing_slot;
-                                        $msg = 'Your Mentee session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
+                                        if($reshdule && $existing){
+                                            $msg = 'Your Mentee session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
+                                        }
                                     }
                                 }
                             @endphp
-                            <div class="card shadow-sm card_notifi">
-                                <small>{{date('m-d-y',strtotime($noti->created_at))}}</small>
-                                <h6>{{$msg}}</h6>
-                            </div>
+                            @if($msg != '')
+                                <div class="card shadow-sm card_notifi">
+                                    <small>{{date('m-d-y',strtotime($noti->created_at))}}</small>
+                                    <h6>{{$msg}}</h6>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
