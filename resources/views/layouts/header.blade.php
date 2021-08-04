@@ -203,7 +203,9 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <ul class="profile-dropdown">
                             <li><a href="{{route('user.message.log')}}">Messages</a></li>
-                            <!-- <li><a href="#">My Lessons</a></li> -->
+                            @if($guard == 'mentor')
+                                <li><a href="{{route('mentor.details',base64_encode($user->id))}}?date={{date('Y-m-d')}}">View Profile</a></li>
+                            @endif
                             <!-- <li><a href="#">Invite a friend </a></li> -->
                             <li><a href="{{route('mentor.mentee.setting')}}">Accounts</a></li>
                             <li><a href="{{url('logout')}}">Log out</a></li>
