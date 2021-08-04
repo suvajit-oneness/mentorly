@@ -27,12 +27,15 @@
 							</thead>
 							<tbody>
 								@foreach($booking as $book)
+								@php
+									$user = $book->userDetails;
+								@endphp
 								<tr>
 									<td>{{$book->id}}</td>
 									<td>{{date('Y-m-d h:i:s',strtotime($book->created_at))}}</td>
-									<td>{{($book->userDetails) ? $book->userDetails->name : 'N/A'}}</td>
-									<td>{{($book->userDetails) ? $book->userDetails->email : 'N/A'}}</td>
-									<td>{{($book->userDetails) ? $book->userDetails->mobile : 'N/A'}}</td>
+									<td>{{($user) ? $user->name : 'N/A'}}</td>
+									<td>{{($user) ? $user->email : 'N/A'}}</td>
+									<td>{{($user) ? $user->mobile : 'N/A'}}</td>
 									<td>$ {{$book->transaction_detail->amount / 100}}</td>
 									<td>@if($book->slot_details){{$book->slot_details->date}} - {{$book->slot_details->time_shift}}@endif</td>
 									<td>
