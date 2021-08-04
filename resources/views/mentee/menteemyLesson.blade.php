@@ -14,9 +14,9 @@
 
 
 					<div class="settings-details p-1" style="max-width: none;">
-						<h5>Next Lesson</h5>
+						<h5>Upcoming Lesson</h5>
 						<div class="table-responsive zoomTable">
-							@if(count($nextlesson) > 0)
+							@if(count($lession) > 0)
 							<table class="table table-hover table-sm table-bordered">
 								<thead>
 									<tr>
@@ -25,38 +25,45 @@
 										<th>Mentor Name</th>
 										<th>Mentor Email</th>
 										<th>Mentor Mobile</th>
-										<th>Booking Amount</th>
 										<th>Booking Slot</th>
+										<th>Booking Amount</th>
+										<th>Transaction Id</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($nextlesson as $pur)
-										<tr>
-											<td>{{$pur->slotbookid}}</td>
-											<td><?php echo date('m-d-y',strtotime($pur->classbooked)) ?></td>
-											<td>{{$pur->name}}</td>
-											<td>{{$pur->email}}</td>
-											<td>{{$pur->mobile}}</td>
-											<td>$ {{$pur->amount/100}}</td>
-											<td>{{$pur->date}} - {{$pur->time_shift}}</td>
-										</tr>
+									@php $counter = 0;@endphp
+									@foreach($lession as $index => $pur)
+										@if($index <= 5)
+											@php
+												$mentor = $pur->mentor;
+												$transaction = $pur->transaction_detail;
+												$slot = $pur->slot_details;
+											@endphp
+											<tr>
+												<td>{{$pur->id}}</td>
+												<td>{{date('m-d-y',strtotime($pur->created_at))}}</td>
+												<td>{{$mentor->name}}</td>
+												<td>{{$mentor->email}}</td>
+												<td>{{$mentor->mobile}}</td>
+												<td>{{$slot->date}} - {{$slot->time_shift}}</td>
+												<td>$ {{$transaction->amount/100}}</td>
+												<td>{{$transaction->transactionId}}</td>
+											</tr>
+											@php $counter++; @endphp
+										@else
+											@break
+										@endif
 									@endforeach
 								</tbody>
 							</table>
 							@else
-								<h4 class="text-center p-3">You donot have any Booking</h4>
+							<h4 class="text-center p-3">You donot have any Booking</h4>
 							@endif
 						</div>
-
-
-					<nav aria-label="breadcrumb">
-					 
-					</nav>
-
-
+						<nav aria-label="breadcrumb"></nav>
+						@if(count($lession) > 5 && $counter >= 5)
+						<h5>My Lesson</h5>
 						<div class="table-responsive zoomTable">
-							<h5>My Lesson</h5>
-							@if(count($recentlesson) > 0)
 							<table class="table table-hover table-sm table-bordered">
 								<thead>
 									<tr>
@@ -65,30 +72,36 @@
 										<th>Mentor Name</th>
 										<th>Mentor Email</th>
 										<th>Mentor Mobile</th>
-										<th>Booking Amount</th>
 										<th>Booking Slot</th>
+										<th>Booking Amount</th>
+										<th>Transaction Id</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($recentlesson as $pur)
-										<tr>
-											<td>{{$pur->slotbookid}}</td>
-											<td><?php echo date('m-d-y',strtotime($pur->classbooked)) ?></td>
-											<td>{{$pur->name}}</td>
-											<td>{{$pur->email}}</td>
-											<td>{{$pur->mobile}}</td>
-											<td>$ {{$pur->amount/100}}</td>
-											<td>{{$pur->date}} - {{$pur->time_shift}}</td>
-
-											
-										</tr>
+									@foreach($lession as $key => $pur)
+										@if($key > 5)
+											@php
+												$mentor = $pur->mentor;
+												$transaction = $pur->transaction_detail;
+												$slot = $pur->slot_details;
+											@endphp
+											<tr>
+												<td>{{$pur->id}}</td>
+												<td>{{date('m-d-y',strtotime($pur->created_at))}}</td>
+												<td>{{$mentor->name}}</td>
+												<td>{{$mentor->email}}</td>
+												<td>{{$mentor->mobile}}</td>
+												<td>{{$slot->date}} - {{$slot->time_shift}}</td>
+												<td>$ {{$transaction->amount/100}}</td>
+												<td>{{$transaction->transactionId}}</td>
+											</tr>
+										@endif
 									@endforeach
 								</tbody>
 							</table>
-							@else
-								<h4 class="text-center p-3">You donot have any Booking</h4>
-							@endif
 						</div>
+						@endif
+
 					</div>
 				</div>
 			</div>
@@ -97,6 +110,6 @@
 </section>
 
 @section('script')
-	<script type="text/javascript"></script>
+<script type="text/javascript"></script>
 @stop
 @endsection

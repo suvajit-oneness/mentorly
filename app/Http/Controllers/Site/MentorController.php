@@ -473,10 +473,10 @@ class MentorController extends Controller
         $guard = get_guard();
         if($guard == 'mentor'){
             $mentor = Auth::guard($guard)->user();
-            $booking = MentorSlotBooked::where('mentorId',$mentor->id)->where('bookingStatus','!=','3')->with('slot_details')->orderBy('id','desc')->get();
+            $booking = MentorSlotBooked::where('mentorId',$mentor->id)->where('bookingStatus','!=','3')->orderBy('id','desc')->get();
             foreach ($booking as $userType) {
                 $user = [];
-                if($userType->userType == 'mentee'){
+                if($userType->userType == 'web'){
                     $user = User::where('id',$userType->bookedUserId)->first();
                 }elseif($userType->userType == 'mentor'){
                     $user = Mentor::where('id',$userType->bookedUserId)->first();
