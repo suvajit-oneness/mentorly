@@ -61,7 +61,8 @@ class StripePaymentController extends Controller
 
        // return view('email/invoicetemplate',compact('dataMentee'));
 
-            sendMail($dataMentee,'email/menteeSlotPayment',$user->email,'Payment Successful for Mentorly Session !!');
+           // sendMail($dataMentee,'email/menteeSlotPayment',$user->email,'Payment Successful for Mentorly Session !!');
+            sendMail($dataMentee,'email/invoicetemplate',$user->email,'Payment Successful for Mentorly Session !!');
             return redirect(route('stripe.payment.success').'?slotId='.$req->slotId.'&userType='.$req->userType.'&transactionId='.$stripe->id);
         }
         return back();

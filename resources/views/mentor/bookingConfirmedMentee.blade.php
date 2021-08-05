@@ -58,24 +58,17 @@
 										@endif
 									</td>
 									<td>
-										@if($book->bookingStatus!=1)
+										@if($book->bookingStatus==0)
 										<a href="{{route('booking.request.approve',$book->id)}}" onclick="return confirm('Are you sure to active this ?	')">
 										<button class="btn-success">Approve</button>
 										</a>
-										@endif
-										@if($book->bookingStatus!=2)
 										<a href="{{route('booking.request.reject',$book->id)}}" onclick="return confirm('Are you sure to Reject this ?	')">
 										<button class="btn-danger">Reject</button>
 										</a>
-										@endif
-
-										@if($book->rescheduleStatus!=1)
-										@if($book->bookingStatus!=3)
 										<a href="{{route('booking.request.reschedule',['id'=>$book->id,
 											'mentorId'=>base64_encode($book->mentorId)])}}" onclick="return confirm('Are you sure to Reschedule this ?	')">
 										<button class="btn-warning">Reschedule</button>
 										</a>
-										@endif
 										@endif
 									</td>
 								</tr>
