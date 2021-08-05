@@ -30,6 +30,7 @@ Route::post('forget/password/{userType}','Site\WebsiteController@postForgetPassw
 // reset password link generate //
 Route::get('resetPassword/{userid?}','Site\WebsiteController@userResetPassword')->name('resetPassword');
 Route::post('updatepassword','Site\WebsiteController@userUpdatePassword')->name('updatepassword');
+Route::post('reviewpost','Site\MentorController@reviewpost')->name('reviewpost');
 
 
 

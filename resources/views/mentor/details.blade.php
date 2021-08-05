@@ -43,7 +43,7 @@
 							<div class="time-zone">
 								<select class="select-style" id="sel1">
 									@foreach($timezone as $key => $zone)
-										<option value="{{$zone->id}}" @if($mentor->timezone_id == $zone->id){{'selected'}}@endif>{{$zone->name}}</option>
+									<option value="{{$zone->id}}" @if($mentor->timezone_id == $zone->id){{'selected'}}@endif>{{$zone->name}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -51,25 +51,25 @@
 						<div class="calender-body">
 							<div class="calender-head">
 								@foreach($daysData as $day)
-									<div class="dayname">{{$day['day']}}<br>({{$day['short_date']}})</div>	
+								<div class="dayname">{{$day['day']}}<br>({{$day['short_date']}})</div>	
 								@endforeach
 							</div>
 							<div class="calender-time">
 								@foreach($daysData as $day)
-									<div class="time-avali">
-										@foreach($day['available'] as $slot)
-											
-												@if($slot['available'] == 2)
-												<div class="time-slot time_stot_active">
-													<a href="javascript:void(0)" style="color: #fff">{{$slot['time_shift']}}</a>
-												</div>
-												@else
-												<div class="time-slot">
-													<a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
-												</div>
-												@endif
-										@endforeach
+								<div class="time-avali">
+									@foreach($day['available'] as $slot)
+
+									@if($slot['available'] == 2)
+									<div class="time-slot time_stot_active">
+										<a href="javascript:void(0)" style="color: #fff">{{$slot['time_shift']}}</a>
 									</div>
+									@else
+									<div class="time-slot">
+										<a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
+									</div>
+									@endif
+									@endforeach
+								</div>
 								@endforeach
 							</div>
 						</div>
@@ -77,6 +77,52 @@
 					<!-- mentor time sectioon end  -->
 
 				</div>
+
+
+				<!-- review start -->
+				<div class="mentor-det-details no-flex reviews-place">
+					<h2 class="medium-heading">Reviews <span>({{count($mentor->reviews)}})</span></h2>
+
+					<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
+						{{ csrf_field() }}
+						<div class="form-group required">
+							  @php
+						        $guard = get_guard();$notification = [];
+						        if($guard != ''){
+						            $user = Auth::guard($guard)->user();
+						        }
+						    @endphp
+						    <input type="hidden" name="currenturl" value="{{url()->full()}}">
+							<input type="hidden" name="userid" value="{{$user->id}}"> 
+							<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
+
+							<div class="col-sm-12">
+								<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
+								<label class="star star-5" for="star-5"></label>
+								<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
+								<label class="star star-4" for="star-4"></label>
+								<input class="star star-3" value="3" id="star-3" type="radio" name="rating"/>
+								<label class="star star-3" for="star-3"></label>
+								<input class="star star-2" value="2" id="star-2" type="radio" name="rating"/>
+								<label class="star star-2" for="star-2"></label>
+								<input class="star star-1" value="1" id="star-1" type="radio" name="rating"/>
+								<label class="star star-1" for="star-1"></label>
+							</div>
+
+
+							<div class="col-sm-12">
+								<textarea name="review" class="form-control"></textarea>
+							</div>
+
+							<div class="col-sm-12">
+							<button type="submit" name="submit" class="btn btn-primary">Post</button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+
+				<!-- review end -->
 
 				@if(count($mentor->reviews) > 0)
 				<div class="mentor-det-details no-flex reviews-place">
@@ -128,22 +174,22 @@
 						<div class="row-title"></div>
 						<div class="row-cell">
 							@foreach($days as $day)
-								<div class="cell">{{$day->short_day}}</div>
+							<div class="cell">{{$day->short_day}}</div>
 							@endforeach
 						</div>
 					</div>
 					@foreach($mentor->timeShift as $timeShift)
-						<div class="row-grid">
-							<div class="row-title">
-								<span class="daytime">{{$timeShift['shift_name']}}</span>
-								<span class="time">{{$timeShift['shift']}}</span>
-							</div>
-							<div class="row-cell">
-								@foreach($timeShift['days'] as $av_day)
-									<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
-								@endforeach
-							</div>
+					<div class="row-grid">
+						<div class="row-title">
+							<span class="daytime">{{$timeShift['shift_name']}}</span>
+							<span class="time">{{$timeShift['shift']}}</span>
 						</div>
+						<div class="row-cell">
+							@foreach($timeShift['days'] as $av_day)
+							<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
+							@endforeach
+						</div>
+					</div>
 					@endforeach
 				</div>
 
@@ -164,103 +210,103 @@
 
 <!-- Message Modal -->
 <div class="modal fade" id="messageToMentorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  	<div class="modal-dialog" role="document">
-    	<div class="modal-content">
-      		<div class="modal-header">
-        		<h5 class="modal-title" id="exampleModalLabel">Message to <span id="mentorName"></span></h5>
-        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          			<span aria-hidden="true">&times;</span>
-        		</button>
-      		</div>
-      		<div class="modal-body">
-      			<div class="form-group">
-      				<textarea placeholder="Your message" name="message" id="mentorMessage" class="form-control"></textarea>
-      				<span id="errorMessage" class="text-danger"></span>
-      			</div>
-      		</div>
-      		<div class="modal-footer">
-        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        		<button type="button" id="modalMessageSendBtn" class="btn btn-primary">Send Message</button>
-      		</div>
-    	</div>
-  	</div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Message to <span id="mentorName"></span></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<textarea placeholder="Your message" name="message" id="mentorMessage" class="form-control"></textarea>
+					<span id="errorMessage" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="modalMessageSendBtn" class="btn btn-primary">Send Message</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section('script')
-	<script type="text/javascript">
-		var mentorId = '{{$mentor->id}}';
-		$(document).on('click','.messageToMentor',function(){
-			var checkGuard = '{{get_guard()}}';$('#errorMessage').empty();
-			mentorId = parseInt($(this).attr('data-mentor'));
-			if(checkGuard == '' || checkGuard == 'admin'){
-				alert('you have to perform login before sending message');
-			}else{
-				var mentorName = $(this).attr('data-name');
-				$('#messageToMentorModal #mentorName').text('( '+mentorName+' )');
-				$('#messageToMentorModal #mentorMessage').val('');
-				$('#messageToMentorModal').modal('show');
-			}
-		});
+<script type="text/javascript">
+	var mentorId = '{{$mentor->id}}';
+	$(document).on('click','.messageToMentor',function(){
+		var checkGuard = '{{get_guard()}}';$('#errorMessage').empty();
+		mentorId = parseInt($(this).attr('data-mentor'));
+		if(checkGuard == '' || checkGuard == 'admin'){
+			alert('you have to perform login before sending message');
+		}else{
+			var mentorName = $(this).attr('data-name');
+			$('#messageToMentorModal #mentorName').text('( '+mentorName+' )');
+			$('#messageToMentorModal #mentorMessage').val('');
+			$('#messageToMentorModal').modal('show');
+		}
+	});
 
-		$(document).on('click','#modalMessageSendBtn',function(){
-			var submitBtn = $(this);
-			$('#errorMessage').empty();
-			var message = $('#messageToMentorModal #mentorMessage').val();
-			if(message == ''){
-				$('#errorMessage').empty().append('Please type your message');
-			}else{
-				submitBtn.attr('disabled',true);
-				$.ajax({
-					url : '{{Route('message.submit.to.mentor')}}',
-					type: 'post',
-					data: {message:message,mentorId:mentorId,'_token':'{{csrf_token()}}'},
-					success:function(data){
-						if(data.error == true){
-							$('#messageToMentorModal #errorMessage').text(data.message);
-						}else{
-							$('#messageToMentorModal').modal('hide');
-						}
-						submitBtn.attr('disabled',false);
+	$(document).on('click','#modalMessageSendBtn',function(){
+		var submitBtn = $(this);
+		$('#errorMessage').empty();
+		var message = $('#messageToMentorModal #mentorMessage').val();
+		if(message == ''){
+			$('#errorMessage').empty().append('Please type your message');
+		}else{
+			submitBtn.attr('disabled',true);
+			$.ajax({
+				url : '{{Route('message.submit.to.mentor')}}',
+				type: 'post',
+				data: {message:message,mentorId:mentorId,'_token':'{{csrf_token()}}'},
+				success:function(data){
+					if(data.error == true){
+						$('#messageToMentorModal #errorMessage').text(data.message);
+					}else{
+						$('#messageToMentorModal').modal('hide');
 					}
-				});
-			}
-		});
+					submitBtn.attr('disabled',false);
+				}
+			});
+		}
+	});
 
-		$(document).on('click','.slotBooking',function(){
-			var guard = '{{get_guard()}}';
-			if(guard == '' || guard == 'admin'){
-				alert('you have to perform login before booking slot');
-			}else{
-				var slot = $(this).attr('data-slot'),slotId = $(this).attr('data-slotid');
-				swal({
-				  	title: "Are you sure?",
-				  	text: "you want to proceed the booking Slot "+slot+'?',
-				  	icon: "warning",
-				  	buttons: true,
-				  	dangerMode: true,
-				})
-				.then((willDelete) => {
-				  	if (willDelete) {
-				  		$.ajax({
-							url : '{{Route('mentor.booking.slot')}}',
-							type: 'post',
-							data: {slotId:slotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
-							success:function(data){
-								if(data.error == false){
-									window.location.href=data.redirectURL;
-								}else{
-									swal('Error',data.msg);
-								}
+	$(document).on('click','.slotBooking',function(){
+		var guard = '{{get_guard()}}';
+		if(guard == '' || guard == 'admin'){
+			alert('you have to perform login before booking slot');
+		}else{
+			var slot = $(this).attr('data-slot'),slotId = $(this).attr('data-slotid');
+			swal({
+				title: "Are you sure?",
+				text: "you want to proceed the booking Slot "+slot+'?',
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url : '{{Route('mentor.booking.slot')}}',
+						type: 'post',
+						data: {slotId:slotId,mentorId:mentorId,'_token':'{{csrf_token()}}'},
+						success:function(data){
+							if(data.error == false){
+								window.location.href=data.redirectURL;
+							}else{
+								swal('Error',data.msg);
 							}
-						});
-				  	}
-				});
-			}
-		});
+						}
+					});
+				}
+			});
+		}
+	});
 
-		$(document).on('click','.bookMentorButton',function(){
-			alert('Please select the slot from available Slots List');
-		});
-	</script>
+	$(document).on('click','.bookMentorButton',function(){
+		alert('Please select the slot from available Slots List');
+	});
+</script>
 @stop
 @endsection
