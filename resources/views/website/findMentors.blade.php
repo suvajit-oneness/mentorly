@@ -187,10 +187,10 @@
 				<div class="short-by-holder">
 					<label>Sort By: </label>
 					<select name="sort_by" id="sort_by">
-						<option value="highestfirst">Highest First</option>
-						<option value="lowestfirst">Lowest First</option>
-						<option value="numberofreviews">Number of Reviews</option>
-						<option value="bestrating">Best Rating</option>
+						<option value="heighest">Highest First</option>
+						<option value="lowest">Lowest First</option>
+						<option value="reviews">Number of Reviews</option>
+						<option value="rating">Best Rating</option>
 					</select>
 				</div>
 				<datalist id="mentorList">
@@ -209,7 +209,7 @@
 		<div class="profile-wrapper">
 			<div class="profile-holder">
 				@foreach($mentors as $key => $mentor)
-					<div class="showhim MentorListSorting" heighest="{{$mentor->charge_per_hour}}" lowest="{{$mentor->charge_per_hour}}" reviews="{{count($mentor->reviews)}}" rating="{{avgRatingOfMentors($mentor->reviews)}}">
+					<div class="showhim MentorListSorting" data-heighest="{{$mentor->charge_per_hour}}" data-lowest="{{$mentor->charge_per_hour}}" data-reviews="{{count($mentor->reviews)}}" data-rating="{{avgRatingOfMentors($mentor->reviews)}}">
 						<div class="profile-details-box">
 							<div class="profile-first">
 								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}">
@@ -316,11 +316,6 @@
 			}
 		});
 
-		$(document).on('change','#sort_by',function(){
-			var currentValue = $(this).val();
-			$('#lowest').show();
-			alert(currentValue);
-		});
 
 		var datalist = document.querySelector('datalist');
 		datalist.id = "";
@@ -384,6 +379,35 @@
 				$('.mul-select-dropdown').toggleClass('show');
 			});
 		});
+
+		// $(document).on('change','#sort_by',function(){
+		// 	var currentValue = $(this).val();
+		// 	$('#lowest').show();
+		// 	alert(currentValue);
+		// });
+		$("#sort_by").on("change", function() {
+			let sortByFilter = $(this).val();
+			let divData = [];
+			$(".MentorListSorting").each(function(i) {
+				console.log(sortByFilter);
+				let abc = [];
+				abc["sort"] = $(this).attr('data-'+sortByFilter);
+				abc["content"] = '<div class="showhim MentorListSorting" data-heighest="'+$(this).attr('data-heighest')+'" data-lowest="'+$(this).attr('data-lowest')+'" data-reviews="'+$(this).attr('data-reviews')+'" data-rating="'+$(this).attr('data-rating')+'">'+$(this).html()+'</div>';
+				divData[i] = abc;
+			})
+			
+			divData = divData.sort(function(a,b) {
+				if(sortByFilter == "lowest") {
+					return a["sort"] - b["sort"];
+				}
+				return b["sort"] - a["sort"];
+			});
+			$(".profile-holder").empty();
+			$.each(divData, function(i, val) {
+				$(".profile-holder").append(val.content);
+			})
+			console.log(divData);
+		})
 	</script>
 @stop
 @endsection
