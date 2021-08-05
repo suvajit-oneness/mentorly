@@ -350,6 +350,29 @@ public function bookRescheduleClass(Request $req)
         'isread' =>0
     );
 
+
+    $userid =   $oldSlotBooked->bookedUserId; 
+
+    $oldshiftid =   $oldSlotBooked->id;
+    $oldShiftDetails = AvailableShift::find($oldshiftid);
+
+    $newshiftId = $req->slotId; 
+    $newshiftDetails = AvailableShift::find($newshiftId);
+    $userDetails = User::find($userid);
+
+
+     $dataMentee = [
+                'name' => $userDetails->name,
+                'todayDate' => date('M-d-y'),
+                'content' => 'Your booking for the mentorly session of dated '.date('M d,Y',strtotime($oldShiftDetails->date)).' at '.date('H:i:s',strtotime($oldShiftDetails->time_shift)).' has been reschdules to '.date('M d,Y',strtotime($newshiftDetails->date)). ' at '.date('H:i:s',strtotime($newshiftDetails->time_shift)),
+            ];
+    sendMail($dataMentee,'email/reschduleBooking',$userDetails->email,'Your class booking has been Rescheduled !!');
+
+
+
+
+
+
        DB::table('notifications')->insert($data);
 
        DB::commit();
@@ -496,7 +519,20 @@ public function approveBookingrequest(Request $req,$id)
     $data = array(
         'bookingStatus' => 1
     );
-    DB::table('mentor_slot_bookeds')->where('id',$id)->update($data);   
+    $slotdetails = MentorSlotBooked::find($id);
+    $userid =  $slotdetails->bookedUserId; 
+    $availableShiftId =  $slotdetails->availableShiftId; 
+    $shiftDetails = AvailableShift::find($availableShiftId);
+    $userDetails = User::find($userid);
+
+    DB::table('mentor_slot_bookeds')->where('id',$id)->update($data); 
+    $dataMentee = [
+                'name' => $userDetails->name,
+                'todayDate' => date('M-d-y'),
+                'content' => 'Your booking for the mentorly session dated '.date('M d,Y',strtotime($shiftDetails->date)).' at '.date('H:i:s',strtotime($shiftDetails->time_shift)).' has been approved.',
+            ];
+    sendMail($dataMentee,'email/approveBooking',$userDetails->email,'Your class booking has been Approved !!');
+
     return redirect(route('mentor.booking.request'));
 
 }
@@ -508,7 +544,19 @@ public function rejectBookingrequest(Request $req,$id)
     $data = array(
         'bookingStatus' => 2
     );
+    $slotdetails = MentorSlotBooked::find($id);
+    $userid =  $slotdetails->bookedUserId; 
+    $availableShiftId =  $slotdetails->availableShiftId; 
+    $shiftDetails = AvailableShift::find($availableShiftId);
+    $userDetails = User::find($userid);
+
     DB::table('mentor_slot_bookeds')->where('id',$id)->update($data);   
+    $dataMentee = [
+                'name' => $userDetails->name,
+                'todayDate' => date('M-d-y'),
+                'content' => 'Your booking for the mentorly session dated '.date('M d,Y',strtotime($shiftDetails->date)).' at '.date('H:i:s',strtotime($shiftDetails->time_shift)).' has been Rejected.',
+            ];
+    sendMail($dataMentee,'email/rejectedBooking',$userDetails->email,'Your class booking has been Rejected !!');
     return redirect(route('mentor.booking.request'));
 }
 
