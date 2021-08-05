@@ -57,7 +57,7 @@
                     <script>
                         function openNav() {
                           document.getElementById("mySidenav").style.width = "300px";
-                          document.getElementById("toggle").style.position = "static";
+                          document.getElementById("toggle").style.position = "relative";
                       }
 
                       function closeNav() {
@@ -74,7 +74,7 @@
                         <h6>Notification</h6>
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     </div>
-                    <div class="p-3 scroll-noti">
+                    <div class="scroll-noti">
                         @foreach($notification as $noti)
                             @php
                                 $msg = '';
@@ -107,96 +107,6 @@
                         @endforeach
                     </div>
                 </div>
-
-
-
-                <style type="text/css">
-
-
-                    .sidenav {
-                        height: 100vh;
-                        width: 0;
-                        position: fixed;
-                        z-index: 1;
-                        top: 0;
-                        right:0;
-                        background-color: #fff;
-                        overflow-x: hidden;
-                        transition: 0.5s;
-                        box-shadow: 0 7px 8px rgba(0, 0, 0, 0.15);
-                    }
-                    .notification_title{
-                        border-bottom:1px solid #efefef;
-                        padding:20px;
-                    }
-                    .notification_title h6{
-                        font-size:18px;
-                        font-weight:600;
-                        color:#000;
-                        margin-bottom:0px;
-                    }
-                    .scroll-noti{
-                        height: 573px;
-                        overflow-y: auto;
-                    }
-                    .card_notifi {
-                        margin-bottom:0;
-                        border: none;
-                        width: 100%;
-                        padding: 10px;
-                        border-radius: 0;
-                        box-shadow: none !important;
-                        border-bottom: 1px solid #e6e6e6;
-                    }
-                    .card_notifi small {
-                        font-size: 10px;
-                        color: #a5a5a5;
-                        margin-bottom: 10px;
-                        font-weight: 400;
-                        text-align: right;
-                    }
-                    .card_notifi h6 {
-                        font-size: 14px;
-                        color: #000;
-                        margin-bottom: 4px;
-                        font-weight: 400;
-                        font-family: 'Lato', sans-serif;
-                        color: #2e2b2b;
-                    }
-                    .card_notifi p {
-                        font-size: 13px;
-                        color: #afafaf;
-                        margin-bottom: 0;
-                        font-weight: 600 !important;
-                    }
-                    .sidenav .closebtn {
-                        position: absolute;
-                        top: 0;
-                        right: -50px;
-                        font-size: 26px;
-                        margin-right: 50px;
-                        padding: 0px 10px;
-                        /* background: #1cb3d3; */
-                        color: #000;
-                        }.headedr-two-list li a span {
-                            color: #ffffff;
-                            position: absolute;
-                            background: #1cb3d3;
-                            border-radius: 50%;
-                            padding: 0 2px;
-                            font-size: 11px;
-                            width: 20px;
-                            height: 20px;
-                            line-height: 15px;
-                            text-align: center;
-                            top: -5%;
-                            right: -7px;
-                            border: 2px solid #fff;
-                        }
-                    </style>
-
-
-
                 </ul>
                 <div class="header-profile">
                     <span class="header-profile-image" data-toggle="dropdown" ><img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor5.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"></span>
