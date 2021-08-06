@@ -194,7 +194,7 @@
 				</div>
 
 				<div class="show-review">
-					<span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} reviews)</a>
+					<span><img src="{{asset('design/images/rating.png')}}"></span> {{number_format(avgRatingOfMentors($mentor->reviews),2)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} reviews)</a>
 				</div>
 
 				<div class="button-place">
