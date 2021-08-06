@@ -2,84 +2,102 @@
 @section('title','Message Logs')
 @section('content')
 
-	<div class="container">
+<div class="container">
 	{{-- <h3 class=" text-center">Messaging</h3> --}}
-		<div class="messaging mt-3">
-		  <div class="inbox_msg">
+	<div class="messaging mt-3">
+		<div class="inbox_msg">
 			<div class="inbox_people">
-			  <div class="headind_srch">
-				<div class="recent_heading">
-				  <h4>Recent</h4>
-				</div>
-				<div class="srch_bar">
-				  <div class="stylish-input-group">
-					<input type="text" class="search-bar"  placeholder="Search" >
-					<span class="input-group-addon">
-					<button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-					</span> </div>
-				</div>
-			  </div>
-			  <div class="inbox_chat">
-				@foreach ($data as $item)
-				<input type="hidden" id="logged_in_id" value="{{Auth::guard(get_guard())->user()->id}}">
-				<input type="hidden" id="logged_in_guard" value="{{get_guard()}}">
-				<div class="chat_list {{$item->id}}" id="{{$item->id}}" onclick="getMessages(this.id); return false;">
-					<div class="chat_people">
-					  <div class="chat_img"> <img src="@if(Auth::guard(get_guard())->user()->image ==''){{asset('design/images/mentor1.jpg')}}@else{{Auth::guard(get_guard())->user()->image}}@endif"> </div>
-					  <div class="chat_ib">
+				<div class="headind_srch">
+					<div class="recent_heading">
+						<h4>Recent</h4>
+					</div>
+					<div class="srch_bar">
+						<div class="stylish-input-group">
+							<input type="text" class="search-bar"  placeholder="Search" >
+							<span class="input-group-addon">
+								<button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+							</span> </div>
+						</div>
+					</div>
+					<div class="inbox_chat">
+						@foreach ($data as $item)
+						<input type="hidden" id="logged_in_id" value="{{Auth::guard(get_guard())->user()->id}}">
+						<input type="hidden" id="logged_in_guard" value="{{get_guard()}}">
+						<div class="chat_list {{$item->id}}" id="{{$item->id}}" onclick="getMessages(this.id); return false;">
+							<div class="chat_people">
+								<div class="chat_img"> 
+									@php
+									$guard = get_guard();
+									if($guard == 'mentor'){
+										if(Auth::guard(get_guard())->user()->image =='')
+										{
+											$profileimg = "asset('design/images/mentor1.jpg')";
+										}else{
+											$profileimg = $item->opponent->image ; 
+										}
+
+									}elseif($guard == 'web'){
+										$profileimg = $item->opponent->image ; 
+
+								}
+
+						@endphp
+						<img src="{{$profileimg}}"> 
+					</div>
+					<div class="chat_ib">
 						<h5>{{$item->opponent->name}} <span class="chat_date">{{$item->last_message->created_at->diffForHumans()}}</span></h5>
 						<p>{{$item->last_message->message}}</p>
-					  </div>
 					</div>
-				  </div>
-				@endforeach
-			  </div>
+				</div>
 			</div>
-			<div class="mesgs">
-				<div class="text-center">
-					<h1>Mesages</h1>
-				</div>
-			  {{-- <div class="msg_history">
-				<div class="incoming_msg">
-				  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-				  <div class="received_msg">
-					<div class="received_withd_msg">
-					  <p>Test which is a new approach to have all
-						solutions</p>
-					  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-				  </div>
-				</div>
-				<div class="outgoing_msg">
-				  <div class="sent_msg">
-					<p>Test which is a new approach to have all
-					  solutions</p>
-					<span class="time_date"> 11:01 AM    |    June 9</span> </div>
-				</div>
-			  </div>
-			  <div class="type_msg">
-				<div class="input_msg_write">
-				  <input type="text" class="write_msg" placeholder="Type a message" />
-				  <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-				</div>
-			  </div> --}}
-			</div>
-		  </div>
+			@endforeach
 		</div>
 	</div>
+	<div class="mesgs">
+		<div class="text-center">
+			<h1>Mesages</h1>
+		</div>
+		{{-- <div class="msg_history">
+			<div class="incoming_msg">
+				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+				<div class="received_msg">
+					<div class="received_withd_msg">
+						<p>Test which is a new approach to have all
+						solutions</p>
+						<span class="time_date"> 11:01 AM    |    June 9</span></div>
+					</div>
+				</div>
+				<div class="outgoing_msg">
+					<div class="sent_msg">
+						<p>Test which is a new approach to have all
+						solutions</p>
+						<span class="time_date"> 11:01 AM    |    June 9</span> </div>
+					</div>
+				</div>
+				<div class="type_msg">
+					<div class="input_msg_write">
+						<input type="text" class="write_msg" placeholder="Type a message" />
+						<button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+					</div>
+				</div> --}}
+			</div>
+		</div>
+	</div>
+</div>
 
 @section('script')
-	<script type="text/javascript">
-		function getMessages(id) {
-			$("div.chat_list").removeClass("active_chat");
-			$("div.chat_list."+id).addClass("active_chat");
-			$.ajax({
-				url: "{{route('get.messages.by.id')}}",
-				type: 'POST',
-				data: {
-					'_token' : "{{csrf_token()}}",
-					'conversation_id' : id
-				},
-				success:function(data) {
+<script type="text/javascript">
+	function getMessages(id) {
+		$("div.chat_list").removeClass("active_chat");
+		$("div.chat_list."+id).addClass("active_chat");
+		$.ajax({
+			url: "{{route('get.messages.by.id')}}",
+			type: 'POST',
+			data: {
+				'_token' : "{{csrf_token()}}",
+				'conversation_id' : id
+			},
+			success:function(data) {
 					// console.log(data.data);
 					$('.mesgs').empty();
 					var msg_history = '<div class="msg_history">';
@@ -106,32 +124,32 @@
 					$('.mesgs').append(type_msg);
 				}
 			})
-		};
-		
-		$(document).on('submit','#sendMessageForm',function(evt){
-			var conversationId = $('#conversationId').val();
-			evt.preventDefault();
-			$.ajax({
-				url: "{{route('send.message.universal')}}",
-				type: "POST",
-				data: {
-					'_token': '{{csrf_token()}}',
-					'receiverId': $('#receiverId').val(),
-					'receiverGuard': $('#receiverGuard').val(),
-					'senderId': $('#logged_in_id').val(),
-					'senderGuard': $('#logged_in_guard').val(),
-					'message': $('#my_message').val(),
-				},
-				success:function(data) {
-					$('#sendMessageForm').trigger("reset");
-					getMessages(conversationId);
-				}
-			})
-		});
+	};
+
+	$(document).on('submit','#sendMessageForm',function(evt){
+		var conversationId = $('#conversationId').val();
+		evt.preventDefault();
+		$.ajax({
+			url: "{{route('send.message.universal')}}",
+			type: "POST",
+			data: {
+				'_token': '{{csrf_token()}}',
+				'receiverId': $('#receiverId').val(),
+				'receiverGuard': $('#receiverGuard').val(),
+				'senderId': $('#logged_in_id').val(),
+				'senderGuard': $('#logged_in_guard').val(),
+				'message': $('#my_message').val(),
+			},
+			success:function(data) {
+				$('#sendMessageForm').trigger("reset");
+				getMessages(conversationId);
+			}
+		})
+	});
 		// $('#sendMessageForm').submit(function(evt) {
 			
 		// });
 		
 	</script>
-@stop
-@endsection
+	@stop
+	@endsection

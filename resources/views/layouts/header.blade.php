@@ -1,6 +1,7 @@
 <header>
     @php
-        $guard = get_guard();$notification = [];
+        $guard = get_guard();
+        $notification = [];
         if($guard != ''){
             $user = Auth::guard($guard)->user();
             $notification = \App\Models\Notification::select('*');

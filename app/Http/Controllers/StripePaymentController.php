@@ -51,17 +51,14 @@ class StripePaymentController extends Controller
         	$stripe->exp_year = $payment->payment_method_details->card->exp_year;
         	$stripe->last4 = $payment->payment_method_details->card->last4;
         	$stripe->save();
+            
             $dataMentee = [
                 'name' => $user->name,
-                'amount' => $req->amount,
+                'amount' => ($req->amount/100),
                 'todayDate' => date('M-d-y'),
-                'transactionId' => $stripe->id,
-                'content' => 'We have received your payment $'.$req->amount.' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                'transactionId' => $stripe->transactionId,
+                'content' => 'We have received your payment $'.($req->amount/100).' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
             ];
-
-       // return view('email/invoicetemplate',compact('dataMentee'));
-
-           // sendMail($dataMentee,'email/menteeSlotPayment',$user->email,'Payment Successful for Mentorly Session !!');
             sendMail($dataMentee,'email/invoicetemplate',$user->email,'Payment Successful for Mentorly Session !!');
             return redirect(route('stripe.payment.success').'?slotId='.$req->slotId.'&userType='.$req->userType.'&transactionId='.$stripe->id);
         }

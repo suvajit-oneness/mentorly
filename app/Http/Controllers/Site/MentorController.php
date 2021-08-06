@@ -420,7 +420,14 @@ public function stripeBookingConfirmed(Request $req)
             'isread' => 0
         );
         DB::table('notifications')->insert($data);
-
+        $newRequest = new Request([
+            'senderId' => $user->id,
+            'senderGuard' => $req->userType,
+            'receiverId' => $mentor->id,
+            'receiverGuard' => 'mentor',
+            'message' => 'I have sent you the booking request against '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)),
+        ]);
+        $this->sendMessageUniversal($newRequest);
         $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
 
         $dataMentee = [
