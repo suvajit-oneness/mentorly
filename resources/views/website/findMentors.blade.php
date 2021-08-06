@@ -220,7 +220,7 @@
 								<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}" class="profile-name" target="_blank">{{$mentor->name}}.</a>
 								<ul class="twolist">
 									<li class="company">Twitch</li>
-									<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{avgRatingOfMentors($mentor->reviews)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} Reviews)</a></li>
+									<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{number_format(avgRatingOfMentors($mentor->reviews),2)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} Reviews)</a></li>
 								</ul>
 								<!-- <div class="inerview-taken">
 									<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given

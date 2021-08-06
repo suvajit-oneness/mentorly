@@ -11,6 +11,7 @@ use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
 use App\Models\MentorExperienceLog;
 use App\Models\Review;
+use App\Models\Notification;
 
 class MentorController extends Controller
 {
@@ -601,17 +602,53 @@ public function getIndivisualSlots($mentor)
 
 
 public function reviewpost(Request $req)
-{
+{   
+    $req->validate([
+        'review' => 'required',
+        'rating' => 'required',
+        'userid' => 'required',
+        'mentor_id' => 'required'
+    ]);
+
     $currenturl = $req->currenturl;
     $guard = get_guard();
     $user = Auth::guard($guard)->user();
+    $userid = Auth::guard($guard)->user()->id;
+    $username = Auth::guard($guard)->user()->name;
+    $useremail = Auth::guard($guard)->user()->email;
     $review = new Review();
     $review->review = $req->review;
     $review->rating = $req->rating;
     $review->user_id = $req->userid;
     $review->mentor_id = $req->mentor_id;
     $review->status = 1;
+
+    $mentorDetails = Mentor::find($req->mentor_id);
+    $mentoName =  $mentorDetails->name; 
+    $mentoEmail =  $mentorDetails->email;
+
     $review->save();
+
+    $msg = $username." has post a ".$req->rating. " star rating for you and review is: ".$req->review;
+
+    $notification = new Notification();
+    $notification->userId = $userid;
+    $notification->userType = $guard;
+    $notification->mentorId = $req->mentor_id;
+    $notification->msg = "N";
+    $notification->reviewmsg = $msg;
+    $notification->save();
+
+    $dataMentee = [
+                'name' => $mentoName,
+                'content' => $msg,
+            ];
+    sendMail($dataMentee,'email/reviewemail',$mentoEmail,'You got an review');
+
+
+
+
+
     return redirect($currenturl);
 
 

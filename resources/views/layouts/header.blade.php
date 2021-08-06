@@ -96,8 +96,10 @@
                                         if($reshdule && $existing){
                                             $msg = 'Your Mentee session has been Resheduled from  '.$existing->date.' on '.$existing->time_shift.' to '.$reshdule->date.' on '.$reshdule->time_shift;
                                         }
-                                    }
-                                }
+                                    }elseif($noti->msg == 'N'){
+                                            $msg = $noti->reviewmsg;
+                                        }
+                                }       
                             @endphp
                             @if($msg != '')
                                 <div class="card shadow-sm card_notifi">
