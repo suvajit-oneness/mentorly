@@ -96,7 +96,7 @@
 							<input type="hidden" name="userid" value="{{$user->id}}"> 
 							<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
 
-							<div class="col-sm-12">
+							<div class="rating">
 								<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
 								<label class="star star-5" for="star-5"></label>
 								<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
@@ -110,11 +110,11 @@
 							</div>
 
 
-							<div class="col-sm-12">
+							<div>
 								<textarea name="review" class="form-control"></textarea>
 							</div>
 
-							<div class="col-sm-12">
+							<div>
 							<button type="submit" name="submit" class="btn btn-primary">Post</button>
 							</div>
 
