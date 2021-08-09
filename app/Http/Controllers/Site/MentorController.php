@@ -629,7 +629,7 @@ public function reviewpost(Request $req)
 
     $review->save();
 
-    $msg = $username." has post a ".$req->rating. " star rating for you and review is: ".$req->review;
+    $msg = $username." has post a ".$req->rating. " star rating for you .";
 
     $notification = new Notification();
     $notification->userId = $userid;

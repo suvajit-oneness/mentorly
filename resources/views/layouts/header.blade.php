@@ -8,7 +8,7 @@
             if($guard == 'mentor'){
                 $notification = $notification->where('mentorId',$user->id);
             }elseif($guard == 'web'){
-                $notification = $notification->where('userId',$user->id)->where('userType',$guard);
+                $notification = $notification->where('userId',$user->id)->where('userType',$guard)->where('msg','!=','N');
             }
             $notification = $notification->orderBy('id','DESC')->get();
         }
