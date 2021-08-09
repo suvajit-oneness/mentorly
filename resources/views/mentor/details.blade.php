@@ -133,16 +133,21 @@
 						<li>
 							<div class="box">
 								<div class="box-inner justify-content-start">
-									<div class="viewer-image">
-										<img src="@if($review->user->image == ''){{asset('design/images/mentor2.jpg')}}@else{{$review->user->image}}@endif">
-									</div>
-									<div class="reviewer-content">
-										<h3 class="profile-name mb-0">{{$review->user->name}}</h3>
-										<small class="small-info date-text d-block text-muted" style="font-size:13px;">{{date('M, d Y',strtotime($review->created_at))}}</small>
-										<div class="comment mt-1">
-											<p>{{$review->review}}.</p>
+									@php
+										$reviewUser = $review->user;
+									@endphp
+									@if($reviewUser)
+										<div class="viewer-image">
+											<img src="@if($reviewUser->image == ''){{asset('design/images/mentor2.jpg')}}@else{{$reviewUser->image}}@endif">
 										</div>
-									</div>
+										<div class="reviewer-content">
+											<h3 class="profile-name mb-0">{{$reviewUser->name}}</h3>
+											<small class="small-info date-text d-block text-muted" style="font-size:13px;">{{date('M, d Y',strtotime($review->created_at))}}</small>
+											<div class="comment mt-1">
+												<p>{{$review->review}}.</p>
+											</div>
+										</div>
+									@endif
 								</div>
 							</div>
 						</li>
