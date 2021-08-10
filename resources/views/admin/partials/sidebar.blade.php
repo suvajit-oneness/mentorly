@@ -107,6 +107,34 @@
 
         <li class="treeview">
             <a class="app-menu__item" href="#" data-toggle="treeview">
+                <i class="app-menu__icon fa fa-group"></i>
+                <span class="app-menu__label">Carrier</span>
+                <i class="treeview-indicator fa fa-angle-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.job.category.*']) }}"
+                    href="{{ route('admin.job.category.index') }}">
+                    <i class="icon fa fa-circle-o"></i>Job Category
+                    </a>
+                </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.job.design*']) }}"
+                    href="{{ route('admin.job.design.index') }}">
+                    <i class="icon fa fa-circle-o"></i>Job
+                    </a>
+                </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.job.requirement.*']) }}"
+                    href="{{ route('admin.job.requirement.index') }}">
+                    <i class="icon fa fa-circle-o"></i>Job Requirement
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="treeview">
+            <a class="app-menu__item" href="#" data-toggle="treeview">
                 <i class="app-menu__icon fa fa-folder"></i>
                 <span class="app-menu__label">Reports</span>
                 <i class="treeview-indicator fa fa-angle-right"></i>

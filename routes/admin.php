@@ -24,6 +24,21 @@ Route::group(['prefix' => 'admin'], function () {
 		// Report
 	    Route::get('report/carrier/application','Site\CarrierController@carrierApplicationReport')->name('admin.carrier.application.report');
 
+	    //Job Category
+	    Route::group(['prefix' => 'job/category'],function(){
+	    	Route::get('list','Site\CarrierController@jobCateoryList')->name('admin.job.category.index');
+	    });
+
+	    //Job Design
+	    Route::group(['prefix' => 'job/details'],function(){
+	    	Route::get('list','Site\CarrierController@jobDetailsList')->name('admin.job.design.index');
+	    });
+
+	    //Job Requirement
+	    Route::group(['prefix' => 'job/requirement'],function(){
+	    	Route::get('list','Site\CarrierController@jobRequirementList')->name('admin.job.requirement.index');
+	    });
+
 		Route::get('/invite_list', 'Admin\InvitationController@index')->name('admin.invite');
 	    Route::get('/invitation', 'Admin\InvitationController@create')->name('admin.invite.create');
 		Route::post('/invitation', 'Admin\InvitationController@store')->name('admin.invitation.store');

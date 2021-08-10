@@ -8,6 +8,21 @@ use App\Model\JobType,App\Model\Job;
 
 class CarrierController extends Controller
 {
+    public function jobCateoryList(Request $req)
+    {
+        return view('admin.carrier.category.index');
+    }
+
+    public function jobDetailsList(Request $req)
+    {
+        return view('admin.carrier.jobDetails.index');
+    }
+
+    public function jobRequirementList(Request $req)
+    {
+        return view('admin.carrier.jobRequirement.index');
+    }
+
     public function index(Request $req)
     {
         $jobType = JobType::select('*')->get();
