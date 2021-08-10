@@ -3,28 +3,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\FacebookController;
 
-
-
-//user password reset routes
-// Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
-// Route::get('password/reset','Auth\ForgotPasswordController@showLinkRequestForm')->name('user.password.request');
-// Route::post('password/reset','Auth\ResetPasswordController@reset');
-// Route::get('password/reset/{token}','Auth\ResetPasswordController@showResetForm')->name('password.reset');
-
 Auth::routes(['verify' => true,'login'=>false]);
 
 require 'admin.php';
 
-
-
 Route::get('facebook', function () {
     return view('facebook');
 });
+
 Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
 Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
-
-
-
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');
@@ -45,7 +33,9 @@ Route::get('resetPassword/{userid?}','Site\WebsiteController@userResetPassword')
 Route::post('updatepassword','Site\WebsiteController@userUpdatePassword')->name('updatepassword');
 Route::post('reviewpost','Site\MentorController@reviewpost')->name('reviewpost');
 
-
+// Carrer
+Route::get('carrer','Site\CarrerController@index')->name('carrer');
+Route::get('carrer/description','Site\CarrerController@description')->name('carrer.description');
 
 // mentors Route
 Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');
@@ -63,16 +53,10 @@ Route::get('mentor/mentee/message/log','Site\MentorController@messageLog')->name
 Route::get('booking/history','Site\MenteeController@purchasHistory')->name('booking.history');
 Route::get('booking/mylessons','Site\MenteeController@myLesson')->name('booking.mylessons');
 
-
-
 Route::get('mentor/booking/request','Site\MentorController@seeBookingDetails')->name('mentor.booking.request');
 Route::get('mentor/booking/request/approve/{id?}','Site\MentorController@approveBookingrequest')->name('booking.request.approve');
 Route::get('mentor/booking/request/reject/{id?}','Site\MentorController@rejectBookingrequest')->name('booking.request.reject');
 Route::get('mentor/booking/request/reschedule/{id?}/{mentorId?}','Site\MentorController@rescheduleBookingrequest')->name('booking.request.reschedule');
-
-
-
-
 
 Route::get('find/mentors','Site\WebsiteController@findMentors')->name('mentors.find');
 Route::get('mentor/details/{mentorId}','Site\WebsiteController@mentorDetails')->name('mentor.details');
