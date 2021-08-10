@@ -5,22 +5,34 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request,App\Model\JobApplication;
 use App\Model\JobType,App\Model\Job;
+use App\Model\JobRequirement;
 
 class CarrierController extends Controller
 {
     public function jobCateoryList(Request $req)
     {
-        return view('admin.carrier.category.index');
+        $type = JobType::select('*')->latest()->get();
+        return view('admin.carrier.category.index',compact('type'));
     }
 
     public function jobDetailsList(Request $req)
     {
-        return view('admin.carrier.jobDetails.index');
+        $job = Job::select('*');
+        if(!empty($req->category)){
+            $job = $job->where('jobTypeId',decrypt($req->category));
+        }
+        $job = $job->latest()->get();
+        return view('admin.carrier.jobDetails.index',compact('job'));
     }
 
     public function jobRequirementList(Request $req)
     {
-        return view('admin.carrier.jobRequirement.index');
+        $requirement = JobRequirement::select('*');
+        if(!empty($req->jobId)){
+            $requirement = $requirement->where('jobId',decrypt($req->jobId));
+        }
+        $requirement = $requirement->latest()->get();
+        return view('admin.carrier.jobRequirement.index',compact('requirement'));
     }
 
     public function index(Request $req)

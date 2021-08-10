@@ -21,16 +21,22 @@
                             <tr>
                                 <th> Id </th>
                                 <th> Job Type</th>
-                                <th> Job Name</th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Email Id </th>
-                                <th> Phone No </th>
-                                <th> Resume</th>
-                                <th> Posted At </th>
-                                <!-- <th> Action</th> -->
+                                <th> Total Job</th>
+                                <th> Action</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @foreach($type as $index => $category)
+                            <tr>
+                                <td>{{$category->id}}</td>
+                                <td>{{$category->title}}</td>
+                                <td>
+                                    <a href="{{route('admin.job.design.index')}}?category={{encrypt($category->id)}}">{{count($category->job_details)}}</a>
+                                </td>
+                                <td><a href="javascript:void(0)" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                         
                     </table>
                 </div>

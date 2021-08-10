@@ -22,16 +22,21 @@
                                 <th> Id </th>
                                 <th> Job Type</th>
                                 <th> Job Name</th>
-                                <th> First Name </th>
-                                <th> Last Name </th>
-                                <th> Email Id </th>
-                                <th> Phone No </th>
-                                <th> Resume</th>
-                                <th> Posted At </th>
-                                <!-- <th> Action</th> -->
+                                <th> Requirement</th>
+                                <th> Action</th>
                             </tr>
                         </thead>
-                        
+                        <tbody>
+                            @foreach($requirement as $index => $data)
+                                <tr>
+                                    <td>{{$data->id}}</td>
+                                    <td>{{$data->job_details->type->title}}</td>
+                                    <td>{{$data->job_details->name}}</td>
+                                    <td>{{$data->name}}</td>
+                                    <td><a href="javascript:void(0)" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
