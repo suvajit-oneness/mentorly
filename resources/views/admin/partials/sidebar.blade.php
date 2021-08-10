@@ -105,7 +105,7 @@
             </a>
         </li>
 
-        <li class="treeview">
+        <!-- <li class="treeview">
             <a class="app-menu__item" href="#" data-toggle="treeview">
                 <i class="app-menu__icon fa fa-group"></i>
                 <span class="app-menu__label">Carrier</span>
@@ -131,7 +131,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
         <li class="treeview">
             <a class="app-menu__item" href="#" data-toggle="treeview">
