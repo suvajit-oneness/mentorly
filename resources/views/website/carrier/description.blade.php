@@ -21,7 +21,7 @@
             
                 <div class="descriptionHeading">
                     <h6>Description</h6>
-                    <a href="#"> <i class="fab fa-share-alt"></i> Share this job</a>
+                    <!-- <a href="#"> <i class="fab fa-share-alt"></i> Share this job</a> -->
                 </div>
                 
                 {!! $job->description !!}
