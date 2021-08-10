@@ -23,6 +23,7 @@
 										<th>Booking Id</th>
 										<th>Booking Date</th>
 										<th>Mentor Name</th>
+										<th>Messege</th>
 										<th>Mentor Email</th>
 										<th>Mentor Mobile</th>
 										<th>Booking Slot</th>
@@ -44,6 +45,11 @@
 										<td>{{$pur->id}}</td>
 										<td>{{date('m-d-y',strtotime($pur->created_at))}}</td>
 										<td>{{$mentor->name}}</td>
+										<td>
+											<a href="{{route('user.message.log')}}">
+												<img src="{{url('/')}}/design/images/message.png">
+											</a>
+										</td>
 										<td>{{$mentor->email}}</td>
 										<td>{{$mentor->mobile}}</td>
 										<td>{{$slot->date}} - {{$slot->time_shift}}</td>

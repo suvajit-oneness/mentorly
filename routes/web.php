@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\FacebookController;
+
 
 
 //user password reset routes
@@ -12,6 +14,17 @@ use Illuminate\Http\Request;
 Auth::routes(['verify' => true,'login'=>false]);
 
 require 'admin.php';
+
+
+
+Route::get('facebook', function () {
+    return view('facebook');
+});
+Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
+Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+
+
+
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');

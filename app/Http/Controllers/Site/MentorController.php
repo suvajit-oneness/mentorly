@@ -369,7 +369,8 @@ public function bookRescheduleClass(Request $req)
             ];
     sendMail($dataMentee,'email/reschduleBooking',$userDetails->email,'Your class booking has been Rescheduled !!');
 
-
+   // Db::table('zoom_meetings')->where('mentorId',$oldSlotBooked->mentorId)->orderBy('id','asc')->delete();
+   // $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
 
 
 

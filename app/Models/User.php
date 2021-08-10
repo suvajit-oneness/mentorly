@@ -12,6 +12,6 @@ class User extends Authenticatable
     protected $table = 'users';
 
 	protected $fillable = [
-	   'name', 'mobile', 'email', 'otp', 'country', 'city', 'address', 'is_verified', 'status', 'is_deleted'
+	   'name', 'mobile', 'email', 'otp', 'country', 'city', 'address', 'is_verified', 'status', 'is_deleted','facebook_id'
 	];
 }
