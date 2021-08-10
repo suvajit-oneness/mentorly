@@ -22,32 +22,23 @@
                     help.
                 </p>
             </div>
-
+			
             <div class="vacancyList">
-                <h4>Jersey City</h4>
-                <ul>
-                    <li><a href="#">Database Administrator</a></li>
-                    <li><a href="#">Frontend Web Developer</a></li>
-                    <li><a href="#">Ionic Developer</a></li>
-                    <li><a href="#">Laravel Developer</a></li>
-                </ul>
-                
-                <h4>Seattle</h4>
-                <ul>
-                    <li><a href="#">Database Administrator</a></li>
-                    <li><a href="#">Frontend Web Developer</a></li>
-                    <li><a href="#">Ionic Developer</a></li>
-                    <li><a href="#">Laravel Developer</a></li>
-                </ul>
-                
-                <h4>Washington D.C.</h4>
-                <ul>
-                    <li><a href="#">Database Administrator</a></li>
-                    <li><a href="#">Frontend Web Developer</a></li>
-                    <li><a href="#">Ionic Developer</a></li>
-                    <li><a href="#">Laravel Developer</a></li>
-                </ul>
-
+            	@if(count($jobType) > 0)
+	            	@foreach($jobType as $index => $type)
+		            	@php $jobData = $type->job_details; @endphp
+		            	@if(count($jobData) > 0)
+			            	<h4>{{$type->title}}</h4>
+			            	<ul>
+			            		@foreach($jobData as $key => $job)
+				                    <li><a href="{{route('carrier.description',encrypt($job->id))}}">{{$job->name}} (Posted at {{date('d M, Y',strtotime($job->created_at))}})</a></li>
+			                    @endforeach
+			                </ul>
+		            	@endif
+		            @endforeach
+	            @else
+		            <h4>No Vacancy</h4>
+	            @endif
             </div>
         </div>
     </section>

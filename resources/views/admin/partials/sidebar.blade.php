@@ -72,6 +72,26 @@
                 </li>
             </ul>
         </li>
+
+        <li>
+            <a class="app-menu__item {{ sidebar_open(['admin.user.*']) }}"
+                href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-video-camera"></i>
+                <span class="app-menu__label">All Mentee</span>
+            </a>
+        </li>
+        <li>
+            <a class="app-menu__item {{ sidebar_open(['admin.mentor.*']) }}"
+                href="{{ route('admin.mentor.index') }}"><i class="app-menu__icon fa fa-newspaper-o"></i>
+                <span class="app-menu__label">All Mentors</span>
+            </a>
+        </li>
+        <li>
+            <a class="app-menu__item {{ sidebar_open(['admin.slot.*']) }}"
+                href="{{ route('admin.slot.index') }}"><i class="app-menu__icon fa fa-video-camera"></i>
+                <span class="app-menu__label">Mentor Booked Slots</span>
+            </a>
+        </li>
+
         <li>
             <a class="app-menu__item {{ sidebar_open(['admin.zoom.meeting']) }}"
                 href="{{ route('admin.zoom.meeting') }}"><i class="app-menu__icon fa fa-video-camera"></i>
@@ -84,6 +104,7 @@
                 <span class="app-menu__label">All News</span>
             </a>
         </li>
+
         <li class="treeview">
             <a class="app-menu__item" href="#" data-toggle="treeview">
                 <i class="app-menu__icon fa fa-folder"></i>
@@ -92,28 +113,9 @@
             </a>
             <ul class="treeview-menu">
                 <li>
-                    <a class="treeview-item {{ sidebar_open(['admin.user.*']) }}"
-                        href="{{ route('admin.user.index') }}">
-                        <i class="icon fa fa-circle-o"></i>All Mentee
-                    </a>
-                </li>
-                <li>
-                    <a class="treeview-item {{ sidebar_open(['admin.mentor.*']) }}"
-                        href="{{ route('admin.mentor.index') }}">
-                        <i class="icon fa fa-circle-o"></i>All Mentors
-                    </a>
-                </li>
-
-                <li>
                     <a class="treeview-item {{ sidebar_open(['admin.transaction.*']) }}"
                         href="{{ route('admin.transaction.index') }}">
                         <i class="icon fa fa-circle-o"></i>Transaction Log
-                    </a>
-                </li>
-                <li>
-                    <a class="treeview-item {{ sidebar_open(['admin.slot.*']) }}"
-                        href="{{ route('admin.slot.index') }}">
-                        <i class="icon fa fa-circle-o"></i>Mentor Booked Slots
                     </a>
                 </li>
                 {{-- <li>
@@ -126,6 +128,12 @@
                     <a class="treeview-item {{ sidebar_open(['admin.contact.*']) }}"
                         href="{{ route('admin.contact.index') }}">
                         <i class="icon fa fa-circle-o"></i>Contacts
+                    </a>
+                </li>
+                <li>
+                    <a class="treeview-item {{ sidebar_open(['admin.carrier.application.*']) }}"
+                        href="{{ route('admin.carrier.application.report') }}">
+                        <i class="icon fa fa-circle-o"></i>Job Application
                     </a>
                 </li>
             </ul>

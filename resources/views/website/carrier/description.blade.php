@@ -3,9 +3,9 @@
 @section('content')
 	<section class="JDtext text-center">
         <div class="container">
-            <h4>Database Administrator</h4>
+            <h4>{{$job->name}}</h4>
             <span>REMOTE</span>
-            <p>Partner Solutions Group, Partner Success Team, Jersey City, New Jerseay, United States - Full time</p>
+            <p>{{$job->location}}</p>
         </div>
     </section>
     <section class="JDtabs">
@@ -23,67 +23,54 @@
                     <h6>Description</h6>
                     <a href="#"> <i class="fab fa-share-alt"></i> Share this job</a>
                 </div>
-
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptate quam non esse? Natus
-                    vitae deserunt doloribus aliquam eveniet corporis, ducimus eum dignissimos minus rerum. Distinctio
-                    vero sapiente fugit accusantium.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum pariatur quasi, excepturi nobis, dolor placeat, est quibusdam blanditiis minima maxime dolorem maiores quidem dignissimos aliquam natus inventore fugiat doloremque suscipit?
-                </p>
-
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptate quam non esse? Natus
-                    vitae deserunt doloribus aliquam eveniet corporis, ducimus eum dignissimos minus rerum. Distinctio
-                    vero sapiente fugit accusantium.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum pariatur quasi, excepturi nobis, dolor placeat, est quibusdam blanditiis minima maxime dolorem maiores quidem dignissimos aliquam natus inventore fugiat doloremque suscipit?
-                </p>
-
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi voluptate quam non esse? Natus
-                    vitae deserunt doloribus aliquam eveniet corporis, ducimus eum dignissimos minus rerum. Distinctio
-                    vero sapiente fugit accusantium.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum pariatur quasi, excepturi nobis, dolor placeat, est quibusdam blanditiis minima maxime dolorem maiores quidem dignissimos aliquam natus inventore fugiat doloremque suscipit?
-                </p>
+                
+                {!! $job->description !!}
+                
                 <div class="descriptionHeading">
                     <h6>Requirements</h6>
                 </div>
     
                 <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis porro repellat quam consequuntur quis non officia!</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit sit amet.</li>
+                    @foreach($job->requirement as $req)
+                        <li>{{$req->name}}</li>
+                    @endforeach
                 </ul>
             </div>
 
 
             <div id="application" class="d-none">
                 <p class="required">Required</p>
-                <form action="#">
+                <form action="{{route('carrier.job.application.post',$job->id)}}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="personalDetails">
                         <h5>Personal Information</h5>
                         <button type="reset" class="clear">Clear</button>
                     </div>
-
                     <div class="nameSec">
+                        <input type="hidden" name="jobId" value="{{$job->id}}">
+                        @error('jobId')<span class="text-danger">{{$message}}</span>@enderror
                         <div class="name">
                             <label for="fname" class="required">First Name</label>
-                            <input type="text" name="fname" required>
+                            <input type="text" name="first_name" placeholder="First Name" required value="{{old('first_name')}}">
+                            @error('first_name')<span class="text-danger">{{$message}}</span>@enderror
                         </div>
                         <div class="name">
                             <label for="lname" class="required">Last Name</label>
-                            <input type="text" name="lname" required>
+                            <input type="text" placeholder="Last Name" name="last_name" required value="{{old('last_name')}}">
+                            @error('last_name')<span class="text-danger">{{$message}}</span>@enderror
                         </div>
                     </div>
                     <label for="email" class="required">Email</label>
-                    <input type="email" name="email" required>
+                    <input type="email" placeholder="Email" name="email" required value="{{old('email')}}">
+                    @error('email')<span class="text-danger">{{$message}}</span>@enderror
 
                     <label for="pnum" class="required">Phone Number</label>
-                    <input type="number" name="pnum" required>
+                    <input type="text" placeholder="Phone Number" name="phone_number" required value="{{old('phone_number')}}" onkeypress="return isNumberKey(event);" maxlength="10">
+                    @error('phone_number')<span class="text-danger">{{$message}}</span>@enderror
 
                     <label for="resume" class="required">Upload Your Resume</label>
-                    <input type="file" required>
-
-                    <label for="coverLetter">Upload Cover Letter</label>
-                    <input type="file" >
+                    <input type="file" name="resume" required>
+                    @error('resume')<span class="text-danger">{{$message}}</span>@enderror
 
                     <div class="applicationSubmit">
                         <button type="submit">Submit</button>
@@ -94,6 +81,11 @@
     </section>
 @section('script')
 	<script type="text/javascript">
+        $(document).ready(function(){
+            @if($errors->any())
+                application();
+            @endif
+        });
         function application() {
             var applicationSection = document.getElementById('application');
             var overviewSection = document.getElementById('overview');

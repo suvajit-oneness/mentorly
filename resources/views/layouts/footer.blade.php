@@ -25,7 +25,7 @@
                 @if($guard == '' || $guard != 'mentor')
                     <li><a href="{{route('singup.mentor')}}">Become a Mentor </a></li>
                 @endif
-                <li><a href="{{route('carrer')}}">Careers</a></li>
+                <li><a href="{{route('carrier')}}">Carriers</a></li>
                 <li><a href="{{route('aboutus')}}">About Us</a></li>
                 <li><a href="{{route('contactus')}}">Contact</a></li>
             </ul>

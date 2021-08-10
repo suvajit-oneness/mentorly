@@ -21,6 +21,9 @@ Route::group(['prefix' => 'admin'], function () {
 	        return view('admin.dashboard.index');
 	    })->name('admin.dashboard');
 
+		// Report
+	    Route::get('report/carrier/application','Site\CarrierController@carrierApplicationReport')->name('admin.carrier.application.report');
+
 		Route::get('/invite_list', 'Admin\InvitationController@index')->name('admin.invite');
 	    Route::get('/invitation', 'Admin\InvitationController@create')->name('admin.invite.create');
 		Route::post('/invitation', 'Admin\InvitationController@store')->name('admin.invitation.store');

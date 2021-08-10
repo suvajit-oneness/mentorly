@@ -33,9 +33,10 @@ Route::get('resetPassword/{userid?}','Site\WebsiteController@userResetPassword')
 Route::post('updatepassword','Site\WebsiteController@userUpdatePassword')->name('updatepassword');
 Route::post('reviewpost','Site\MentorController@reviewpost')->name('reviewpost');
 
-// Carrer
-Route::get('carrer','Site\CarrerController@index')->name('carrer');
-Route::get('carrer/description','Site\CarrerController@description')->name('carrer.description');
+// Carrier
+Route::get('carrier','Site\CarrierController@index')->name('carrier');
+Route::get('carrier/{jobId}/description','Site\CarrierController@description')->name('carrier.description');
+Route::post('carrier/{jobId}/application/save','Site\CarrierController@saveJobApplication')->name('carrier.job.application.post');
 
 // mentors Route
 Route::get('mentor/mentee/setting','Site\MentorController@setting')->name('mentor.mentee.setting');

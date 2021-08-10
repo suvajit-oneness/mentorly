@@ -20,6 +20,19 @@ if (!function_exists('sidebar_open')) {
     }
 }
 
+    function randomGenerator()
+    {
+        return uniqid().''.date('ymdhis').''.uniqid();
+    }
+
+    function imageUpload($image,$folder='image')
+    {
+        $random = randomGenerator();
+        $image->move('upload/'.$folder.'/',$random.'.'.$image->getClientOriginalExtension());
+        $imageurl = 'upload/'.$folder.'/'.$random.'.'.$image->getClientOriginalExtension();
+        return $imageurl;
+    }
+
 function dateDifferenceFromNow($startdate)
 {
     $datetime1 = strtotime($startdate);
@@ -37,11 +50,10 @@ function sendMail($data,$template,$to,$subject){
     $newMail->view_file = $template;
     $newMail->payload = json_encode($data);
     $newMail->save();
-    
-   /* Mail::send($template, $data, function($message)use ($data,$to,$subject) {
+    Mail::send($template, $data, function($message)use ($data,$to,$subject) {
         $message->to($to, $data['name'])->subject($subject);
         $message->from('onenesstechsolution@gmail.com','Mentorly');
-    });*/
+    });
 }
 
 if (!function_exists('imageResizeAndSave')) {
