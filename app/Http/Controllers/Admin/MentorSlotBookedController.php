@@ -12,9 +12,7 @@ class MentorSlotBookedController extends BaseController
 {
     public function index()
     {
-        $bookedSlots = MentorSlotBooked::with('mentor','slot_details','users', 'transaction_detail')->get();
-        // dd($bookedSlots->first()->mentor['name']);
-        // dd($bookedSlots);
+        $bookedSlots = MentorSlotBooked::get();
         return view('admin.slots.index', compact('bookedSlots'));
     }
 

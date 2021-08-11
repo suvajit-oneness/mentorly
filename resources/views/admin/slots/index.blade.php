@@ -36,18 +36,17 @@
                             @foreach($bookedSlots as $key => $slot)
                                 <tr>
                                     <td>{{ $slot->id }}</td>
-                                    <td>{{ $slot->transaction_detail->id }}</td>
-                                    {{-- <td>{{ $slot->mentor->id }}</td> --}}
-                                    <td>{{ !empty($slot->mentor) ? $slot->mentor->name:'' }}</td>
+                                    <td>{{ $slot->transaction_detail->transactionId }}</td>
+                                    <td>{{ !empty($slot->mentor) ? $slot->mentor->name : '' }}</td>
                                     <td>{{ $slot->slot_details->date }} at {{ $slot->slot_details->time_shift }}</td>
                                     <td>{{ !empty($slot->users) ? $slot->users->name:'' }}</td>
-                                    <td>{{ $slot->price }}</td>
+                                    <td>$ {{ $slot->transaction_detail->amount / 100 }}</td>
                                     <td>{{ date("d-M-Y",strtotime($slot->created_at)) }}</td>
-                                <td class="text-center">
-                                    <div class="btn-group" role="group" aria-label="Second group">
-                                        <a href="javascript:void(0)" data-id="{{$slot['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group" aria-label="Second group">
+                                            <a href="javascript:void(0)" data-id="{{$slot['id']}}" class="sa-remove btn btn-sm btn-danger edit-btn"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

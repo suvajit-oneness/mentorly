@@ -6,6 +6,7 @@
         <div class="active-wrap">
             <h1><i class="fa fa-file"></i> Job Category</h1>
         </div>
+        <a href="javascript:void(0)" class="btn btn-primary pull-right AddNewJobCategory">Add New</a>
     </div>
 </div>
     @include('admin.partials.flash')
@@ -33,12 +34,54 @@
                                 <td>
                                     <a href="{{route('admin.job.design.index')}}?category={{encrypt($category->id)}}">{{count($category->job_details)}}</a>
                                 </td>
-                                <td><a href="javascript:void(0)" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
+                                <td><a href="javascript:void(0)" class="text-success editJobCategory" data-details="{{json_encode($category)}}">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
                             </tr>
                             @endforeach
                         </tbody>
                         
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Job Category Modal -->
+    <div class="modal fade" id="addJobCategoryModalLong" tabindex="-1" role="dialog" aria-labelledby="addJobCategoryModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addJobCategoryModalLongTitle">Add New Job Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Job Category Modal -->
+    <div class="modal fade" id="editJobCategoryModalLong" tabindex="-1" role="dialog" aria-labelledby="editJobCategoryModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editJobCategoryModalLongTitle">Edit Job Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -50,6 +93,14 @@
     <script type="text/javascript">$('#sampleTable').DataTable({"ordering": false});</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <script type="text/javascript">
+        $(document).on('click','.AddNewJobCategory',function(){
+           $('#addJobCategoryModalLong').modal('show'); 
+        });
 
+        $(document).on('click','.editJobCategory',function(){
+            var details = JSON.parse($(this).attr('data-details'));
+            console.log(details);
+            $('#editJobCategoryModalLong').modal('show'); 
+        });
     </script>
 @endpush
