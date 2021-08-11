@@ -65,7 +65,6 @@ class CarrierController extends Controller
     }
 
     //job detail functions
-
     public function jobDetailsList(Request $req)
     {
         $job = Job::select('*');
@@ -98,7 +97,6 @@ class CarrierController extends Controller
         $job->description = $req->description;
         $job->valid_till = $req->valid_till;
         $job->save();
-        
         return redirect()->route('admin.job.detail.index')->with('Success','Job saved Sucessfully');
     }
 
@@ -127,7 +125,6 @@ class CarrierController extends Controller
         $job->description = $req->description;
         $job->valid_till = $req->valid_till;
         $job->save();
-        
         return redirect()->route('admin.job.detail.index')->with('Success','Job updated Sucessfully');
     }
 
