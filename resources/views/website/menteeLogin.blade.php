@@ -46,10 +46,24 @@
 			</form>
 
 
+			<div class="col-md-12">
+				<center>
+				<p>
+					<a href="{{route('socialite.login',['web','facebook'])}}">
+						<button class="btn btn-primary">Login with Facebook</button>
+					</a>
+					<a href="{{route('socialite.login',['web','google'])}}">
+						<button class="btn btn-danger">Login with Google</button>
+					</a>
+				</p>
+				</center>
+			</div>
+
+
 			 <div class="row">
         <div class="col-md-12 row-block">
-            <a href="{{ url('auth/facebook') }}" class="btn btn-lg btn-primary btn-block">
-                <strong>Login With Facebook</strong>
+            <a href="{{route('socialite.login',['web','google'])}}" class="btn btn-lg btn-primary btn-block">
+                <strong>Login With Google</strong>
             </a>     
         </div>
     </div>

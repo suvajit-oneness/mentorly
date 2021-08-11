@@ -45,6 +45,19 @@
 				</div>
 			</form>
 
+			<div class="col-md-12">
+				<center>
+				<p>
+					<a href="{{route('socialite.login',['mentor','facebook'])}}">
+						<button class="btn btn-primary">Login with Facebook</button>
+					</a>
+					<a href="{{route('socialite.login',['mentor','google'])}}">
+						<button class="btn btn-danger">Login with Google</button>
+					</a>
+				</p>
+				</center>
+			</div>
+
 
 			@if (Session::has('message'))
                          <div class="alert alert-success" role="alert">
