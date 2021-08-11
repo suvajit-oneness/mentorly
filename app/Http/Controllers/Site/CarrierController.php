@@ -176,7 +176,7 @@ class CarrierController extends Controller
             return back()->with('Success','Requirement Created Success');
         }elseif($req->form_type == 'edit'){
             $req->validate([
-                'requirementId' => 'required|numeric|min:1'
+                'requirementId' => 'required|numeric|exists:job_requirements,id'
             ]);
             $jobReq = JobRequirement::findOrFail($req->requirementId);
             $jobReq->jobId = $req->jobId;
