@@ -243,7 +243,7 @@ class CarrierController extends Controller
             'name' => $req->first_name,
             'content' => 'Thankyou for applying for the post "'.$job->name.'", Our HR will call you shorlty',
         ];
-        sendMail($sendMailData,'email/carrierApplication','rrpit9@gmail.com','Your Application Submitted Successfully !!');
+        sendMail($sendMailData,'email/carrierApplication',$req->email,'Your Application Submitted Successfully !!');
         return back()->with('Success','Application Submitted Sucessfully');
     }
 
