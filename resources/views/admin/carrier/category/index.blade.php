@@ -32,7 +32,7 @@
                                 <td>{{$category->id}}</td>
                                 <td>{{$category->title}}</td>
                                 <td>
-                                    <a href="{{route('admin.job.design.index')}}?category={{encrypt($category->id)}}">{{count($category->job_details)}}</a>
+                                    <a href="{{route('admin.job.detail.index')}}?category={{encrypt($category->id)}}">{{count($category->job_details)}}</a>
                                 </td>
                                 <td><a href="javascript:void(0)" class="text-success editJobCategory" data-details="{{json_encode($category)}}">Edit</a> | <a href="javascript:void(0)" class="text-danger deleteJobCategory" data-id="{{$category->id}}">Delete</a></td>
                             </tr>

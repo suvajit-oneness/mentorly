@@ -64,6 +64,8 @@ class CarrierController extends Controller
         return response()->json(['error' => true,'message' => $validate->errors()->first()]);
     }
 
+    //job detail functions
+
     public function jobDetailsList(Request $req)
     {
         $job = Job::select('*');
@@ -74,16 +76,134 @@ class CarrierController extends Controller
         return view('admin.carrier.jobDetails.index',compact('job'));
     }
 
+    public function JobDetailsAdd()
+    {
+        $categories = JobType::get();
+        return view('admin.carrier.jobDetails.add', compact('categories'));
+    }
+    
+    public function JobDetailsStore(Request $req)
+    {
+        $req->validate([
+            'jobTypeId' => 'required|numeric|min:1',
+            'name' => 'required|string',
+            'location' => 'required',
+            'description' => 'required',
+            'valid_till' => 'required',
+        ]);
+        $job = new Job();
+        $job->jobTypeId = $req->jobTypeId;
+        $job->name = $req->name;
+        $job->location = $req->location;
+        $job->description = $req->description;
+        $job->valid_till = $req->valid_till;
+        $job->save();
+        
+        return redirect()->route('admin.job.detail.index')->with('Success','Job saved Sucessfully');
+    }
+
+    public function JobDetailsEdit(Request $req)
+    {
+        $categories = JobType::get();
+        $jobId = decrypt($req->jobId);
+        $job = Job::findOrFail($jobId);
+        return view('admin.carrier.jobDetails.edit', compact('categories', 'job'));
+    }
+
+    public function JobDetailsUpdate(Request $req)
+    {
+        $req->validate([
+            'jobId' => 'required',
+            'jobTypeId' => 'required|numeric|exists:job_types,id',
+            'name' => 'required|string',
+            'location' => 'required',
+            'description' => 'required',
+            'valid_till' => 'required',
+        ]);
+        $job = Job::findOrFail(decrypt($req->jobId));
+        $job->jobTypeId = $req->jobTypeId;
+        $job->name = $req->name;
+        $job->location = $req->location;
+        $job->description = $req->description;
+        $job->valid_till = $req->valid_till;
+        $job->save();
+        
+        return redirect()->route('admin.job.detail.index')->with('Success','Job updated Sucessfully');
+    }
+
+    public function jobDelete(Request $req)
+    {
+        $rules = [
+            'jobId' => 'required|min:1|numeric',
+        ];
+        $validate = validator()->make($req->all(),$rules);
+        if(!$validate->fails()){
+            $job = Job::where('id',$req->jobId)->first();
+            if($job){
+                $job->delete();
+                return response()->json(['error' => false,'message'=>'Deleted Success']);
+            }
+            return response()->json(['error' => true,'message' => 'Something went wrong please try after sometime']);
+        }
+        return response()->json(['error' => true,'message' => $validate->errors()->first()]);
+    }
+
+    //job requirement functions
     public function jobRequirementList(Request $req)
     {
         $requirement = JobRequirement::select('*');
+        $jobId = 0;
         if(!empty($req->jobId)){
-            $requirement = $requirement->where('jobId',decrypt($req->jobId));
+            $jobId = decrypt($req->jobId);
+            $requirement = $requirement->where('jobId',$jobId);
         }
         $requirement = $requirement->latest()->get();
-        return view('admin.carrier.jobRequirement.index',compact('requirement'));
+        return view('admin.carrier.jobRequirement.index',compact('requirement', 'jobId'));
     }
 
+    public function jobRequirementSaveOrUpdate(Request $req)
+    {
+        $req->validate([
+            'form_type' => 'required|string|in:add,edit',
+            'jobId' => 'required|numeric|exists:jobs,id',
+            'name' => 'required',
+        ]);
+        if($req->form_type == 'add'){
+            $jobReq = new JobRequirement();
+            $jobReq->jobId = $req->jobId;
+            $jobReq->name = $req->name;
+            $jobReq->save();
+            return back()->with('Success','Requirement Created Success');
+        }elseif($req->form_type == 'edit'){
+            $req->validate([
+                'requirementId' => 'required|numeric|min:1'
+            ]);
+            $jobReq = JobRequirement::findOrFail($req->requirementId);
+            $jobReq->jobId = $req->jobId;
+            $jobReq->name = $req->name;
+            $jobReq->save();
+            return back()->with('Success','Requirement Update Success');
+        }
+    }
+
+    public function jobRequirementDelete(Request $req)
+    {
+        $rules = [
+            'JobRequirementId' => 'required|min:1|numeric',
+        ];
+        $validate = validator()->make($req->all(),$rules);
+        if(!$validate->fails()){
+            $jobRequirment = JobRequirement::where('id',$req->JobRequirementId)->first();
+            if($jobRequirment){
+                $jobRequirment->delete();
+                return response()->json(['error' => false,'message'=>'Deleted Success']);
+            }
+            return response()->json(['error' => true,'message' => 'Something went wrong please try after sometime']);
+        }
+        return response()->json(['error' => true,'message' => $validate->errors()->first()]);
+    }
+
+    //job type functions
     public function index(Request $req)
     {
         $jobType = JobType::select('*')->get();

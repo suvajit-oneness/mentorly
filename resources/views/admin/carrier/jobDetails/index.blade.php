@@ -5,6 +5,7 @@
     <div class="app-title">
         <div class="active-wrap">
             <h1><i class="fa fa-file"></i> Job</h1>
+            <a href="{{route('admin.job.detail.add')}}" class="btn btn-primary pull-right AddNewJobCategory">Add New</a>
         </div>
     </div>
 </div>
@@ -13,9 +14,9 @@
         <div class="col-md-12">
             <div class="tile">
                 <div class="tile-body">
-                    @if(Session::has('message'))
+                    {{-- @if(Session::has('message'))
                         <p class="alert alert-success">{{ Session::get('message') }}</p>
-                    @endif
+                    @endif --}}
                     <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
@@ -39,7 +40,7 @@
                                     <td>{{ $data->location }}</td>
                                     <td>{{ date('d M, Y',strtotime($data->valid_till)) }}</td>
                                     <td>{!! $data->description !!}</td>
-                                    <td><a href="javascript:void(0)" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
+                                    <td><a href="{{route('admin.job.detail.edit', ['jobId' => encrypt($data->id)])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger deleteJob" data-id="{{$data->id}}">Delete</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -55,6 +56,36 @@
     <script type="text/javascript">$('#sampleTable').DataTable({"ordering": false});</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <script type="text/javascript">
-
+        $(document).on('click','.deleteJob',function(){
+            var deleteJob = $(this);
+            var jobId = $(this).attr('data-id');
+            swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this Job requirement!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes, delete it!",
+              closeOnConfirm: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.ajax({
+                        type : 'POST',
+                        dataType : 'JSON',
+                        url : "{{route('admin.job.detail.delete')}}",
+                        data : {jobId:jobId,_token:'{{csrf_token()}}'},
+                        success:function(data){
+                            if(data.error == false){
+                                deleteJob.closest('tr').remove();
+                                swal('Success',"Poof! Job category has been deleted!", 'success');
+                            }else{
+                                swal('Error',data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endpush

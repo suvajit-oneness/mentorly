@@ -119,17 +119,17 @@
                     </a>
                 </li>
                 <li>
-                    <a class="treeview-item {{ sidebar_open(['admin.job.design*']) }}"
-                    href="{{ route('admin.job.design.index') }}">
+                    <a class="treeview-item {{ sidebar_open(['admin.job.detail*','admin.job.requirement.*']) }}"
+                    href="{{ route('admin.job.detail.index') }}">
                     <i class="icon fa fa-circle-o"></i>Job
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="treeview-item {{ sidebar_open(['admin.job.requirement.*']) }}"
                     href="{{ route('admin.job.requirement.index') }}">
                     <i class="icon fa fa-circle-o"></i>Job Requirement
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
 

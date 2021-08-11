@@ -31,14 +31,21 @@ Route::group(['prefix' => 'admin'], function () {
 	    	Route::post('delete','Site\CarrierController@jobCateoryDelete')->name('admin.job.category.delete');
 	    });
 
-	    //Job Design
+	    //Job Detail
 	    Route::group(['prefix' => 'job/details'],function(){
-	    	Route::get('list','Site\CarrierController@jobDetailsList')->name('admin.job.design.index');
+	    	Route::get('list','Site\CarrierController@jobDetailsList')->name('admin.job.detail.index');
+	    	Route::get('add','Site\CarrierController@JobDetailsAdd')->name('admin.job.detail.add');
+	    	Route::post('store','Site\CarrierController@JobDetailsStore')->name('admin.job.detail.store');
+			Route::get('edit','Site\CarrierController@JobDetailsEdit')->name('admin.job.detail.edit');
+			Route::post('update','Site\CarrierController@JobDetailsUpdate')->name('admin.job.detail.update');
+			Route::post('delete','Site\CarrierController@jobDelete')->name('admin.job.detail.delete');
 	    });
 
 	    //Job Requirement
 	    Route::group(['prefix' => 'job/requirement'],function(){
 	    	Route::get('list','Site\CarrierController@jobRequirementList')->name('admin.job.requirement.index');
+	    	Route::post('save-or-update','Site\CarrierController@jobRequirementSaveOrUpdate')->name('admin.job.requirement.saveOrUpdate');
+			Route::post('delete','Site\CarrierController@jobRequirementDelete')->name('admin.job.requirement.delete');
 	    });
 
 		Route::get('/invite_list', 'Admin\InvitationController@index')->name('admin.invite');
