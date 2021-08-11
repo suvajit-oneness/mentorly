@@ -34,7 +34,7 @@
                                 <td>
                                     <a href="{{route('admin.job.design.index')}}?category={{encrypt($category->id)}}">{{count($category->job_details)}}</a>
                                 </td>
-                                <td><a href="javascript:void(0)" class="text-success editJobCategory" data-details="{{json_encode($category)}}">Edit</a> | <a href="javascript:void(0)" class="text-danger">Delete</a></td>
+                                <td><a href="javascript:void(0)" class="text-success editJobCategory" data-details="{{json_encode($category)}}">Edit</a> | <a href="javascript:void(0)" class="text-danger deleteJobCategory" data-id="{{$category->id}}">Delete</a></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -93,14 +93,57 @@
     <script type="text/javascript">$('#sampleTable').DataTable({"ordering": false});</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <script type="text/javascript">
+
+        @if(old('form_type') == 'add')
+            $('#addJobCategoryModalLong').modal('show');
+        @endif
+
+        @if(old('form_type') == 'edit')
+            $('#editJobCategoryModalLong').modal('show');
+        @endif
+
         $(document).on('click','.AddNewJobCategory',function(){
-           $('#addJobCategoryModalLong').modal('show'); 
+            $('#AddNewJobCategory .form-control').removeClass('is-invalid');$('.errorMessage').remove();
+            $('#AddNewJobCategory').modal('show');
         });
 
         $(document).on('click','.editJobCategory',function(){
             var details = JSON.parse($(this).attr('data-details'));
-            console.log(details);
-            $('#editJobCategoryModalLong').modal('show'); 
+            // $('#editJobCategoryModalLong #planIdForUpdate').val(details.id);
+            // $('#editJobCategoryModalLong #typeIdforUpdate').val(details.type);
+            // $('#editJobCategoryModalLong #titleForUpdate').val(details.title);
+            $('#editJobCategoryModalLong .form-control').removeClass('is-invalid');$('.errorMessage').remove();
+            $('#editJobCategoryModalLong').modal('show');
+        });
+
+        $(document).on('click','.deleteJobCategory',function(){
+            var deleteJobCategory = $(this);
+            var categoryId = $(this).attr('data-id');
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this Job plan!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type : 'POST',
+                        dataType : 'JSON',
+                        url : "",
+                        data : {jobCategoryId:categoryId,_token:'{{csrf_token()}}'},
+                        success:function(data){
+                            if(data.error == false){
+                                deleteJobCategory.closest('tr').remove();
+                                swal('Success',"Poof! Company Plan has been deleted!", 'success');
+                            }else{
+                                swal('Error',data.message);
+                            }
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endpush
