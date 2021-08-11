@@ -27,6 +27,8 @@ Route::group(['prefix' => 'admin'], function () {
 	    //Job Category
 	    Route::group(['prefix' => 'job/category'],function(){
 	    	Route::get('list','Site\CarrierController@jobCateoryList')->name('admin.job.category.index');
+	    	Route::post('list/updatedOrSave','Site\CarrierController@jobCateorysaveOrUpdate')->name('admin.job.category.saveOrUpdate');
+	    	Route::post('delete','Site\CarrierController@jobCateoryDelete')->name('admin.job.category.delete');
 	    });
 
 	    //Job Design

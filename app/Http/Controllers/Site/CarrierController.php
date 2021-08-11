@@ -15,6 +15,55 @@ class CarrierController extends Controller
         return view('admin.carrier.category.index',compact('type'));
     }
 
+    public function jobCateorysaveOrUpdate(Request $req)
+    {
+        $req->validate([
+            'form_type' => 'required|string|in:add,edit',
+            'category' => 'required|string|max:200',
+        ]);
+        if($req->form_type == 'add'){
+            $category = JobType::where('title',$req->category)->first();
+            if(!$category){
+                $category = new JobType();
+                $category->title = $req->category;
+                $category->save();
+                return back()->with('Success','Category Created Success');
+            }
+            $error['category'] = 'This category is already exist';
+            return back()->withErrors($error)->withInput($req->all());
+        }elseif($req->form_type == 'edit'){
+            $req->validate([
+                'categoryId' => 'required|numeric|min:1',
+            ]);
+            $category = JobType::where('id','!=',$req->categoryId)->where('title',$req->category)->first();
+            if(!$category){
+                $category = JobType::where('id',$req->categoryId)->first();
+                $category->title = $req->category;
+                $category->save();
+                return back()->with('Success','Category Updated Success');
+            }
+            $error['category'] = 'This category is already exist';
+            return back()->withErrors($error)->withInput($req->all());
+        }
+    }
+
+    public function jobCateoryDelete(Request $req)
+    {
+        $rules = [
+            'jobCategoryId' => 'required|min:1|numeric',
+        ];
+        $validate = validator()->make($req->all(),$rules);
+        if(!$validate->fails()){
+            $category = JobType::where('id',$req->jobCategoryId)->first();
+            if($category){
+                $category->delete();
+                return response()->json(['error' => false,'message'=>'Deleted Success']);
+            }
+            return response()->json(['error' => true,'message' => 'Something went wrong please try after sometime']);
+        }
+        return response()->json(['error' => true,'message' => $validate->errors()->first()]);
+    }
+
     public function jobDetailsList(Request $req)
     {
         $job = Job::select('*');

@@ -55,13 +55,20 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <form method="post" action="{{route('admin.job.category.saveOrUpdate')}}">
+                    @csrf
+                    <input type="hidden" name="form_type" value="add">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="category" id="addCategory" placeholder="Category" value="{{old('category')}}" class="form-control @error('category') is-invalid @enderror">
+                            @error('category')<span class="text-danger errorMessage">{{$message}}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -76,13 +83,21 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <form method="post" action="{{route('admin.job.category.saveOrUpdate')}}">
+                    @csrf
+                    <input type="hidden" name="form_type" value="edit">
+                    <input type="hidden" name="categoryId" id="updateCategoryId" value="{{old('categoryId')}}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="category" id="updateCategory" placeholder="Category" value="{{old('category')}}" class="form-control @error('category') is-invalid @enderror">
+                            @error('category')<span class="text-danger errorMessage">{{$message}}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -103,15 +118,15 @@
         @endif
 
         $(document).on('click','.AddNewJobCategory',function(){
-            $('#AddNewJobCategory .form-control').removeClass('is-invalid');$('.errorMessage').remove();
-            $('#AddNewJobCategory').modal('show');
+            $('#addJobCategoryModalLong .form-control').removeClass('is-invalid');$('.errorMessage').remove();
+            $('#addJobCategoryModalLong #addCategory').val('');
+            $('#addJobCategoryModalLong').modal('show');
         });
 
         $(document).on('click','.editJobCategory',function(){
             var details = JSON.parse($(this).attr('data-details'));
-            // $('#editJobCategoryModalLong #planIdForUpdate').val(details.id);
-            // $('#editJobCategoryModalLong #typeIdforUpdate').val(details.type);
-            // $('#editJobCategoryModalLong #titleForUpdate').val(details.title);
+            $('#editJobCategoryModalLong #updateCategoryId').val(details.id);
+            $('#editJobCategoryModalLong #updateCategory').val(details.title);
             $('#editJobCategoryModalLong .form-control').removeClass('is-invalid');$('.errorMessage').remove();
             $('#editJobCategoryModalLong').modal('show');
         });
@@ -120,23 +135,25 @@
             var deleteJobCategory = $(this);
             var categoryId = $(this).attr('data-id');
             swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this Job plan!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this Job category!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Yes, delete it!",
+              closeOnConfirm: false
+            },
+            function(isConfirm){
+                if (isConfirm) {
                     $.ajax({
                         type : 'POST',
                         dataType : 'JSON',
-                        url : "",
+                        url : "{{route('admin.job.category.delete')}}",
                         data : {jobCategoryId:categoryId,_token:'{{csrf_token()}}'},
                         success:function(data){
                             if(data.error == false){
                                 deleteJobCategory.closest('tr').remove();
-                                swal('Success',"Poof! Company Plan has been deleted!", 'success');
+                                swal('Success',"Poof! Job category has been deleted!", 'success');
                             }else{
                                 swal('Error',data.message);
                             }
