@@ -65,7 +65,6 @@ class CarrierController extends Controller
     }
 
     //job detail functions
-
     public function jobDetailsList(Request $req)
     {
         $job = Job::select('*');
@@ -98,7 +97,6 @@ class CarrierController extends Controller
         $job->description = $req->description;
         $job->valid_till = $req->valid_till;
         $job->save();
-        
         return redirect()->route('admin.job.detail.index')->with('Success','Job saved Sucessfully');
     }
 
@@ -127,7 +125,6 @@ class CarrierController extends Controller
         $job->description = $req->description;
         $job->valid_till = $req->valid_till;
         $job->save();
-        
         return redirect()->route('admin.job.detail.index')->with('Success','Job updated Sucessfully');
     }
 
@@ -243,7 +240,7 @@ class CarrierController extends Controller
             'name' => $req->first_name,
             'content' => 'Thankyou for applying for the post "'.$job->name.'", Our HR will call you shorlty',
         ];
-        sendMail($sendMailData,'email/carrierApplication','rrpit9@gmail.com','Your Application Submitted Successfully !!');
+        sendMail($sendMailData,'email/carrierApplication',$req->email,'Your Application Submitted Successfully !!');
         return back()->with('Success','Application Submitted Sucessfully');
     }
 
