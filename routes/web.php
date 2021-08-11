@@ -1,18 +1,13 @@
 <?php
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\FacebookController;
-
 Auth::routes(['verify' => true,'login'=>false]);
 
 require 'admin.php';
 
-Route::get('facebook', function () {
-    return view('facebook');
-});
-
-Route::get('auth/facebook', 'Auth\FacebookController@redirectToFacebook');
-Route::get('auth/facebook/callback', 'Auth\FacebookController@handleFacebookCallback');
+// SOCIALITE SIGN-IN
+Route::get('{userType}/sign-in/{socialite}','Auth\SocialiteController@socialiteLogin')->name('socialite.login');
+Route::get('sign-in/{socialite}/redirect','Auth\SocialiteController@socialiteLoginRedirect')->name('socialite.login.redirect');
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');

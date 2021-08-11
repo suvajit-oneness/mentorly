@@ -322,6 +322,7 @@ public function holdBookingRequest(Request $req)
 
 
 
+
 public function bookRescheduleClass(Request $req)
 {
     DB::beginTransaction();
@@ -337,55 +338,65 @@ public function bookRescheduleClass(Request $req)
        $newBookingSlot->ReschduleAgainstClassid = $oldSlotBooked->id;
        $newBookingSlot->created_at = date('Y-m-d H:i:s');
        $newBookingSlot->updated_at = date('Y-m-d H:i:s');
-
        $newBookingSlot->save();
+        $oldShiftDetails = AvailableShift::find($oldSlotBooked->availableShiftId);
+        $newshiftDetails = AvailableShift::find($req->slotId);
+        $userid =   $oldSlotBooked->bookedUserId;
+        if($oldSlotBooked->userType=='mentor')
+        {
+            $userDetails = Mentor::find($userid);
+        }elseif($oldSlotBooked->userType=='web')
+        {
+            $userDetails = User::find($userid);
+        }
+        $data = array(
+            'userId' => $oldSlotBooked->bookedUserId,
+            'userType' => $oldSlotBooked->userType,
+            'mentorId' =>  $oldSlotBooked->mentorId,
+            'msg' => 'R',
+            'reschduleslot' =>  $req->slotId,
+            'existingSlotid' =>  $oldSlotBooked->availableShiftId,
+            'isread' =>0
+        );
+        DB::table('notifications')->insert($data);
+        $dataMentee = [
+            'name' => $userDetails->name,
+            'todayDate' => date('M-d-y'),
+            'content' => 'Your booking for the mentorly session of dated '.date('M d,Y',strtotime($oldShiftDetails->date)).' at '.date('H:i:s',strtotime($oldShiftDetails->time_shift)).' has been reschdules to '.date('M d,Y',strtotime($newshiftDetails->date)). ' at '.date('H:i:s',strtotime($newshiftDetails->time_shift)),
+        ];
+        sendMail($dataMentee,'email/reschduleBooking',$userDetails->email,'Your class booking has been Rescheduled !!');
+        $this->deleteZoomMeeting($oldSlotBooked->id);
+        $zoomMeeting = $this->crateZoomMeeting($newshiftDetails,$userDetails,$newBookingSlot);
+        DB::commit();
+        return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('mentor.booking.request')]);
 
+    
 
-       $data = array(
-        'userId' => $oldSlotBooked->bookedUserId,
-        'userType' => $oldSlotBooked->userType,
-        'mentorId' =>  $oldSlotBooked->mentorId,
-        'msg' => 'R',
-        'reschduleslot' =>  $req->slotId,
-        'existingSlotid' =>  $oldSlotBooked->availableShiftId,
-        'isread' =>0
-    );
+    
 
+    // zoom meet create //
+    // $slot = AvailableShift::where('id',$newshiftId)->first();
+    // $user = Auth::guard($req->userType)->user();
+    // $slotBooked = new MentorSlotBooked();
+    // $slotBooked->mentorId = $slot->mentorId;
+    // $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked,$newshiftId);
 
-    $userid =   $oldSlotBooked->bookedUserId; 
-
-    $oldshiftid =   $oldSlotBooked->id;
-    $oldShiftDetails = AvailableShift::find($oldshiftid);
-
-    $newshiftId = $req->slotId; 
-    $newshiftDetails = AvailableShift::find($newshiftId);
-    $userDetails = User::find($userid);
-
-
-     $dataMentee = [
-                'name' => $userDetails->name,
-                'todayDate' => date('M-d-y'),
-                'content' => 'Your booking for the mentorly session of dated '.date('M d,Y',strtotime($oldShiftDetails->date)).' at '.date('H:i:s',strtotime($oldShiftDetails->time_shift)).' has been reschdules to '.date('M d,Y',strtotime($newshiftDetails->date)). ' at '.date('H:i:s',strtotime($newshiftDetails->time_shift)),
-            ];
-    sendMail($dataMentee,'email/reschduleBooking',$userDetails->email,'Your class booking has been Rescheduled !!');
+    // DB::delete('zoom_meetings')->where('mentorId', $oldSlotBooked->mentorId)->where('slotid',$oldshiftid)->delete();
+    // zoom meeting end //
+     
 
    // Db::table('zoom_meetings')->where('mentorId',$oldSlotBooked->mentorId)->orderBy('id','asc')->delete();
    // $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
 
-
-
-
-       DB::table('notifications')->insert($data);
-
-       DB::commit();
-            //return response()->json(['data'=>$newBookingSlot,'data2'=>$oldSlotBooked]);
-       return response()->json(['error'=>false,'msg'=>'Your Booking Has Been On Hold','redirectURL'=>route('mentor.booking.request')]);
+       
+      
    }catch(Exception $e){
     DB::rollback();
     return response()->json(['error'=> true,'message'=>'Something went wrong please try after some time']);
 }
 
 }
+
 
 
 
@@ -430,7 +441,8 @@ public function stripeBookingConfirmed(Request $req)
             'message' => 'I have sent you the booking request against '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)),
         ]);
         $this->sendMessageUniversal($newRequest);
-        $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
+        $requestedSlotid = $req->slotId;
+        $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked,$requestedSlotid);
 
         $dataMentee = [
             'name' => $user->name,
@@ -457,7 +469,22 @@ public function stripeBookingConfirmed(Request $req)
     }
 }
 
-public function crateZoomMeeting($slot,$user,$slotBooked)
+public function deleteZoomMeeting($bookedslotId)
+    {
+        $zoom = ZoomMeeting::where('mentorSlotBookedId',$bookedslotId)->first();
+        $meeting_id = $zoom->meetingId;
+        $client = new \GuzzleHttp\Client(['base_uri' => 'https://api.zoom.us']);
+        $response = $client->request("DELETE", "/v2/meetings/$meeting_id", [
+            "headers" => [
+                "Authorization" => "Bearer " . $this->generateToken(),
+            ]
+        ]);
+        if (204 == $response->getStatusCode()) {
+            $zoom->delete();
+        }
+    }
+
+public function crateZoomMeeting($slot,$user,$slotBooked,$requestedSlotid=0)
 {
     $mentor = Mentor::where('id',$slotBooked->mentorId)->first();
     $topic = 'Meeting with '.$mentor->name.' at '.$slot->date. ' '.$slot->time_shift;
@@ -496,6 +523,7 @@ public function crateZoomMeeting($slot,$user,$slotBooked)
         $newMeeting->status = $data->status;
         $newMeeting->type = $data->type;
         $newMeeting->start_url = !empty($data->start_url) ? $data->start_url : '';
+        $newMeeting->mentorSlotBookedId = $slotBooked->id;
         $newMeeting->save();
     }
     return $newMeeting;

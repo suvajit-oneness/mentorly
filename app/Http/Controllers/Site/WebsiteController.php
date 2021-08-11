@@ -201,6 +201,7 @@ class WebsiteController extends Controller
         if(!empty($req->timeoftheweek)){
 
         }
+        
         $mentors = $mentors->whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->orderBy('mentors.charge_per_hour','DESC')->groupBy('mentors.id')->get();
         $days = AvailableDay::get();
         foreach ($mentors as $mentor) {

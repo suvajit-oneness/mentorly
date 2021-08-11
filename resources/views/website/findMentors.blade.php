@@ -222,6 +222,16 @@
 									<li class="company">Twitch</li>
 									<li class="rating"><span><img src="{{asset('design/images/rating.png')}}"></span> {{number_format(avgRatingOfMentors($mentor->reviews),2)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} Reviews)</a></li>
 								</ul>
+								@php
+								$res = DB::table('mentor_slot_bookeds')->where('mentorId',$mentor->id)->where('bookingStatus','1')->count();
+								@endphp
+								<div class="inerview-taken">
+								@if($res>0)
+								Successfully Completed {{$res}} class
+								@else
+								@endif
+
+								 </div>
 								<!-- <div class="inerview-taken">
 									<span><img src="{{asset('design/images/student.png')}}"></span>  51 interviews given
 								</div> -->
