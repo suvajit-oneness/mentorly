@@ -20,7 +20,7 @@
                     @if(Session::has('message'))
                         <p class="alert alert-success">{{ Session::get('message') }}</p>
                     @endif
-                    <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
+                    <table class="table table-hover table-responsive custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
                                 <th>Id</th>

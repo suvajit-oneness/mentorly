@@ -15,20 +15,23 @@
 	    <div class="col-md-12">
 	        <div class="tile">
 	            <div class="tile-body">
-	                <table class="table table-hover custom-data-table-style table-striped" id="sampleTable">
-						<tr>
-							<th>Id</th>
-							<th>Meeting Id</th>
-							<th>Host Id</th>
-							<th>Mentor Details</th>
-							<th>Mentee Details</th>
-							<th>Topic</th>
-							<th>Start Time</th>
-							<th>Agenda</th>
-							<th>Join URL</th>
-							<th>Action</th>
-						</tr>
-						@foreach($data as $zoom)
+	                <table class="table table-hover table-responsive custom-data-table-style table-striped" id="sampleTable">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Meeting Id</th>
+								<th>Host Id</th>
+								<th>Mentor Details</th>
+								<th>Mentee Details</th>
+								<th>Topic</th>
+								<th>Start Time</th>
+								<th>Agenda</th>
+								<th>Join URL</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($data as $zoom)
 							<tr>
 								<td>{{$zoom->id}}</td>
 								<td>{{$zoom->meetingId}}</td>
@@ -42,7 +45,9 @@
 								<td><a href="{{route('admin.zoom.delete',$zoom->meetingId)}}" class="loaderEnable text-danger">Delete</a></td>
 							</tr>
 						@endforeach
+						</tbody>
 					</table>
+					{{-- {{$data->links()}} --}}
 	            </div>
 	        </div>
 	    </div>
@@ -110,10 +115,11 @@
 	</div>
 	@endsection
 	@push('scripts')
-	    <script type="text/javascript" src="{{ asset('backend/js/plugins/jquery.dataTables.min.js') }}"></script>
-	    <script type="text/javascript" src="{{ asset('backend/js/plugins/dataTables.bootstrap.min.js') }}"></script>
-	    <script type="text/javascript">$('#sampleTable').DataTable({"ordering": false});</script>
+	   
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+		<script type="text/javascript" src="{{ asset('backend/js/plugins/jquery.dataTables.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('backend/js/plugins/dataTables.bootstrap.min.js') }}"></script>
+		<script type="text/javascript">$('#sampleTable').DataTable({"ordering": false});</script>
 	    <script type="text/javascript">
 	    	@if($errors->any())
 	    		$('#zoomModal').modal('show');

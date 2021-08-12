@@ -22,7 +22,7 @@ class ZoomMeetingController extends Controller
 				$data = $data->where('mentorId',$user->id);
 				break;
 		}
-		$data = $data->where('over',0)->orderBy('id','DESC')->get();
+		$data = $data->where('over',0)->orderBy('id','DESC')->paginate(10);
 		foreach($data as $newData){
 			if($newData->userType == 'web'){
 				$newData->mentee = User::where('id',$newData->menteeId)->first();

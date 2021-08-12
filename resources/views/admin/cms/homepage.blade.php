@@ -15,7 +15,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>Where our mentor’s work at <a href="{{route('admin.cms.homepage.add','where_our_mentor_work_at')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -37,7 +37,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>What We Do <a href="{{route('admin.cms.homepage.add','what_we_do')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -64,7 +64,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>Focus On The Skill You Need <a href="{{route('admin.cms.homepage.add','focus_ontheskill_you_need')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Description</th>
@@ -87,7 +87,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>Our Sucess Story <a href="{{route('admin.cms.homepage.add','our_sucess_story')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -116,7 +116,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>How Mentory Works <a href="{{route('admin.cms.homepage.add','how_mentory_works')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -143,7 +143,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <caption><h3>Become Mentor <a href="{{route('admin.cms.homepage.add','become_mentor_home_page')}}" class="float-right btn">Add New</a></h3></caption><br>
-                    <table class="table table-hover custom-data-table-style table-striped">
+                    <table class="table table-hover sampleTable custom-data-table-style table-striped">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -167,6 +167,10 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+    <script type="text/javascript" src="{{ asset('backend/js/plugins/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('backend/js/plugins/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript">$('.sampleTable').DataTable({"ordering": false});</script>
     <script type="text/javascript">
         $(document).on('click','.delete',function(){
             var thisClicked = $(this);
