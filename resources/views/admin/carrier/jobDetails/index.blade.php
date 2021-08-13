@@ -39,7 +39,7 @@
                                     <td><a href="{{route('admin.job.requirement.index')}}?jobId={{encrypt($data->id)}}">{{count($data->requirement)}}</a></td>
                                     <td>{{ $data->location }}</td>
                                     <td>{{ date('d M, Y',strtotime($data->valid_till)) }}</td>
-                                    <td>{!! $data->description !!}</td>
+                                    <td>{!! str_limit($data->description,100) !!}</td>
                                     <td><a href="{{route('admin.job.detail.edit', ['jobId' => encrypt($data->id)])}}" class="text-success">Edit</a> | <a href="javascript:void(0)" class="text-danger deleteJob" data-id="{{$data->id}}">Delete</a></td>
                                 </tr>
                             @endforeach
