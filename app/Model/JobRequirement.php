@@ -11,6 +11,6 @@ class JobRequirement extends Model
 
     public function job_details()
     {
-        return $this->belongsTo('App\Model\Job','jobId','id');
+        return $this->belongsTo('App\Model\Job','jobId','id')->withTrashed();
     }
 }

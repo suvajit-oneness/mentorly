@@ -11,6 +11,6 @@ class JobType extends Model
 
     public function job_details()
     {
-        return $this->hasMany('App\Model\Job','jobTypeId','id');
+        return $this->hasMany('App\Model\Job','jobTypeId','id')->withTrashed();
     }
 }

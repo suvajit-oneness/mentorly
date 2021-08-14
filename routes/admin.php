@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
 	    })->name('admin.dashboard');
 
 		// Report
-	    Route::get('report/carrier/application','Site\CarrierController@carrierApplicationReport')->name('admin.carrier.application.report');
+	    Route::get('report/career/application','Site\CarrierController@carrierApplicationReport')->name('admin.carrier.application.report');
 
 	    //Job Category
 	    Route::group(['prefix' => 'job/category'],function(){
