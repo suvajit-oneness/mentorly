@@ -57,7 +57,7 @@ class StripePaymentController extends Controller
                 'amount' => ($req->amount/100),
                 'todayDate' => date('M-d-y'),
                 'transactionId' => $stripe->transactionId,
-                'content' => 'We have received your payment $'.($req->amount/100).' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
+                'content' => 'We have received your payment $'.$req->amount.' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
             ];
             sendMail($dataMentee,'email/invoicetemplate',$user->email,'Payment Successful for Mentorly Session !!');
             return redirect(route('stripe.payment.success').'?slotId='.$req->slotId.'&userType='.$req->userType.'&transactionId='.$stripe->id);
