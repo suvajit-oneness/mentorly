@@ -58,16 +58,15 @@
 								@foreach($daysData as $day)
 								<div class="time-avali">
 									@foreach($day['available'] as $slot)
-
-									@if($slot['available'] == 2)
-									<div class="time-slot time_stot_active">
-										<a href="javascript:void(0)" style="color: #fff">{{$slot['time_shift']}}</a>
-									</div>
-									@else
-									<div class="time-slot">
-										<a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
-									</div>
-									@endif
+										@if($slot['available'] == 2)
+											<div class="time-slot time_stot_active">
+												<a href="javascript:void(0)" style="color: #fff">{{$slot['time_shift']}}</a>
+											</div>
+										@else
+											<div class="time-slot">
+												<a href="javascript:void(0)" class="slotBooking" data-slotid="{{$slot['id']}}" data-slot="{{$slot['time_shift']}}">{{$slot['time_shift']}}</a>
+											</div>
+										@endif
 									@endforeach
 								</div>
 								@endforeach
@@ -194,7 +193,6 @@
 				<!-- review end -->
 			</div>
 		</div>
-
 	</div>
 </section>
 
