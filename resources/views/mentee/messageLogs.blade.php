@@ -98,33 +98,32 @@
 				'conversation_id' : id
 			},
 			success:function(data) {
-					// console.log(data.data);
-					$('.mesgs').empty();
-					var msg_history = '<div class="msg_history">';
-					var type_msg = '';
-					$.each(data.data, function(i, val) {
-						if (($('#logged_in_id').val() == val.from_id) && ($('#logged_in_guard').val() == val.from_guard)) {
-							msg_history += '<div class="outgoing_msg"><div class="sent_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span> </div></div>';
+				$('.mesgs').empty();$('.loading-data').hide();
+				var msg_history = '<div class="msg_history">';
+				var type_msg = '';
+				$.each(data.data, function(i, val) {
+					if (($('#logged_in_id').val() == val.from_id) && ($('#logged_in_guard').val() == val.from_guard)) {
+						msg_history += '<div class="outgoing_msg"><div class="sent_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span> </div></div>';
+					} else {
+						msg_history += '<div class="incoming_msg"><div class="incoming_msg_img">'; 
+						if (val.userDetails.image == '') {
+							msg_history += "<img src={{asset('design/images/mentor1.jpg')}}>";
 						} else {
-							msg_history += '<div class="incoming_msg"><div class="incoming_msg_img">'; 
-							if (val.userDetails.image == '') {
-								msg_history += "<img src={{asset('design/images/mentor1.jpg')}}>";
-							} else {
-								msg_history += "<img src='{{asset('')}}/'"+val.userDetails.image+">";
-							}
-							msg_history +='</div><div class="received_msg"><div class="received_withd_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span></div></div></div>';
-							msg_history += '<input type="hidden" id="receiverId" value="'+val.from_id+'">';
-							msg_history += '<input type="hidden" id="receiverGuard" value="'+val.from_guard+'">';
-							msg_history += '<input type="hidden" id="conversationId" value="'+val.conversation_id+'">';
+							msg_history += "<img src='{{asset('')}}/'"+val.userDetails.image+">";
 						}
-					})
-					msg_history += '</div>';
-					type_msg += "<div class='type_msg'><div class='input_msg_write'><form id='sendMessageForm'><input type='text' class='write_msg' placeholder='Type a message' id='my_message' value=''/><button class='msg_send_btn' type='submit'><i class='fa fa-paper-plane'></i></button></form></div></div>";
-					$('.mesgs').append(msg_history);
-					$('.mesgs').append(type_msg);
-				}
-			})
-	};
+						msg_history +='</div><div class="received_msg"><div class="received_withd_msg"><p>'+val.message+'</p><span class="time_date"> '+val.time+'</span></div></div></div>';
+						msg_history += '<input type="hidden" id="receiverId" value="'+val.from_id+'">';
+						msg_history += '<input type="hidden" id="receiverGuard" value="'+val.from_guard+'">';
+						msg_history += '<input type="hidden" id="conversationId" value="'+val.conversation_id+'">';
+					}
+				})
+				msg_history += '</div>';
+				type_msg += "<div class='type_msg'><div class='input_msg_write'><form id='sendMessageForm'><input type='text' class='write_msg' placeholder='Type a message' id='my_message' value=''/><button class='msg_send_btn' type='submit'><i class='fa fa-paper-plane'></i></button></form></div></div>";
+				$('.mesgs').append(msg_history);
+				$('.mesgs').append(type_msg);
+			}
+		})
+	}
 
 	$(document).on('submit','#sendMessageForm',function(evt){
 		var conversationId = $('#conversationId').val();
