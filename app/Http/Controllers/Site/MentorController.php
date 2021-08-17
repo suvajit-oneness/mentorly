@@ -10,14 +10,15 @@ use App\Models\Conversation;use App\Models\Message;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
 use App\Models\MentorExperienceLog;
-use App\Models\Review;
+use App\Models\Review,App\Model\MasterReferral;
 use App\Models\Notification;
 
 class MentorController extends Controller
 {
     public function inviteFriends(Request $req)
     {
-        return view('invite-friends');
+        $masterRef = MasterReferral::first();
+        return view('invite-friends',compact('masterRef'));
     }
 
     public function setting(Request $req)
