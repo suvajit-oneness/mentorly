@@ -33,6 +33,17 @@ if (!function_exists('sidebar_open')) {
         return $imageurl;
     }
 
+    function generateUniqueAlphaNumeric($length = 8)
+    {
+        $random_string = '';
+        for($i = 0; $i < $length; $i++) {
+            $number = random_int(0, 36);
+            $character = base_convert($number, 10, 36);
+            $random_string .= $character;
+        }
+        return $random_string;
+    }
+
 function dateDifferenceFromNow($startdate)
 {
     $datetime1 = strtotime($startdate);

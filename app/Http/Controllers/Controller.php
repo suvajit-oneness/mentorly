@@ -34,14 +34,14 @@ class Controller extends BaseController
     // Referral system
     public function generateUniqueReferral()
     {
-    	$random = generateUniqueAlphaNumeric(7);
-    	$referral = Referral::where('code',$random)->first();
-    	if(!$referral){
-    		$referral = new Referral();
-    		$referral->code = strtoupper($random);
-    		$referral->save();
-    		return $referral;
-    	}
-    	return $this->generateUniqueReferral();
+        $random = generateUniqueAlphaNumeric(8);
+        $referral = Referral::where('code',$random)->first();
+        if(!$referral){
+            $referral = new Referral();
+            $referral->code = strtoupper($random);
+            $referral->save();
+            return $referral;
+        }
+        return $this->generateUniqueReferral();
     }
 }

@@ -15,6 +15,11 @@ use App\Models\Notification;
 
 class MentorController extends Controller
 {
+    public function inviteFriends(Request $req)
+    {
+        return view('invite-friends');
+    }
+
     public function setting(Request $req)
     {
     	$guard = get_guard();

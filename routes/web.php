@@ -1,13 +1,19 @@
 <?php
 use Illuminate\Http\Request;
 
-Auth::routes(['verify' => true,'login'=>false]);
+Auth::routes(['verify' => true,'login'=>false,'register'=>false]);
+
+Route::get('/login',function(){ return redirect('/');})->name('login');
 
 require 'admin.php';
 
 // SOCIALITE SIGN-IN
 Route::get('{userType}/sign-in/{socialite}','Auth\SocialiteController@socialiteLogin')->name('socialite.login');
 Route::get('sign-in/{socialite}/redirect','Auth\SocialiteController@socialiteLoginRedirect')->name('socialite.login.redirect');
+
+Route::group(['middleware' => 'auth'],function(){
+	Route::get('invite/your/friends','Site\MentorController@inviteFriends')->name('invite.friends');
+});
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');
