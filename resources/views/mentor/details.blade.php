@@ -75,43 +75,24 @@
 						</div>
 					</div>
 					<!-- mentor time sectioon end  -->
-
 				</div>
 
-
-				<!-- review start -->
-				@if($guard != '' && $guard != 'admin')
-					<div class="mentor-det-details no-flex reviews-place">
-						<h2 class="medium-heading">Reviews <span>({{count($mentor->reviews)}})</span></h2>
-						<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
-							{{ csrf_field() }}
-							<div class="form-group required">
-								<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
-								<div class="rating">
-									<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
-									<label class="star star-5" for="star-5"></label>
-									<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
-									<label class="star star-4" for="star-4"></label>
-									<input class="star star-3" value="3" id="star-3" type="radio" name="rating"/>
-									<label class="star star-3" for="star-3"></label>
-									<input class="star star-2" value="2" id="star-2" type="radio" name="rating"/>
-									<label class="star star-2" for="star-2"></label>
-									<input class="star star-1" value="1" id="star-1" type="radio" name="rating"/>
-									<label class="star star-1" for="star-1"></label>
+				@php $resume = $mentor->resume; @endphp
+				@if(count($resume) > 0)
+					<div class="mentor-det-details no-flex resume-place">
+						<h2 class="medium-heading">Resume</h2>
+						<ul class="edu-list">
+							@foreach($resume as $index => $res)
+							<li>
+								<div class="year">{{date('M, Y',strtotime($res->start))}} — {{($res->end != '0000-00-00' ? date('M, Y',strtotime($res->end)) : 'Till Now')}}</div>
+								<div class="study">
+									{{$res->name}}
 								</div>
-								<div>
-									<textarea name="review" class="form-control"></textarea>
-								</div>
-								<div>
-								<button type="submit" name="submit" class="btn btn-primary">Post</button>
-								</div>
-
-							</div>
-						</form>
+							</li><hr>
+							@endforeach
+						</ul>
 					</div>
 				@endif
-
-				<!-- review end -->
 
 				@if(count($mentor->reviews) > 0)
 				<div class="mentor-det-details no-flex reviews-place">
@@ -145,22 +126,6 @@
 				</div>
 				@endif
 
-				@php $resume = $mentor->resume; @endphp
-				@if(count($resume) > 0)
-				<div class="mentor-det-details no-flex resume-place">
-					<h2 class="medium-heading">Resume</h2>
-					<ul class="edu-list">
-						@foreach($resume as $index => $res)
-						<li>
-							<div class="year">{{date('M, Y',strtotime($res->start))}} — {{($res->end != '0000-00-00' ? date('M, Y',strtotime($res->end)) : 'Till Now')}}</div>
-							<div class="study">
-								{{$res->name}}
-							</div>
-						</li><hr>
-						@endforeach
-					</ul>					
-				</div>
-				@endif
 			</div>
 			<div class="right-panel">
 				<div class="calender">
@@ -188,13 +153,45 @@
 				</div>
 
 				<div class="show-review">
-					<span><img src="{{asset('design/images/rating.png')}}"></span> {{number_format(avgRatingOfMentors($mentor->reviews),2)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} reviews)</a>
+					<span><img src="{{asset('design/images/rating.png')}}"></span> {{number_format(avgRatingOfMentors($mentor->reviews),1)}} <a href="javascript:void(0)">({{count($mentor->reviews)}} reviews)</a>
 				</div>
 
 				<div class="button-place">
 					<a href="javascript:void(0)" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm messageToMentor">Message</a>
 				</div>
 
+				<!-- review start -->
+				@if($guard != '' && $guard != 'admin')
+					<div class="mentor-det-details no-flex reviews-place">
+						<h2 class="medium-heading">Post your Review<span></span></h2>
+						<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
+							{{ csrf_field() }}
+							<div class="form-group required">
+								<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
+								<div class="rating">
+									<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
+									<label class="star star-5" for="star-5"></label>
+									<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
+									<label class="star star-4" for="star-4"></label>
+									<input class="star star-3" value="3" id="star-3" type="radio" name="rating"/>
+									<label class="star star-3" for="star-3"></label>
+									<input class="star star-2" value="2" id="star-2" type="radio" name="rating"/>
+									<label class="star star-2" for="star-2"></label>
+									<input class="star star-1" value="1" id="star-1" type="radio" name="rating"/>
+									<label class="star star-1" for="star-1"></label>
+								</div>
+								<div>
+									<textarea name="review" class="form-control"></textarea>
+								</div>
+								<div>
+								<button type="submit" name="submit" class="btn btn-primary">Post</button>
+								</div>
+
+							</div>
+						</form>
+					</div>
+				@endif
+				<!-- review end -->
 			</div>
 		</div>
 
