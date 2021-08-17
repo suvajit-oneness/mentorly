@@ -636,7 +636,7 @@ public function reviewpost(Request $req)
         'mentor_id' => 'required|numeric|min:1',
     ]);
     $guard = get_guard();
-    if($guard != '' && $guard == 'admin'){
+    if($guard != '' && $guard != 'admin'){
         $user = Auth::guard($guard)->user();
         $review = new Review();
         $review->review = $req->review;
@@ -656,7 +656,7 @@ public function reviewpost(Request $req)
         $notification->msg = "N";
         $notification->reviewmsg = $msg;
         $notification->save();
-        
+
         $dataMentee = [
             'name' => $mentor->name,
             'content' => $msg,
