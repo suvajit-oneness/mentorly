@@ -7,6 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Auth;
+use App\Model\Referral;use DB;use App\User;use Hash;
+use App\Model\UserPoint;use App\Model\MasterReferral;
 
 class Controller extends BaseController
 {
@@ -45,4 +47,19 @@ class Controller extends BaseController
     {
         view()->share(['pageTitle' => $title, 'subTitle' => $subTitle]);
     }
+
+    //referral system
+    public function generateUniqueReferral()
+    {
+    	$random = generateUniqueAlphaNumeric(7);
+    	$referral = Referral::where('code',$random)->first();
+    	if(!$referral){
+    		$referral = new Referral();
+    		$referral->code = strtoupper($random);
+    		$referral->save();
+    		return $referral;
+    	}
+    	return $this->generateUniqueReferral();
+    }
+
 }
