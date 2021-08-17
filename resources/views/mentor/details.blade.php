@@ -4,7 +4,7 @@
 
 <section class="gray-wrapper">
 	<div class="container-xl">
-		
+		@php $guard = get_guard(); @endphp
 		<div class="mentor-details-wrapper">
 			<div class="left-panel">
 
@@ -13,7 +13,7 @@
 						<img src="@if($mentor->image !=''){{$mentor->image}}@else{{asset('design/images/mentor1.jpg')}}@endif">
 					</div>
 					<div class="mentor-bio">
-						<h3 class="profile-name mb-0">@php if(get_guard() == 'mentor' && (Auth::guard('mentor')->user()->id == $mentor->id)) echo "Welcome" @endphp {{$mentor->name}}.</h3>
+						<h3 class="profile-name mb-0">@php if($guard == 'mentor' && (Auth::guard('mentor')->user()->id == $mentor->id)) echo "Welcome" @endphp {{$mentor->name}}.</h3>
 						<span class="small-info">Certified developer with {{dateDifferenceFromNow($mentor->carrier_started)}} experience.</span>
 						<div class="inerview-taken mt-3">
 							<span><img src="{{asset('design/images/company.png')}}"></span>  Twitch
@@ -51,7 +51,7 @@
 						<div class="calender-body">
 							<div class="calender-head">
 								@foreach($daysData as $day)
-								<div class="dayname">{{$day['day']}}<br>({{$day['short_date']}})</div>	
+									<div class="dayname">{{$day['day']}}<br>({{$day['short_date']}})</div>	
 								@endforeach
 							</div>
 							<div class="calender-time">
@@ -80,47 +80,36 @@
 
 
 				<!-- review start -->
-				<div class="mentor-det-details no-flex reviews-place">
-					<h2 class="medium-heading">Reviews <span>({{count($mentor->reviews)}})</span></h2>
+				@if($guard != '' && $guard != 'admin')
+					<div class="mentor-det-details no-flex reviews-place">
+						<h2 class="medium-heading">Reviews <span>({{count($mentor->reviews)}})</span></h2>
+						<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
+							{{ csrf_field() }}
+							<div class="form-group required">
+								<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
+								<div class="rating">
+									<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
+									<label class="star star-5" for="star-5"></label>
+									<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
+									<label class="star star-4" for="star-4"></label>
+									<input class="star star-3" value="3" id="star-3" type="radio" name="rating"/>
+									<label class="star star-3" for="star-3"></label>
+									<input class="star star-2" value="2" id="star-2" type="radio" name="rating"/>
+									<label class="star star-2" for="star-2"></label>
+									<input class="star star-1" value="1" id="star-1" type="radio" name="rating"/>
+									<label class="star star-1" for="star-1"></label>
+								</div>
+								<div>
+									<textarea name="review" class="form-control"></textarea>
+								</div>
+								<div>
+								<button type="submit" name="submit" class="btn btn-primary">Post</button>
+								</div>
 
-					<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
-						{{ csrf_field() }}
-						<div class="form-group required">
-							  @php
-						        $guard = get_guard();$notification = [];
-						        if($guard != ''){
-						            $user = Auth::guard($guard)->user();
-						        }
-						    @endphp
-						    <input type="hidden" name="currenturl" value="{{url()->full()}}">
-							<input type="hidden" name="userid" value="{{$user->id}}"> 
-							<input type="hidden" name="mentor_id" value="{{$mentor->id}}"> 
-
-							<div class="rating">
-								<input class="star star-5" value="5" id="star-5" type="radio" name="rating"/>
-								<label class="star star-5" for="star-5"></label>
-								<input class="star star-4" value="4" id="star-4" type="radio" name="rating"/>
-								<label class="star star-4" for="star-4"></label>
-								<input class="star star-3" value="3" id="star-3" type="radio" name="rating"/>
-								<label class="star star-3" for="star-3"></label>
-								<input class="star star-2" value="2" id="star-2" type="radio" name="rating"/>
-								<label class="star star-2" for="star-2"></label>
-								<input class="star star-1" value="1" id="star-1" type="radio" name="rating"/>
-								<label class="star star-1" for="star-1"></label>
 							</div>
-
-
-							<div>
-								<textarea name="review" class="form-control"></textarea>
-							</div>
-
-							<div>
-							<button type="submit" name="submit" class="btn btn-primary">Post</button>
-							</div>
-
-						</div>
-					</form>
-				</div>
+						</form>
+					</div>
+				@endif
 
 				<!-- review end -->
 
@@ -179,22 +168,22 @@
 						<div class="row-title"></div>
 						<div class="row-cell">
 							@foreach($days as $day)
-							<div class="cell">{{$day->short_day}}</div>
+								<div class="cell">{{$day->short_day}}</div>
 							@endforeach
 						</div>
 					</div>
 					@foreach($mentor->timeShift as $timeShift)
-					<div class="row-grid">
-						<div class="row-title">
-							<span class="daytime">{{$timeShift['shift_name']}}</span>
-							<span class="time">{{$timeShift['shift']}}</span>
+						<div class="row-grid">
+							<div class="row-title">
+								<span class="daytime">{{$timeShift['shift_name']}}</span>
+								<span class="time">{{$timeShift['shift']}}</span>
+							</div>
+							<div class="row-cell">
+								@foreach($timeShift['days'] as $av_day)
+									<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
+								@endforeach
+							</div>
 						</div>
-						<div class="row-cell">
-							@foreach($timeShift['days'] as $av_day)
-							<div class="cell @if($av_day['available']>0){{'cell-light'}}@else{{'cell-deep'}}@endif"></div>
-							@endforeach
-						</div>
-					</div>
 					@endforeach
 				</div>
 
@@ -203,7 +192,6 @@
 				</div>
 
 				<div class="button-place">
-					
 					<a href="javascript:void(0)" data-mentor="{{$mentor->id}}" data-name="{{$mentor->name}}" class="prinery-btm deepblue-btm messageToMentor">Message</a>
 				</div>
 

@@ -628,59 +628,44 @@ public function getIndivisualSlots($mentor)
     return $shifting;
 }
 
-
-
 public function reviewpost(Request $req)
-{   
+{
     $req->validate([
-        'review' => 'required',
-        'rating' => 'required',
-        'userid' => 'required',
-        'mentor_id' => 'required'
+        'review' => 'required|string',
+        'rating' => 'required|numeric|min:1|max:5',
+        'mentor_id' => 'required|numeric|min:1',
     ]);
-
-    $currenturl = $req->currenturl;
     $guard = get_guard();
-    $user = Auth::guard($guard)->user();
-    $userid = Auth::guard($guard)->user()->id;
-    $username = Auth::guard($guard)->user()->name;
-    $useremail = Auth::guard($guard)->user()->email;
-    $review = new Review();
-    $review->review = $req->review;
-    $review->rating = $req->rating;
-    $review->user_id = $req->userid;
-    $review->mentor_id = $req->mentor_id;
-    $review->status = 1;
+    if($guard != '' && $guard == 'admin'){
+        $user = Auth::guard($guard)->user();
+        $review = new Review();
+        $review->review = $req->review;
+        $review->rating = $req->rating;
+        $review->user_type = $guard;
+        $review->user_id = $user->id;
+        $review->mentor_id = $req->mentor_id;
+        $review->status = 1;
+        $review->save();
+        $mentor = Mentor::find($req->mentor_id);
+        $msg = $user->name." has post a ".$review->rating. " star rating for you .";
 
-    $mentorDetails = Mentor::find($req->mentor_id);
-    $mentoName =  $mentorDetails->name; 
-    $mentoEmail =  $mentorDetails->email;
-
-    $review->save();
-
-    $msg = $username." has post a ".$req->rating. " star rating for you .";
-
-    $notification = new Notification();
-    $notification->userId = $userid;
-    $notification->userType = $guard;
-    $notification->mentorId = $req->mentor_id;
-    $notification->msg = "N";
-    $notification->reviewmsg = $msg;
-    $notification->save();
-
-    $dataMentee = [
-                'name' => $mentoName,
-                'content' => $msg,
-            ];
-    sendMail($dataMentee,'email/reviewemail',$mentoEmail,'You got an review');
-
-
-
-
-
-    return redirect($currenturl);
-
-
+        $notification = new Notification();
+        $notification->userId = $user->id;
+        $notification->userType = $guard;
+        $notification->mentorId = $mentor->id;
+        $notification->msg = "N";
+        $notification->reviewmsg = $msg;
+        $notification->save();
+        
+        $dataMentee = [
+            'name' => $mentor->name,
+            'content' => $msg,
+        ];
+        sendMail($dataMentee,'email/reviewemail',$mentor->email,'You got an review');
+        return redirect()->back()->with('Success','Review Submitted Success');
+    }
+    return redirect()->back()->with('Error','Please Login to Continue');
+    
 }
 
 
