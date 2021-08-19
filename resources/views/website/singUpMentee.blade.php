@@ -46,6 +46,12 @@
 					  <input type="password" class="input-style" name="password_confirmation" id="password_confirmation" placeholder="Confirm password">
 					</div>
 					<div class="form-group">
+						<input type="text" class="input-style" name="code" id="code" placeholder="Referral code (optional)" value="{{ old('code') }}">
+						@error('code')
+							<span class="text-danger">{{$message}}</span>
+						@enderror
+				  	</div>
+					<div class="form-group">
 					  <input type="submit" class="button-style" id="" value="Submit">
 					</div>
 					<div class="disclaimer-place">
@@ -59,6 +65,10 @@
 </section>
 
 @section('script')
-	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		// $(function() {
+		// 	alert('works');
+		// });
+	</script>
 @stop
 @endsection

@@ -157,7 +157,13 @@ class WebsiteController extends Controller
 				'last_name' => 'required|string',
 				'email' => 'required|email|string|unique:users',
 				'password' => 'required|confirmed|string',
-    		]);
+                'code' => [
+                    'nullable',
+                    'exists:referrals'
+                ],
+    		], [
+                'code.exists' => 'This Referral Code is invalid'
+            ]);
     		$mentee = new User();
     		$mentee->name = $req->first_name.' '.$req->last_name;
     		$mentee->email = $req->email;
@@ -166,6 +172,8 @@ class WebsiteController extends Controller
             $referral = $this->generateUniqueReferral();
             $referral->userId = $mentee->id;
             $referral->userType = 'web';
+            // $ref = $this->checkReferral($req->code);
+            // $referral->referred_by_referral_id = $ref->id;
             $referral->save();
             Auth::guard('web')->login($mentee);
             $data = [

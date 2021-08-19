@@ -44,4 +44,9 @@ class Controller extends BaseController
         }
         return $this->generateUniqueReferral();
     }
+
+    // public function checkReferral($code) {
+    //     $ref = Referral::where('code', $code)->get();
+    //     return $ref;
+    // }
 }
