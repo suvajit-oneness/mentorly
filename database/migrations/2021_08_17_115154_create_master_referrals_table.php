@@ -13,7 +13,7 @@ class CreateMasterReferralsTable extends Migration
      */
     public function up()
     {
-        Schema::create('master_referral', function (Blueprint $table) {
+        Schema::create('master_referrals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('off_percentage',8,2);
             $table->string('offer_detail');
@@ -27,7 +27,7 @@ class CreateMasterReferralsTable extends Migration
             'offer_detail' => 'their first lesson',
             'reward_amount' => 30
         ];
-        DB::table('master_referral')->insert($data);
+        DB::table('master_referrals')->insert($data);
     }
 
     /**
@@ -37,6 +37,6 @@ class CreateMasterReferralsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_referral');
+        Schema::dropIfExists('master_referrals');
     }
 }

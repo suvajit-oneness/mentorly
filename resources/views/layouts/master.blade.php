@@ -16,6 +16,7 @@
   @yield('css')
 </head>
 <body>
+    <div class="loading-data" style="display:block; color: #fff;">Loading&#8230;</div>
     @include('layouts.header')
 
     @yield('content')
@@ -30,6 +31,13 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <script>
 
+        $(document).ready(function() {
+            $('.loading-data').hide();
+            $(document).on('submit', 'form', function() {
+                $('button').attr('disabled', 'disabled');
+                $('.loading-data').show();
+            });
+        });
         @if(Session::has('Success'))
             swal('Success','{{Session::get('Success')}}');
         @elseif(Session::has('Errors'))

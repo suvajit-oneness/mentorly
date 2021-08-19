@@ -22,6 +22,17 @@ class CreateReferralsTable extends Migration
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
+        $data = [];
+        $mentee = \App\Models\User::get();
+        foreach ($mentee as $key => $user) {
+            $referral = generateUniqueReferral();
+            DB::table('referrals')->where('id',$referral->id)->update(['userId'=>$user->id,'userType' => 'web']);
+        }
+        $mentor = \App\Models\Mentor::get();
+        foreach ($mentor as $key => $user) {
+            $referral = generateUniqueReferral();
+            DB::table('referrals')->where('id',$referral->id)->update(['userId'=>$user->id,'userType' => 'mentor']);
+        }
     }
 
     /**

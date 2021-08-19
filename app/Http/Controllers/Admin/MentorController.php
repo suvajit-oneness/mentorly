@@ -82,6 +82,10 @@ class MentorController extends BaseController
         $mentor->carrier_started = date('Y-m-d',strtotime($req->carrier_started));
         $mentor->charge_per_hour = $req->charge_per_hour;
         $mentor->save();
+        $referral = $this->generateUniqueReferral();
+        $referral->userId = $mentor->id;
+        $referral->userType = 'mentor';
+        $referral->save();
         Session::flash('message', 'Mentor added successfully!');
         return redirect(route('admin.mentor.index'));
     }

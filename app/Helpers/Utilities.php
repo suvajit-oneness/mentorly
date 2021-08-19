@@ -20,6 +20,19 @@ if (!function_exists('sidebar_open')) {
     }
 }
 
+    function generateUniqueReferral()
+    {
+        $random = generateUniqueAlphaNumeric(8);
+        $referral = \App\Model\Referral::where('code',$random)->first();
+        if(!$referral){
+            $referral = new \App\Model\Referral();
+            $referral->code = strtoupper($random);
+            $referral->save();
+            return $referral;
+        }
+        return generateUniqueReferral();
+    }
+
     function randomGenerator()
     {
         return uniqid().''.date('ymdhis').''.uniqid();
@@ -31,6 +44,17 @@ if (!function_exists('sidebar_open')) {
         $image->move('upload/'.$folder.'/',$random.'.'.$image->getClientOriginalExtension());
         $imageurl = 'upload/'.$folder.'/'.$random.'.'.$image->getClientOriginalExtension();
         return $imageurl;
+    }
+
+    function generateUniqueAlphaNumeric($length = 8)
+    {
+        $random_string = '';
+        for($i = 0; $i < $length; $i++) {
+            $number = random_int(0, 36);
+            $character = base_convert($number, 10, 36);
+            $random_string .= $character;
+        }
+        return $random_string;
     }
 
 function dateDifferenceFromNow($startdate)

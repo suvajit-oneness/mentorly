@@ -15,8 +15,8 @@ class CreateUserPointsTable extends Migration
     {
         Schema::create('user_points', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('userId');
             $table->string('userType');
+            $table->bigInteger('userId');
             $table->float('points',8,2)->default(0);
             $table->float('amount',8,2)->default(0);
             $table->float('percentage',8,2)->default(0);

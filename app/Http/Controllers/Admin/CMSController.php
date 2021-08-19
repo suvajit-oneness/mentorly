@@ -67,13 +67,8 @@ class CMSController extends Controller
     		$setting->key = 'where_our_mentor_work_at';
     	}
     	if($req->hasFile('icon')){
-	    	// Image Upload
-	    	$random = $this->randomGenerator();
-	        $image = $req->file('icon');
-	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-	        // Image Upload Done
-	        $setting->icon = $imageurl;
+    		$image = $req->file('icon');
+    		$setting->icon = imageUpload($image,'homepage');
 	    }
     	$setting->save();
     	return redirect(route('admin.cms.homepage'))->with('Success','Setting '.$message.' Successfully');
@@ -101,13 +96,8 @@ class CMSController extends Controller
     		$setting->key = 'what_we_do';
     	}
     	if($req->hasFile('icon')){
-	    	// Image Upload
-	    	$random = $this->randomGenerator();
-	        $image = $req->file('icon');
-	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-	        // Image Upload Done
-	        $setting->icon = $imageurl;
+	    	$image = $req->file('icon');
+    		$setting->icon = imageUpload($image,'homepage');
     	}
     	$setting->title = $req->title;
     	$setting->description = $req->description;
@@ -160,13 +150,8 @@ class CMSController extends Controller
     		$setting->key = 'our_sucess_story';
     	}
     	if($req->hasFile('media')){
-    		// Image Upload
-	    	$random = $this->randomGenerator();
-	        $image = $req->file('media');
-	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-	        // Image Upload Done
-	    	$setting->media = $imageurl;
+	    	$image = $req->file('media');
+    		$setting->media = imageUpload($image,'homepage');
     	}
     	$setting->title = $req->title;
     	$setting->designation = $req->designation;
@@ -197,13 +182,8 @@ class CMSController extends Controller
     		$setting->key = 'how_mentory_works';
     	}
     	if($req->hasFile('media')){
-    		// Image Upload
-	    	$random = $this->randomGenerator();
-	        $image = $req->file('media');
-	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-	        // Image Upload Done
-	    	$setting->media = $imageurl;
+	    	$image = $req->file('media');
+    		$setting->media = imageUpload($image,'homepage');
     	}
     	$setting->title = $req->title;
     	$setting->description = $req->description;
@@ -232,13 +212,8 @@ class CMSController extends Controller
     		$setting->key = 'become_mentor_home_page';
     	}
     	if($req->hasFile('media')){
-    		// Image Upload
-	    	$random = $this->randomGenerator();
-	        $image = $req->file('media');
-	        $image->move('upload/homepage/',$random.'.'.$image->getClientOriginalExtension());
-	        $imageurl = url('upload/homepage/'.$random.'.'.$image->getClientOriginalExtension());
-	        // Image Upload Done
-	    	$setting->media = $imageurl;
+    		$image = $req->file('media');
+    		$setting->media = imageUpload($image,'homepage');
     	}
     	$setting->title = $req->title;
     	$setting->save();
