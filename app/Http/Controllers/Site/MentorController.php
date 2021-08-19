@@ -9,7 +9,7 @@ use App\Models\User;use Hash;
 use App\Models\Conversation;use App\Models\Message;
 use App\Models\AvailableDay;use App\Models\MentorSlotBooked;
 use App\Models\AvailableShift;use DB;use App\Models\ZoomMeeting;
-use App\Models\MentorExperienceLog;
+use App\Models\MentorExperienceLog,App\Model\Referral;
 use App\Models\Review,App\Model\MasterReferral;
 use App\Models\Notification;
 
@@ -17,8 +17,14 @@ class MentorController extends Controller
 {
     public function inviteFriends(Request $req)
     {
+        $guard = get_guard();
+        if($guard == '' || $guard == 'admin'){
+            return redirect('/');
+        }
+        $user = Auth::guard($guard)->user();
         $masterRef = MasterReferral::first();
-        return view('invite-friends',compact('masterRef'));
+        $referral = Referral::where('userId',$user->id)->where('userType',$guard)->first();
+        return view('invite-friends',compact('masterRef','referral'));
     }
 
     public function setting(Request $req)

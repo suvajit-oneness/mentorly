@@ -20,6 +20,19 @@ if (!function_exists('sidebar_open')) {
     }
 }
 
+    function generateUniqueReferral()
+    {
+        $random = generateUniqueAlphaNumeric(8);
+        $referral = \App\Model\Referral::where('code',$random)->first();
+        if(!$referral){
+            $referral = new \App\Model\Referral();
+            $referral->code = strtoupper($random);
+            $referral->save();
+            return $referral;
+        }
+        return generateUniqueReferral();
+    }
+
     function randomGenerator()
     {
         return uniqid().''.date('ymdhis').''.uniqid();

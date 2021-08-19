@@ -140,6 +140,10 @@ class WebsiteController extends Controller
             $mentor->charge_per_hour = 40;
             $mentor->carrier_started = date('Y-m-d');
     		$mentor->save();
+            $referral = $this->generateUniqueReferral();
+            $referral->userId = $mentor->id;
+            $referral->userType = 'mentor';
+            $referral->save();
             Auth::guard('mentor')->login($mentor);
             $data = [
                 'name' => 'User',
@@ -159,6 +163,10 @@ class WebsiteController extends Controller
     		$mentee->email = $req->email;
     		$mentee->password = Hash::make($req->password);
     		$mentee->save();
+            $referral = $this->generateUniqueReferral();
+            $referral->userId = $mentee->id;
+            $referral->userType = 'web';
+            $referral->save();
             Auth::guard('web')->login($mentee);
             $data = [
                 'name' => 'User',
@@ -213,9 +221,6 @@ class WebsiteController extends Controller
         $mentorList = Mentor::whereStatus(1)->whereIsDeleted(0)->whereIsVerified(1)->groupBy('name')->get();
     	return view('website.findMentors',compact('mentors','seniority','request','days','industry','mentorList'));
     }
-
-
-   
 
     public function getIndivisualSlots($mentor)
     {

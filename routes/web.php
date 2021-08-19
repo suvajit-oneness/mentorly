@@ -11,9 +11,7 @@ require 'admin.php';
 Route::get('{userType}/sign-in/{socialite}','Auth\SocialiteController@socialiteLogin')->name('socialite.login');
 Route::get('sign-in/{socialite}/redirect','Auth\SocialiteController@socialiteLoginRedirect')->name('socialite.login.redirect');
 
-Route::group(['middleware' => 'auth'],function(){
-	Route::get('invite/your/friends','Site\MentorController@inviteFriends')->name('invite.friends');
-});
+Route::get('invite/your/friends','Site\MentorController@inviteFriends')->name('invite.friends');
 
 // New Routes
 Route::get('/','Site\WebsiteController@index');

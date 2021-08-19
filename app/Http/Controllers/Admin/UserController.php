@@ -59,6 +59,10 @@ class UserController extends BaseController
         $user->status = 1;
         $user->is_verified = 1;
         $user->save();
+        $referral = $this->generateUniqueReferral();
+        $referral->userId = $user->id;
+        $referral->userType = 'web';
+        $referral->save();
         Session::flash('message', 'User added successfully!');
         return redirect(route('admin.user.index'));
     }
