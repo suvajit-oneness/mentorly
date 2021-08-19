@@ -54,7 +54,7 @@ class StripePaymentController extends Controller
             
             $dataMentee = [
                 'name' => $user->name,
-                'amount' => ($req->amount/100),
+                'amount' => $req->amount,
                 'todayDate' => date('M-d-y'),
                 'transactionId' => $stripe->transactionId,
                 'content' => 'We have received your payment $'.$req->amount.' for the mentorly session dated '.date('M d,Y',strtotime($slot->date)).' at '.date('H:i:s',strtotime($slot->time_shift)).'.',
