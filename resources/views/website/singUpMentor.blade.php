@@ -36,6 +36,13 @@
 							<div class="form-group">
 							  	<input type="password" name="password_confirmation" class="input-style" id="password_confirmation" placeholder="Confirm password">
 							</div>
+
+							<div class="form-group">
+								<input type="text" name="code" id="code" class="input-style" placeholder="Referral code (optional)" value="{{ $_GET["referral"] }}">
+								@error('code')
+								<span class="text-danger">{{ $message }}</span>
+								@enderror
+							</div>
 							
 							<div class="form-group">
 							  	<input type="submit" class="button-style" id="" value="Sign Up">
