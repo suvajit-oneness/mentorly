@@ -38,9 +38,9 @@
 							</div>
 
 							<div class="form-group">
-								<input type="text" name="code" id="code" class="input-style" placeholder="Referral code (optional)" @if(!empty($req->referral))value="{{$req->referral}}"@endif>
-								@error('code')
-								<span class="text-danger">{{ $message }}</span>
+								<input type="text" name="referral_code" id="code" class="input-style" placeholder="Referral code (optional)" @if(!empty($req->referral_code))value="{{(old('referral_code') ? old('referral_code') : $req->referral_code ) }}" @endif>
+								@error('referral_code')
+									<span class="text-danger">{{ $message }}</span>
 								@enderror
 							</div>
 							

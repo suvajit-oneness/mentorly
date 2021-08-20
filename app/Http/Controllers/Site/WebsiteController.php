@@ -128,6 +128,7 @@ class WebsiteController extends Controller
     {
     	$req->validate([
     		'registration_type' => 'required|in:mentor,mentee',
+            'referral_code' => 'nullable|exists:referrals,code',
     	]);
     	if($req->registration_type == 'mentor'){
     		$req->validate([
@@ -144,6 +145,32 @@ class WebsiteController extends Controller
             $referral = $this->generateUniqueReferral();
             $referral->userId = $mentor->id;
             $referral->userType = 'mentor';
+            // if referreal code found
+            if(!empty($req->referral_code)){
+                $ref = $this->checkReferral($req->referral_code);
+                $referral->referred_by_referral_id = $ref->id;
+                // user referral points
+                $points = $this->calc_userPoints();
+                $data = [
+                    [
+                        // Point for new user
+                        'userType' => 'mentor',
+                        'userId' => $mentor->id,
+                        'amount' => $points->off_percentage,
+                        'remarks' => $points->offer_detail,
+                        'valid_till' => date('Y-m-d',strtotime('+1 year')),
+                    ],
+                    [
+                        // Point for old user
+                        'userType' => $ref->userType,
+                        'userId' => $ref->userId,
+                        'amount' => $points->reward_amount,
+                        'remarks' => 'referral bonus credit for USERID: '.$mentor->id. ', USERTYPE: mentor',
+                        'valid_till' => date('Y-m-d',strtotime('+1 year')),
+                    ],
+                ];
+                UserPoint::insert($data);
+            }
             $referral->save();
             Auth::guard('mentor')->login($mentor);
             $data = [
@@ -158,12 +185,6 @@ class WebsiteController extends Controller
 				'last_name' => 'required|string',
 				'email' => 'required|email|string|unique:users',
 				'password' => 'required|confirmed|string',
-                'code' => [
-                    'nullable',
-                    'exists:referrals'
-                ],
-    		], [
-                'code.exists' => 'This Referral Code is invalid'
             ]);
     		$mentee = new User();
     		$mentee->name = $req->first_name.' '.$req->last_name;
@@ -173,42 +194,33 @@ class WebsiteController extends Controller
             $referral = $this->generateUniqueReferral();
             $referral->userId = $mentee->id;
             $referral->userType = 'web';
-            // if referreal code foud
-            if(!empty($req->code)){
-                $ref = $this->checkReferral($req->code);
+            // if referreal code found
+            if(!empty($req->referral_code)){
+                $ref = $this->checkReferral($req->referral_code);
                 $referral->referred_by_referral_id = $ref->id;
-
                 // user referral points
                 $points = $this->calc_userPoints();
-                $UserPoint = new UserPoint();
-
                 $data = [
                     [
-                        // new user
+                        // Point for new user
                         'userType' => 'web',
                         'userId' => $mentee->id,
                         'amount' => $points->off_percentage,
                         'remarks' => $points->offer_detail,
+                        'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
                     [
-                        // old user
+                        // Point for old user
                         'userType' => $ref->userType,
                         'userId' => $ref->userId,
                         'amount' => $points->reward_amount,
                         'remarks' => 'referral bonus credit for USERID: '.$mentee->id. ', USERTYPE: web',
+                        'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
                 ];
-                $UserPoint::insert($data);
-
-                // $UserPoint->userType = 'web';
-                // $UserPoint->userId = $mentee->id;
-                // $UserPoint->percentage = $points->off_percentage;
-                // $UserPoint->remarks = $points->offer_detail;
-                // // $UserPoint->valid_till = Carbon::now()->addYear()->toDateTimeString();
-                // $UserPoint->save();
+                UserPoint::insert($data);
             }
             $referral->save();
-
             Auth::guard('web')->login($mentee);
             $data = [
                 'name' => 'User',
