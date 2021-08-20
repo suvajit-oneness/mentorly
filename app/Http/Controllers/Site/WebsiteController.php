@@ -105,7 +105,7 @@ class WebsiteController extends Controller
             }
             return redirect('/');
         }
-    	return view('website.singUpMentee');
+    	return view('website.singUpMentee',compact('req'));
     }
 
     public function signupFormMentor(Request $req)
@@ -121,7 +121,7 @@ class WebsiteController extends Controller
         $data->faq = \App\Models\Faq::where('forwhichpage','becomeonmentor')->get();
         $data->becomeMentor = \App\Models\FrontendSetting::where('key','become_mentor_page')->get();
         $data->mentor = Mentor::whereStatus(1)->where('is_verified',1)->whereIsDeleted(0)->limit(5)->get();
-    	return view('website.singUpMentor',compact('data'));
+    	return view('website.singUpMentor',compact('data','req'));
     }
 
     public function signUpMentorAndMentee(Request $req)

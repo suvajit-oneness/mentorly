@@ -38,7 +38,7 @@
 							</div>
 
 							<div class="form-group">
-								<input type="text" name="code" id="code" class="input-style" placeholder="Referral code (optional)" value="{{ $_GET["referral"] }}">
+								<input type="text" name="code" id="code" class="input-style" placeholder="Referral code (optional)" @if(!empty($req->referral))value="{{$req->referral}}"@endif>
 								@error('code')
 								<span class="text-danger">{{ $message }}</span>
 								@enderror

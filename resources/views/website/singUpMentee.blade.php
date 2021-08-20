@@ -46,7 +46,7 @@
 					  <input type="password" class="input-style" name="password_confirmation" id="password_confirmation" placeholder="Confirm password">
 					</div>
 					<div class="form-group">
-						<input type="text" class="input-style" name="code" id="code" placeholder="Referral code (optional)" value="{{ $_GET["referral"] }}">
+						<input type="text" class="input-style" name="code" id="code" placeholder="Referral code (optional)" @if(!empty($req->referral))value="{{$req->referral}}"@endif>
 						@error('code')
 							<span class="text-danger">{{$message}}</span>
 						@enderror
