@@ -10,9 +10,10 @@ use Auth;use App\Models\ContactUs;
 use App\Models\Seniority;
 use App\Models\AvailableDay;
 use App\Models\AvailableShift;
+use App\Model\UserPoint;
 use Illuminate\Support\Str;
 //use Illuminate\Contracts\Encryption\DecryptException;
-use DB;
+use DB;use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -172,9 +173,42 @@ class WebsiteController extends Controller
             $referral = $this->generateUniqueReferral();
             $referral->userId = $mentee->id;
             $referral->userType = 'web';
-            // $ref = $this->checkReferral($req->code);
-            // $referral->referred_by_referral_id = $ref->id;
+            // if referreal code foud
+            if(!empty($req->code)){
+                $ref = $this->checkReferral($req->code);
+                $referral->referred_by_referral_id = $ref->id;
+
+                // user referral points
+                $points = $this->calc_userPoints();
+                $UserPoint = new UserPoint();
+
+                $data = [
+                    [
+                        // new user
+                        'userType' => 'web',
+                        'userId' => $mentee->id,
+                        'amount' => $points->off_percentage,
+                        'remarks' => $points->offer_detail,
+                    ],
+                    [
+                        // old user
+                        'userType' => $ref->userType,
+                        'userId' => $ref->userId,
+                        'amount' => $points->reward_amount,
+                        'remarks' => 'referral bonus credit for USERID: '.$mentee->id. ', USERTYPE: web',
+                    ],
+                ];
+                $UserPoint::insert($data);
+
+                // $UserPoint->userType = 'web';
+                // $UserPoint->userId = $mentee->id;
+                // $UserPoint->percentage = $points->off_percentage;
+                // $UserPoint->remarks = $points->offer_detail;
+                // // $UserPoint->valid_till = Carbon::now()->addYear()->toDateTimeString();
+                // $UserPoint->save();
+            }
             $referral->save();
+
             Auth::guard('web')->login($mentee);
             $data = [
                 'name' => 'User',

@@ -6,8 +6,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Auth;use App\Model\Referral;use DB;
-use App\User;use Hash;use App\Model\UserPoint;
+use Auth;
+use App\Model\Referral;
+use DB;
+use App\User;
+use Hash;
+use App\Model\UserPoint;
 use App\Model\MasterReferral;
 
 class Controller extends BaseController
@@ -35,8 +39,8 @@ class Controller extends BaseController
     public function generateUniqueReferral()
     {
         $random = generateUniqueAlphaNumeric(8);
-        $referral = Referral::where('code',$random)->first();
-        if(!$referral){
+        $referral = Referral::where('code', $random)->first();
+        if (!$referral) {
             $referral = new Referral();
             $referral->code = strtoupper($random);
             $referral->save();
@@ -45,8 +49,13 @@ class Controller extends BaseController
         return $this->generateUniqueReferral();
     }
 
-    // public function checkReferral($code) {
-    //     $ref = Referral::where('code', $code)->get();
-    //     return $ref;
-    // }
+    public function checkReferral($code) {
+        $ref = Referral::where('code', $code)->first();
+        return $ref;
+    }
+
+    public function calc_userPoints() {
+        $masterRef = MasterReferral::first();
+        return $masterRef;
+    }
 }
