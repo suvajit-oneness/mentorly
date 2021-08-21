@@ -156,7 +156,9 @@ class WebsiteController extends Controller
                         // Point for new user
                         'userType' => 'mentor',
                         'userId' => $mentor->id,
-                        'amount' => $points->off_percentage,
+                        'points' => 0.00,
+                        'amount' => 0.00,
+                        'percentage' => $points->off_percentage,
                         'remarks' => $points->offer_detail,
                         'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
@@ -164,7 +166,9 @@ class WebsiteController extends Controller
                         // Point for old user
                         'userType' => $ref->userType,
                         'userId' => $ref->userId,
+                        'points' => 0.00,
                         'amount' => $points->reward_amount,
+                        'percentage' => 0.00,
                         'remarks' => 'referral bonus credit for USERID: '.$mentor->id. ', USERTYPE: mentor',
                         'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
@@ -205,7 +209,9 @@ class WebsiteController extends Controller
                         // Point for new user
                         'userType' => 'web',
                         'userId' => $mentee->id,
-                        'amount' => $points->off_percentage,
+                        'points' => 0.00,
+                        'amount' => 0.00,
+                        'percentage' => $points->off_percentage,
                         'remarks' => $points->offer_detail,
                         'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
@@ -213,7 +219,9 @@ class WebsiteController extends Controller
                         // Point for old user
                         'userType' => $ref->userType,
                         'userId' => $ref->userId,
+                        'points' => 0.00,
                         'amount' => $points->reward_amount,
+                        'percentage' => 0.00,
                         'remarks' => 'referral bonus credit for USERID: '.$mentee->id. ', USERTYPE: web',
                         'valid_till' => date('Y-m-d',strtotime('+1 year')),
                     ],
