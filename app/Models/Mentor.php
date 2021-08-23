@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB;use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mentor extends Authenticatable
 {
@@ -12,20 +13,23 @@ class Mentor extends Authenticatable
     protected $table = 'mentors';
 
     protected $fillable = [
-       'name', 'mobile', 'email', 'otp', 'password', 'designation', 'image', 'about', 'country', 'city', 'address', 'industry_id', 'seniority_id', 'slug', 'is_verified', 'status', 'is_deleted'
+        'name', 'mobile', 'email', 'otp', 'password', 'designation', 'image', 'about', 'country', 'city', 'address', 'industry_id', 'seniority_id', 'slug', 'is_verified', 'status', 'is_deleted'
     ];
 
     //hasOne relation with Industry Model
-    public function industry(){
+    public function industry()
+    {
         return $this->hasOne(Industry::class, 'id', 'industry_id');
     }
 
     //hasOne relation with Seniority Model
-    public function seniority(){
+    public function seniority()
+    {
         return $this->hasOne(Seniority::class, 'id', 'seniority_id');
     }
 
-    protected static function boot(){
+    protected static function boot()
+    {
         parent::boot();
         static::created(function ($mentor) {
             $mentor->update(['slug' => $mentor->title]);
@@ -44,7 +48,7 @@ class Mentor extends Authenticatable
     {
         // get the slug of the latest created post
         $max = static::whereTitle($this->title)->latest('id')->skip(1)->value('slug');
-        if (is_numeric($max[-1])) {
+        if ($max && is_numeric($max[-1])) {
             return preg_replace_callback('/(\d+)$/', function ($mathces) {
                 return $mathces[1] + 1;
             }, $max);
@@ -54,11 +58,11 @@ class Mentor extends Authenticatable
 
     public function reviews()
     {
-        return $this->hasMany('App\Models\Review','mentor_id','id')->select('reviews.*','users.name','users.email','users.image')->where('reviews.status',1)->where('reviews.is_deleted',0)->leftjoin('users','reviews.user_id','=','users.id');
+        return $this->hasMany('App\Models\Review', 'mentor_id', 'id')->select('reviews.*', 'users.name', 'users.email', 'users.image')->where('reviews.status', 1)->where('reviews.is_deleted', 0)->leftjoin('users', 'reviews.user_id', '=', 'users.id');
     }
 
     public function resume()
     {
-        return $this->hasMany('App\Models\MentorExperienceLog','mentorId','id')->orderBy('type','DESC')->orderBy('start','DESC');
+        return $this->hasMany('App\Models\MentorExperienceLog', 'mentorId', 'id')->orderBy('type', 'DESC')->orderBy('start', 'DESC');
     }
 }

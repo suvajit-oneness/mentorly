@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Stripe;use Session;use App\Models\StripeTransaction;
 use App\Models\Mentor;use Auth,App\Models\AvailableShift;
+use DB;
+use App\Model\UserPoint;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class StripePaymentController extends Controller
 {
@@ -17,7 +20,21 @@ class StripePaymentController extends Controller
         ]);
         $mentor = Mentor::findOrFail(base64_decode($req->mentorId));
         $data = $req->all();
-        return view('stripe.index',compact('data','mentor'));
+
+        // $userPoints = UserPoint::get();
+        // $userPoints = DB::table('user_points')->sum('percentage')->get();
+
+        // select sum(percentage)
+        $user = Auth::user();
+        $userPoints = DB::table('user_points')
+                    ->select('percentage', DB::raw('SUM(percentage) as percentage'))
+                    ->where([
+                        ['userId', $user->id],
+                        ['userType', 'web'],
+                    ])
+                    ->get();
+
+        return view('stripe.index',compact('data', 'mentor', 'userPoints'));
     }
 
     public function bookingStripePost(Request $req)
@@ -51,7 +68,18 @@ class StripePaymentController extends Controller
         	$stripe->exp_year = $payment->payment_method_details->card->exp_year;
         	$stripe->last4 = $payment->payment_method_details->card->last4;
         	$stripe->save();
-            
+
+            if(!empty($req->percentage) || ($req->percentage != 0)) {
+                $user = auth::user();
+                $userPoint = new UserPoint();
+                $userPoint->userType = 'web';
+                $userPoint->userId = $user->id;
+                $userPoint->percentage = '-'.$req->percentage;
+                $userPoint->remarks = 'Course purchase with txn_id : '.$payment->id;
+                $userPoint->valid_till = date('Y-m-d H:i:s');
+                $userPoint->save();
+            }
+
             $dataMentee = [
                 'name' => $user->name,
                 'amount' => $req->amount,
