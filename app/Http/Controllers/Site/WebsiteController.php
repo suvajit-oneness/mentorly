@@ -70,11 +70,11 @@ class WebsiteController extends Controller
         }
         if($user){
             if(Hash::check($req->password,$user->password)){
-                $data = [
-                    'name' => $user->name,
-                    'content' => 'You have Successfully login to the Website',
-                ];
-                sendMail($data,'email/login',$user->email,'Login Success');
+                // $data = [
+                //     'name' => $user->name,
+                //     'content' => 'You have Successfully login to the Website',
+                // ];
+                // sendMail($data,'email/login',$user->email,'Login Success');
                 if($req->loginType == 'mentor'){
                     Auth::guard('mentor')->login($user);
                     $mentor = Auth::guard('mentor')->user();

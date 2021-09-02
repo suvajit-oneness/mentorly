@@ -1,18 +1,12 @@
 @extends('layouts.master')
 @section('title','Mentor Detail')
 @section('content')
-
 <section class="gray-wrapper">
 	<div class="container-xl">
-		
 		<div class="mentor-details-wrapper">
 			<div class="left-panel">
-
-
-
 				<div class="mentor-det-details no-flex available-place">
 					<h2 class="medium-heading">Mentor availability</h2>
-
 					<!-- mentor time sectioon start -->
 					<div class="calender-holder">
 						<div class="calender-header">
@@ -55,17 +49,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- mentor time sectioon end  -->
-
 				</div>
-
-
-				@php $resume = $mentor->resume; @endphp
-				
 			</div>
-			
 		</div>
-
 	</div>
 </section>
 

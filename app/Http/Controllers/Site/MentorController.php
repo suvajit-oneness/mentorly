@@ -352,9 +352,6 @@ class MentorController extends Controller
         }
     }
 
-
-
-
     public function bookRescheduleClass(Request $req)
     {
         DB::beginTransaction();
@@ -399,38 +396,11 @@ class MentorController extends Controller
             $zoomMeeting = $this->crateZoomMeeting($newshiftDetails, $userDetails, $newBookingSlot);
             DB::commit();
             return response()->json(['error' => false, 'msg' => 'Your Booking Has Been On Hold', 'redirectURL' => route('mentor.booking.request')]);
-
-
-
-
-
-            // zoom meet create //
-            // $slot = AvailableShift::where('id',$newshiftId)->first();
-            // $user = Auth::guard($req->userType)->user();
-            // $slotBooked = new MentorSlotBooked();
-            // $slotBooked->mentorId = $slot->mentorId;
-            // $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked,$newshiftId);
-
-            // DB::delete('zoom_meetings')->where('mentorId', $oldSlotBooked->mentorId)->where('slotid',$oldshiftid)->delete();
-            // zoom meeting end //
-
-
-            // Db::table('zoom_meetings')->where('mentorId',$oldSlotBooked->mentorId)->orderBy('id','asc')->delete();
-            // $zoomMeeting = $this->crateZoomMeeting($slot,$user,$slotBooked);
-
-
-
         } catch (Exception $e) {
             DB::rollback();
             return response()->json(['error' => true, 'message' => 'Something went wrong please try after some time']);
         }
     }
-
-
-
-
-
-
 
     public function stripeBookingConfirmed(Request $req)
     {
