@@ -1,6 +1,6 @@
 <ul class="setting-list">
 	<li><a href="{{route('mentor.mentee.setting')}}" class="{{Route::currentRouteName()=='mentor.mentee.setting'?'active':''}}">Account</a></li>
-	<li><a href="{{route('mentor.email.setting')}}" class="{{Route::currentRouteName()=='mentor.email.setting'?'active':''}}">Email</a></li>
+	<!-- <li><a href="{{route('mentor.email.setting')}}" class="{{Route::currentRouteName()=='mentor.email.setting'?'active':''}}">Email</a></li> -->
 	<li><a href="{{route('mentor.password.setting')}}" class="{{Route::currentRouteName()=='mentor.password.setting'?'active':''}}">Password </a></li>
 	<!-- <li><a href="#">Payment Methods</a></li> -->
 	<!-- <li><a href="{{route('booking.history')}}"class="{{Route::currentRouteName()=='booking.history'?'active':''}}" >Booking History</a></li> -->

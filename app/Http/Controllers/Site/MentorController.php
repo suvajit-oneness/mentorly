@@ -62,6 +62,7 @@ class MentorController extends Controller
             $lastName = emptyCheck($req->last_name);
             $user->name = trim($firstName . ' ' . $lastName);
             $user->mobile = emptyCheck($req->mobile);
+            // $user->email = $req->email;
             $user->timezone_id = $req->timezone;
             if ($req->hasFile('image')) {
                 $random = uniqueString();
@@ -128,26 +129,26 @@ class MentorController extends Controller
         }
     }
 
-    public function settingEmailUpdate(Request $req)
-    {
-        $req->validate([
-            'guardType' => 'required|in:web,mentor',
-            'authId' => 'required|min:1|numeric',
-        ]);
-        if ($req->guardType == 'mentor') {
-            $req->validate([
-                'email' => 'required|string|email|unique:mentors,email,' . $req->authId,
-            ]);
-        } elseif ($req->guardType == 'web') {
-            $req->validate([
-                'email' => 'required|string|email|unique:users,email,' . $req->authId,
-            ]);
-        }
-        $user = Auth::guard($req->guardType)->user();
-        $user->email = $req->email;
-        $user->save();
-        return back()->with('Success', 'Email Updated SuccessFully');
-    }
+    // public function settingEmailUpdate(Request $req)
+    // {
+    //     $req->validate([
+    //         'guardType' => 'required|in:web,mentor',
+    //         'authId' => 'required|min:1|numeric',
+    //     ]);
+    //     if ($req->guardType == 'mentor') {
+    //         $req->validate([
+    //             'email' => 'required|string|email|unique:mentors,email,' . $req->authId,
+    //         ]);
+    //     } elseif ($req->guardType == 'web') {
+    //         $req->validate([
+    //             'email' => 'required|string|email|unique:users,email,' . $req->authId,
+    //         ]);
+    //     }
+    //     $user = Auth::guard($req->guardType)->user();
+    //     $user->email = $req->email;
+    //     $user->save();
+    //     return back()->with('Success', 'Email Updated SuccessFully');
+    // }
 
     public function settingPassword(Request $req)
     {

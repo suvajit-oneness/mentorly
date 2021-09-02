@@ -58,6 +58,18 @@
 
 							<div class="form-group">
 								<div class="row align-items-center">
+									<label class="col-md-4">Email</label>
+									<div class="col-md-8">
+										<input type="text" class="input-style" id="email" placeholder="Enter your email address" value="@if(old('email')){{old('email')}}@else{{$user->email}}@endif" readonly="">
+										@error('email')
+											<span class="text-danger">{{$message}}</span>
+										@enderror
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="row align-items-center">
 									<label class="col-md-4">Phone number</label>
 									<div class="col-md-8">
 										<input type="text" name="mobile" onkeypress="return isNumberKey(event)" maxlength="15" class="input-style" placeholder="Enter your phone number" value="{{$user->mobile}}">
