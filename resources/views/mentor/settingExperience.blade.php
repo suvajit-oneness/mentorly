@@ -24,7 +24,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@php $resume = $mentor->resume; @endphp
+										@php $experience = $mentor->experience; @endphp
 										@if(old('start'))
 											@for( $i = 0; $i < count(old('start')); $i++) 
 												<tr>
@@ -50,9 +50,9 @@
 													</td>
 												</tr>
 											@endfor
-										@elseif(count($resume) > 0)
-											<?php $countResume = count($resume); $j=0; ?>
-											@foreach($resume as $key => $data)
+										@elseif(count($experience) > 0)
+											<?php $countExperience = count($experience); $j=0; ?>
+											@foreach($experience as $key => $data)
 												<?php $j++; ?>
 												<tr>
 													<td>
@@ -69,7 +69,7 @@
 													</td>
 													<td><input type="text" name="name[]" class="form-control" value="{{ $data->name}}" placeholder="College/University or Organisation" maxlength="255"></td>
 													<td>
-														@if(($j) == $countResume)
+														@if(($j) == $countExperience)
 															<a href="javascript:void(0)" class="actionbtn addNew">
 																<span class="text-success"><i class="fas fa-plus"></i></span>
 															</a>
