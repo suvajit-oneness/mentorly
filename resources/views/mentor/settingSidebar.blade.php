@@ -1,10 +1,21 @@
+@php
+	$guard = get_guard();
+	if($guard != '')$user = Auth::guard($guard)->user();
+@endphp
+<!-- <div class="nextLession">
+	<table>
+		<tr>
+			<th>Next Lession :</th>
+			<td></td>
+		</tr>
+	</table>
+</div> -->
 <ul class="setting-list">
-	@php $guard = get_guard(); @endphp
 	<a href="javascript:void(0)">
 		@if($guard == 'web')
-			ID : MENTEE-{{Auth::guard('web')->user()->id}}
+			ID : MENTEE-{{$user->id}}
 		@elseif($guard == 'mentor')
-			ID : MENTOR-{{Auth::guard('mentor')->user()->id}}
+			ID : MENTOR-{{$user->id}}
 		@endif
 	</a>
 	<li><a href="{{route('mentor.mentee.setting')}}" class="{{Route::currentRouteName()=='mentor.mentee.setting'?'active':''}}">Account</a></li>

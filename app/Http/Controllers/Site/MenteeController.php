@@ -32,7 +32,7 @@ class MenteeController extends Controller
                 $user = Auth::guard($guard)->user();
                 $lession = MentorSlotBooked::select('*');
                 $lession = $lession->where('bookedUserId',$user->id)->where('userType',$guard);
-                $lession = $lession->where('bookingStatus','!=',3)->orderBy('id','desc')->get();
+                $lession = $lession->where('bookingStatus','!=',3)->latest()->get();
                 return view('mentee.menteemyLesson',compact('lession'));
             }
         }
