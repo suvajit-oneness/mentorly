@@ -61,7 +61,7 @@ class Mentor extends Authenticatable
         return $this->hasMany('App\Models\Review', 'mentor_id', 'id')->select('reviews.*', 'users.name', 'users.email', 'users.image')->where('reviews.status', 1)->where('reviews.is_deleted', 0)->leftjoin('users', 'reviews.user_id', '=', 'users.id');
     }
 
-    public function resume()
+    public function experience()
     {
         return $this->hasMany('App\Models\MentorExperienceLog', 'mentorId', 'id')->orderBy('type', 'DESC')->orderBy('start', 'DESC');
     }

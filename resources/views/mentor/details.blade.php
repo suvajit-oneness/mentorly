@@ -76,12 +76,12 @@
 					<!-- mentor time sectioon end  -->
 				</div>
 
-				@php $resume = $mentor->resume; @endphp
-				@if(count($resume) > 0)
+				@php $experience = $mentor->experience; @endphp
+				@if(count($experience) > 0)
 					<div class="mentor-det-details no-flex resume-place">
-						<h2 class="medium-heading">Resume</h2>
+						<h2 class="medium-heading">Experience</h2>
 						<ul class="edu-list">
-							@foreach($resume as $index => $res)
+							@foreach($experience as $index => $res)
 							<li>
 								<div class="year">{{date('M, Y',strtotime($res->start))}} — {{($res->end != '0000-00-00' ? date('M, Y',strtotime($res->end)) : 'Till Now')}}</div>
 								<div class="study">
