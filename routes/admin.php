@@ -132,6 +132,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::get('/{id}/delete', 'Admin\MentorController@delete')->name('admin.mentor.delete');
 			Route::post('updateStatus', 'Admin\MentorController@updateStatus')->name('admin.mentor.updateStatus');
 			Route::post('verified/update','Admin\MentorController@updateVerificationStage')->name('admin.mentor.verified.update');
+			Route::get('view/{mentorId}/profile','Admin\MentorController@viewMentorProfileByAdmin')->name('admin.mentor.view.profile');
 		});
 
 		Route::group(['prefix' => 'cms'],function(){

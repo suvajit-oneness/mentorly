@@ -23,7 +23,7 @@
                     <table class="table table-hover table-responsive custom-data-table-style table-striped" id="sampleTable">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th> Id</th>
                                 <th> Name </th>
                                 <th> Email Id </th>
                                 <th> Phone No </th>
@@ -31,6 +31,7 @@
                                 <th> Charge per hour </th>
                                 <th> Experience </th>
                                 <th> verified</th>
+                                <th> Profile</th>
                                 <th> Created At </th>
                                 <th> Status </th>
                                 <th style="width:100px; min-width:100px;" class="text-center">Action</th>
@@ -50,6 +51,7 @@
                                         <span>@if($mentor->is_verified == 1){{('Yes')}}@else{{('No')}}@endif</span>
                                         <input type="checkbox" name="verified" data-mentor="{{$mentor->id}}" data-currentStatus="{{$mentor->is_verified}}" class="verifiedToggle" @if($mentor->is_verified == 1){{('checked')}}@endif>
                                     </td>
+                                    <td><a href="{{route('admin.mentor.view.profile',$mentor->id)}}">View Profile</a></td>
                                     <td>{{ date("d-M-Y",strtotime($mentor->created_at)) }}</td>
                                     <td class="text-center">
                                     <div class="toggle-button-cover margin-auto">
@@ -131,6 +133,13 @@
 
         $(document).on('click','.verifiedToggle',function(){
             var thisCheckbox = $(this),currentStatus = thisCheckbox.attr('data-currentStatus'),mentorId = thisCheckbox.attr('data-mentor');
+            if(thisCheckbox.prop("checked") == true){
+                var co = confirm('Have you veried?');
+                if (co == true) {} else {
+                    thisCheckbox.prop('checked',false);
+                    return;
+                }
+            }
             $.ajax({
                 url : '{{route('admin.mentor.verified.update')}}',
                 type : 'post',

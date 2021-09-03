@@ -16,10 +16,10 @@
 						<h3 class="profile-name mb-0">@php if($guard == 'mentor' && (Auth::guard('mentor')->user()->id == $mentor->id)) echo "Welcome" @endphp {{$mentor->name}}.</h3>
 						<span class="small-info">Certified developer with {{dateDifferenceFromNow($mentor->carrier_started)}} experience.</span>
 						<div class="inerview-taken mt-3">
-							<span><img src="{{asset('design/images/company.png')}}"></span>  Twitch
+							<!-- <span><img src="{{asset('design/images/company.png')}}"></span>  Twitch -->
 						</div>
 						<div class="inerview-taken mt-3">
-							<span><img src="{{asset('design/images/student.png')}}"></span>  0 interviews given
+							<!-- <span><img src="{{asset('design/images/student.png')}}"></span>  0 interviews given -->
 						</div>
 					</div>
 				</div>

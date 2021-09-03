@@ -89,6 +89,12 @@ class MentorController extends BaseController
         Session::flash('message', 'Mentor added successfully!');
         return redirect(route('admin.mentor.index'));
     }
+
+    public function viewMentorProfileByAdmin(Request $req,$mentorId)
+    {
+        $mentor = Mentor::findOrFail($mentorId);
+        return view('admin.mentor.view_profile', compact('mentor'));
+    }
     
     public function updateStatus(Request $request){
 
