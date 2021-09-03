@@ -115,13 +115,20 @@ class MentorController extends BaseController
         ];
         $validate = validator()->make($req->all(),$rules);
         if(!$validate->fails()){
+            $subject = 'Profile Verified';$content = 'Your profile has been verified by admin, now your profile can be shown to the mentee';
             $currentStatus = 1;
             $mentor = Mentor::findOrFail($req->mentorId);
             if($req->currentStatus == 1){
+                $subject = 'Profile Rejected';$content = 'Your profile has been rejected by admin, now your profile can`t be shown to the mentee';
                 $currentStatus = 0;
             }
             $mentor->is_verified = $currentStatus;
             $mentor->save();
+            $data = [
+                'name' => $mentor->name,
+                'content' => $content,
+            ];
+            sendMail($data,'email/mentorProfileVerifiedOrReject',$mentor->email,$subject);
             return response()->json(['error' => false,'currentStatus'=>$currentStatus,'message'=>'status updated Success']);
         }
         return response()->json(['error' => true,'message' => $validate->errors()->first()]);

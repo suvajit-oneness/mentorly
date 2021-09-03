@@ -98,10 +98,10 @@
               closeOnConfirm: false
             },
             function(isConfirm){
-              if (isConfirm) {
-                window.location.href = "mentor/"+mentorid+"/delete";
+                if (isConfirm) {
+                    window.location.href = "mentor/"+mentorid+"/delete";
                 } else {
-                  swal("Cancelled", "Record is safe", "error");
+                    swal("Cancelled", "Record is safe", "error");
                 }
             });
         });
@@ -109,37 +109,40 @@
             var mentor_id = $(this).data('mentor_id');
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var check_status = 0;
-          if($(this).is(":checked")){
-              check_status = 1;
-          }else{
-            check_status = 0;
-          }
-          $.ajax({
+            if($(this).is(":checked")){
+                check_status = 1;
+            }else{
+                check_status = 0;
+            }
+            $('.loading-data').show();
+            $.ajax({
                 type:'POST',
                 dataType:'JSON',
                 url:"{{route('admin.mentor.updateStatus')}}",
                 data:{ _token: CSRF_TOKEN, id:mentor_id, check_status:check_status},
                 success:function(response)
                 {
-                  swal("Success!", response.message, "success");
+                    $('.loading-data').hide();
+                    swal("Success!", response.message, "success");
                 },
                 error: function(response)
                 {
-
-                  swal("Error!", response.message, "error");
+                    $('.loading-data').hide();
+                    swal("Error!", response.message, "error");
                 }
-              });
+            });
         });
 
         $(document).on('click','.verifiedToggle',function(){
             var thisCheckbox = $(this),currentStatus = thisCheckbox.attr('data-currentStatus'),mentorId = thisCheckbox.attr('data-mentor');
             if(thisCheckbox.prop("checked") == true){
-                var co = confirm('Have you veried?');
+                var co = confirm('Have you checked his/her profile?');
                 if (co == true) {} else {
                     thisCheckbox.prop('checked',false);
                     return;
                 }
             }
+            $('.loading-data').show();
             $.ajax({
                 url : '{{route('admin.mentor.verified.update')}}',
                 type : 'post',
@@ -155,6 +158,7 @@
                     }else{
                         swal('Error',data.message);
                     }
+                    $('.loading-data').hide();
                 }
             });
         });
