@@ -2,14 +2,37 @@
 	$guard = get_guard();
 	if($guard != '')$user = Auth::guard($guard)->user();
 @endphp
-<!-- <div class="nextLession">
-	<table>
-		<tr>
-			<th>Next Lession :</th>
-			<td></td>
-		</tr>
-	</table>
-</div> -->
+@if($user)
+	@php
+        $lession = \App\Models\MentorSlotBooked::select('mentor_slot_bookeds.*','available_shifts.date','available_shifts.time_shift')->where('mentor_slot_bookeds.bookedUserId',$user->id)->where('mentor_slot_bookeds.userType',$guard)
+	        ->where('mentor_slot_bookeds.bookingStatus','!=',3)->leftjoin('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')->where('available_shifts.date','>=',date('Y-m-d'))->latest('mentor_slot_bookeds.created_at')->first();
+	@endphp
+	@if($lession)
+		@php
+			$mentor = $lession->mentor;
+		@endphp
+		<div class="nextLession">
+			<table>
+				<tr>
+					<th>Upcoming Lession :</th>
+					<td>
+						Your Coming Session with '{{$mentor->name}}' for session '{{date('d M, Y',strtotime($lession->date))}} at {{date('h:i A',strtotime($lession->time_shift))}}'
+						@if(1==1)
+							@php
+								$zoomMeeting = \App\Models\ZoomMeeting::where('mentorSlotBookedId',$lession->id)->where('mentorId',$lession->mentorId)->where('menteeId',$lession->bookedUserId)->where('userType',$lession->userType)->latest()->first();
+								if($zoomMeeting){
+									@endphp
+										<a href="{{$zoomMeeting->join_url}}" class="btn btn-primary" target="_blank">Join</a>
+									@php
+								}
+							@endphp
+						@endif
+					</td>
+				</tr>
+			</table>
+		</div>
+	@endif
+@endif
 <ul class="setting-list">
 	<a href="javascript:void(0)">
 		@if($guard == 'web')
