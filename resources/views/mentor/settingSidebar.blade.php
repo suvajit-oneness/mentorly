@@ -11,36 +11,41 @@
 		@php
 			$mentor = $lession->mentor;
 		@endphp
-		<div class="nextLession">
-			<table>
-				<tr>
-					<th>Upcoming Lession :</th>
-					<td>
-						Your Coming Session with '{{$mentor->name}}' for session '{{date('d M, Y',strtotime($lession->date))}} at {{date('h:i A',strtotime($lession->time_shift))}}'
-						@if(1==1)
-							@php
-								$zoomMeeting = \App\Models\ZoomMeeting::where('mentorSlotBookedId',$lession->id)->where('mentorId',$lession->mentorId)->where('menteeId',$lession->bookedUserId)->where('userType',$lession->userType)->latest()->first();
-								if($zoomMeeting){
-									@endphp
-										<a href="{{$zoomMeeting->join_url}}" class="btn btn-primary" target="_blank">Join</a>
-									@php
-								}
-							@endphp
-						@endif
-					</td>
-				</tr>
-			</table>
+		<div class="col-12 row m-0 p-0">
+		    <div class="col-12 col-md-2 user_ID">
+	        	<a href="javascript:void(0)">
+            		@if($guard == 'web')
+            			ID : MENTEE-{{$user->id}}
+            		@elseif($guard == 'mentor')
+            			ID : MENTOR-{{$user->id}}
+            		@endif
+            	</a>
+		    </div>
+		    <div class="nextLession alert alert-info">
+	          <table>
+    				<tr>
+    					<th class="pr-3">Upcoming Lession :</th>
+    					<td>
+    						Your Coming Session with '{{$mentor->name}}' for session '{{date('d M, Y',strtotime($lession->date))}} at {{date('h:i A',strtotime($lession->time_shift))}}'
+    						@if(1==1)
+    							@php
+    								$zoomMeeting = \App\Models\ZoomMeeting::where('mentorSlotBookedId',$lession->id)->where('mentorId',$lession->mentorId)->where('menteeId',$lession->bookedUserId)->where('userType',$lession->userType)->latest()->first();
+    								if($zoomMeeting){
+    									@endphp
+    										<a href="{{$zoomMeeting->join_url}}" class="btn btn-dark btn-sm ml-5 pl-3 pr-3" target="_blank">Join</a>
+    									@php
+    								}
+    							@endphp
+    						@endif
+    					</td>
+    				</tr>
+    			</table>
+		    </div>
 		</div>
 	@endif
 @endif
+<div class="col-12 col-md-2 p-0">
 <ul class="setting-list">
-	<a href="javascript:void(0)">
-		@if($guard == 'web')
-			ID : MENTEE-{{$user->id}}
-		@elseif($guard == 'mentor')
-			ID : MENTOR-{{$user->id}}
-		@endif
-	</a>
 	<li><a href="{{route('mentor.mentee.setting')}}" class="{{Route::currentRouteName()=='mentor.mentee.setting'?'active':''}}">Account</a></li>
 	<!-- <li><a href="{{route('mentor.email.setting')}}" class="{{Route::currentRouteName()=='mentor.email.setting'?'active':''}}">Email</a></li> -->
 	<li><a href="{{route('mentor.password.setting')}}" class="{{Route::currentRouteName()=='mentor.password.setting'?'active':''}}">Password </a></li>
@@ -55,3 +60,4 @@
 	@endif
 	<li><a href="{{route('user.zoom.meeting')}}" class="{{Route::currentRouteName()=='user.zoom.meeting'?'active':''}}">Zoom Meeting</a></li>
 </ul>
+</div>

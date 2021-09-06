@@ -7,9 +7,7 @@
 		<div class="setting-wrapper">
 			<h2 class="page-heading">Keep your profile UpToDate</h2>
 			<div class="row m-0 mt-5">
-				<div class="col-12 col-md-2 p-0">
-					@include('mentor.settingSidebar')
-				</div>
+				@include('mentor.settingSidebar')
 				<div class="col-12 col-md-10 pl-2 pl-md-5">
 					<div class="settings-details">
 						<form method="post" action="{{route('mentor.mentee.account_update')}}" enctype="multipart/form-data">

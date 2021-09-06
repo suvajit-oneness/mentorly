@@ -161,7 +161,7 @@
 
 				<!-- review start -->
 				@if($guard != '' && $guard != 'admin')
-					<div class="mentor-det-details no-flex reviews-place">
+					<div class="mentor-det-details no-flex reviews-place mt-4">
 						<h2 class="medium-heading">Post your Review<span></span></h2>
 						<form class="form-horizontal poststars" action="{{route('reviewpost')}}" id="addStar" method="POST">
 							{{ csrf_field() }}
@@ -169,15 +169,15 @@
 								<input type="hidden" name="mentor_id" value="{{$mentor->id}}" required> 
 								<div class="rating">
 									<input class="star star-5" value="5" id="star-5" type="radio" name="rating" required />
-									<label class="star star-5" for="star-5"></label>
+									<label class="star star-5" for="star-5">&#9733;</label>
 									<input class="star star-4" value="4" id="star-4" type="radio" name="rating" required />
-									<label class="star star-4" for="star-4"></label>
+									<label class="star star-4" for="star-4">&#9733;</label>
 									<input class="star star-3" value="3" id="star-3" type="radio" name="rating" required />
-									<label class="star star-3" for="star-3"></label>
+									<label class="star star-3" for="star-3">&#9733;</label>
 									<input class="star star-2" value="2" id="star-2" type="radio" name="rating" required />
-									<label class="star star-2" for="star-2"></label>
+									<label class="star star-2" for="star-2">&#9733;</label>
 									<input class="star star-1" value="1" id="star-1" type="radio" name="rating" required />
-									<label class="star star-1" for="star-1"></label>
+									<label class="star star-1" for="star-1">&#9733;</label>
 								</div>
 								<div>
 									<textarea name="review" class="form-control" required placeholder="">{{old('review')}}</textarea>

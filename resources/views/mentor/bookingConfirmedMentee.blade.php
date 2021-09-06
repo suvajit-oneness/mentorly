@@ -5,9 +5,7 @@
 	<div class="container">
 		<div class="setting-wrapper">
 			<div class="row m-0 mt-5">
-				<div class="col-12 col-md-2 p-0">
 					@include('mentor.settingSidebar')
-				</div>
 				<div class="col-12 col-md-10 pl-2 pl-md-5">
 					<div class="settings-details table-responsive zoomTable">
 						@if(count($booking) > 0)
