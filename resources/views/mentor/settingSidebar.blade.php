@@ -7,22 +7,20 @@
         $lession = \App\Models\MentorSlotBooked::select('mentor_slot_bookeds.*','available_shifts.date','available_shifts.time_shift')->where('mentor_slot_bookeds.bookedUserId',$user->id)->where('mentor_slot_bookeds.userType',$guard)
 	        ->where('mentor_slot_bookeds.bookingStatus','!=',3)->leftjoin('available_shifts','mentor_slot_bookeds.availableShiftId','=','available_shifts.id')->where('available_shifts.date','>=',date('Y-m-d'))->latest('mentor_slot_bookeds.created_at')->first();
 	@endphp
-	@if($lession)
-		@php
-			$mentor = $lession->mentor;
-		@endphp
-		<div class="col-12 row m-0 p-0">
-		    <div class="col-12 col-md-2 user_ID">
-	        	<a href="javascript:void(0)">
-            		@if($guard == 'web')
-            			ID : MENTEE-{{$user->id}}
-            		@elseif($guard == 'mentor')
-            			ID : MENTOR-{{$user->id}}
-            		@endif
-            	</a>
-		    </div>
+	<div class="col-12 row m-0 p-0">
+	    <div class="col-12 col-md-2 user_ID">
+        	<a href="javascript:void(0)">
+        		@if($guard == 'web')
+        			ID : MENTEE-{{$user->id}}
+        		@elseif($guard == 'mentor')
+        			ID : MENTOR-{{$user->id}}
+        		@endif
+        	</a>
+	    </div>
+	    @if($lession)
+			@php $mentor = $lession->mentor; @endphp
 		    <div class="nextLession alert alert-info">
-	          <table>
+	            <table>
     				<tr>
     					<th class="pr-3">Upcoming Lession :</th>
     					<td>
@@ -41,8 +39,8 @@
     				</tr>
     			</table>
 		    </div>
-		</div>
-	@endif
+		@endif
+	</div>
 @endif
 <div class="col-12 col-md-2 p-0">
 <ul class="setting-list">
