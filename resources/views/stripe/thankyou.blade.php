@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Thankyou</title>
-</head>
-<body>
+@extends('layouts.master')
+@section('title','Invite-friends')
+@section('content')
+
 	<h1>Your Payment was successFull</h1>
 	<br>
 	<h3>Note : Please Save the Below Details for future Referance</h3><br>
@@ -12,5 +10,18 @@
 
 	<br><br><br><br>
 	<a href="{{url('/')}}">Click here to go home</a>
-</body>
-</html>
+@section('script')
+	<script type="text/javascript">
+		function clipFunc() {
+			var referrallink = document.getElementById("referrallink");
+			var btn = document.getElementById("copyLinkBtn");
+			referrallink.select();
+			referrallink.setSelectionRange(0, 99999); /* For mobile devices */
+			navigator.clipboard.writeText(referrallink.value);
+			btn.innerHTML = "Link copied";
+			// btn.innerHTML = "Link copied";
+			// alert("Copied the text: " + referrallink.value);
+		}
+	</script>
+@stop
+@endsection
