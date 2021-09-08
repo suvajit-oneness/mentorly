@@ -17,9 +17,9 @@
 										<th>Booking Id</th>
 										<th>Booking Date</th>
 										<th>Mentor Name</th>
-										<th>Messege</th>
-										<!-- <th>Mentor Email</th> -->
-										<th>Mentor Mobile</th>
+										<th>Message</th>
+										<th>Mentor Email</th>
+										<!-- <th>Mentor Mobile</th> -->
 										<th>Booking Slot</th>
 										<th>Booking Amount</th>
 										<th>Booking Status</th>
