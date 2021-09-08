@@ -22,7 +22,6 @@
 									@endif
 									<th>Topic</th>
 									<th>Start Time</th>
-									<th>Agenda</th>
 									<th>Join URL</th>
 									<th>Action</th>
 								</tr>
@@ -38,7 +37,6 @@
 										@endif
 										<td>{{$zoom->topic}}</td>
 										<td>{{$zoom->start_time}}</td>
-										<td>@if(!empty($zoom->agenda)){{$zoom->agenda}}@else{{'N/A'}}@endif</td>
 										<td><a href="{{$zoom->join_url}}" target="_blank" class="zoomBtn">Join</a></td>
 										<td><a href="{{route('user.zoom.meeting.cancel',$zoom->id)}}">Cancel</a></td>
 									</tr>
