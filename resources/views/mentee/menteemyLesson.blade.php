@@ -18,7 +18,7 @@
 										<th>Booking Date</th>
 										<th>Mentor Name</th>
 										<th>Messege</th>
-										<th>Mentor Email</th>
+										<!-- <th>Mentor Email</th> -->
 										<th>Mentor Mobile</th>
 										<th>Booking Slot</th>
 										<th>Booking Amount</th>
@@ -45,7 +45,7 @@
 											</a>
 										</td>
 										<td>{{$mentor->email}}</td>
-										<td>{{$mentor->mobile}}</td>
+										<!-- <td>{{$mentor->mobile}}</td> -->
 										<td>{{$slot->date}} - {{$slot->time_shift}}</td>
 										<td>$ {{$transaction->amount/100}}</td>
 										<td>	
@@ -87,7 +87,7 @@
 										<th>Booking Date</th>
 										<th>Mentor Name</th>
 										<th>Mentor Email</th>
-										<th>Mentor Mobile</th>
+										<!-- <th>Mentor Mobile</th> -->
 										<th>Booking Slot</th>
 										<th>Booking Amount</th>
 										<th>Booking Status</th>
@@ -107,7 +107,7 @@
 										<td>{{date('m-d-y',strtotime($pur->created_at))}}</td>
 										<td>{{$mentor->name}}</td>
 										<td>{{$mentor->email}}</td>
-										<td>{{$mentor->mobile}}</td>
+										<!-- <td>{{$mentor->mobile}}</td> -->
 										<td>{{$slot->date}} - {{$slot->time_shift}}</td>
 										<td>$ {{$transaction->amount/100}}</td>
 										<td>	
