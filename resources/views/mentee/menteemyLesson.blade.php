@@ -29,7 +29,7 @@
 								<tbody>
 									@php $counter = 0;@endphp
 									@foreach($lession as $index => $pur)
-									@if($index <= 5)
+									@if($index <= 3)
 									@php
 									$mentor = $pur->mentor;
 									$transaction = $pur->transaction_detail;
@@ -77,7 +77,7 @@
 							@endif
 						</div>
 						<nav aria-label="breadcrumb"></nav>
-						@if(count($lession) > 5 && $counter >= 5)
+						@if(count($lession) > 3 && $counter >= 3)
 						<h5>My Lesson</h5>
 						<div class="table-responsive zoomTable">
 							<table class="table table-hover table-sm table-bordered">

@@ -34,21 +34,20 @@
 											<td>{{$pur->mobile}}</td>
 											<td>$ {{$pur->amount/100}}</td>
 											<td>	
-											@if($pur->bookingStatus==0)
-											<span style="color: blue;">
-												Pending
-											</span>
-											@elseif($pur->bookingStatus==1)
-											<span style="color: green;">
-												Approved
-											</span>
-											@elseif($pur->bookingStatus==2)
-											<span style="color: red;">
-												Rejected
-											</span>
-											@endif
-										</td>
-
+												@if($pur->bookingStatus==0)
+												<span style="color: blue;">
+													Pending
+												</span>
+												@elseif($pur->bookingStatus==1)
+												<span style="color: green;">
+													Approved
+												</span>
+												@elseif($pur->bookingStatus==2)
+												<span style="color: red;">
+													Rejected
+												</span>
+												@endif
+											</td>
 											<td>{{$pur->date}} - {{$pur->time_shift}}</td>
 										</tr>
 									@endforeach
