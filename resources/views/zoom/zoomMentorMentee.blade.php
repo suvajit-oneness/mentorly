@@ -12,7 +12,7 @@
 						<div class="table-responsive zoomTable">
 							<table class="table table-hover custom-data-table-style table-striped table-sm table-bordered" id="sampleTable">
 								<tr>
-									<th>Id</th>
+									<!-- <th>Id</th> -->
 									<th>Meeting Id</th>
 									<th>Host Id</th>
 									@if($guard == 'mentee')
@@ -23,11 +23,11 @@
 									<th>Topic</th>
 									<th>Start Time</th>
 									<th>Join URL</th>
-									<th>Action</th>
+									<!-- <th>Action</th> -->
 								</tr>
 								@foreach($data as $zoom)
 									<tr>
-										<td>{{$zoom->id}}</td>
+										<!-- <td>{{$zoom->id}}</td> -->
 										<td>{{$zoom->meetingId}}</td>
 										<td>{{$zoom->host_id}}</td>
 										@if($guard == 'mentee')
@@ -38,7 +38,7 @@
 										<td>{{$zoom->topic}}</td>
 										<td>{{date('M d, Y h:i A',strtotime($zoom->start_time))}}</td>
 										<td><a href="{{$zoom->join_url}}" target="_blank" class="zoomBtn">Join</a></td>
-										<td><a href="{{route('user.zoom.meeting.cancel',$zoom->id)}}">Cancel</a></td>
+										<!-- <td><a href="{{route('user.zoom.meeting.cancel',$zoom->id)}}">Cancel</a></td> -->
 									</tr>
 								@endforeach
 							</table>
