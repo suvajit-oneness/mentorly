@@ -30,7 +30,7 @@
     								$zoomMeeting = \App\Models\ZoomMeeting::where('mentorSlotBookedId',$lession->id)->where('mentorId',$lession->mentorId)->where('menteeId',$lession->bookedUserId)->where('userType',$lession->userType)->latest()->first();
     								if($zoomMeeting){
     									@endphp
-    										<a href="{{$zoomMeeting->join_url}}" class="btn btn-dark btn-sm ml-5 pl-3 pr-3" target="_blank">Join</a>
+    										<a href="{{$zoomMeeting->join_url}}" class="btn btn btn-sm ml-5 pl-3 pr-3" target="_blank" style="background-color : #0d960a !important;">Join</a>
     									@php
     								}
     							@endphp
