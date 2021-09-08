@@ -1832,28 +1832,42 @@ text-transform: capitalize;
     background: #fff;
     /* max-width: 693px; */
     /* flex: 0 0 693px; */
-    padding: 15px !important;
+    padding: 25px !important;
     margin-left: 0;
     position: relative;
-    left: -48px;
+    left: -26px;
 }
-.setting-list {}
+.setting-list {
+    height:100vh;
+    border-right:2px solid #f6f6f6;
+    background:#fff;
+}
 .setting-list li {}
 .setting-list li a {
     display: block;
     font-size: 16px;
     font-family: GT Walsheim Pro;
     font-weight: 400;
-    color:#000;
-    padding: 6px 10px;
+    color:#4a4a4a;
+    padding: 8px 10px;
+    transition: all 0.35s;
+    margin-bottom:5px;
+}
+.setting-list li a:hover{
+    background: #343a40;
+    color: #fff;
+    padding:8px 10px 8px 15px;
 }
 .setting-list li a.active {
-    background: #1cb3d3;
-    color:#fff;
+    /*background: #1cb3d3;
+    color:#fff;*/
+    background: #343a40;
+    color: #fff;
     position: relative;
+    padding:8px 10px 8px 15px;
 }
 .setting-list li a.active:after {
-    content:"";
+    /*content:"";
     position: absolute;
     top:50%;
     transform: translateY(-50%);
@@ -1863,15 +1877,27 @@ text-transform: capitalize;
     border-style: solid;
     border-width: 17.5px 0 17.5px 15px;
     border-color: transparent transparent transparent #1cb5d3;
-	z-index:1;
+	z-index:1;*/
+	content: "";
+    position: absolute;
+    bottom: 0;
+    /* transform: translateY(-50%); */
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 1px 0 0px 188px;
+    /* border-color: transparent transparent transparent #1cb5d3; */
+    z-index: 1;
+    border-color: #1cb3d3;
 }
 .settings-heading{
-    color: #000;
+    color: #333;
     font-family: GT Walsheim Pro;
-    font-weight: 400;
-    font-size: 29px;
-    border-bottom: 1px solid #bdbdbd;
-    /* margin-left: -43px;
+    font-weight: 600;
+    font-size: 18px;
+     /*border-bottom: 1px solid #bdbdbd;
+    margin-left: -43px;
      margin-right: -43px; 
     padding: 0 43px 10px;*/
 	padding: 0 0 10px;
@@ -1894,7 +1920,10 @@ text-transform: capitalize;
 .profile-picture-setting {
     display: flex;
     align-items: center;
-    margin-bottom: 39px;
+    margin-bottom: 10px;
+    position: relative;
+    width:155px;
+    height:155px;
 }
 .mentee-image img {
     width:100%;
@@ -1902,9 +1931,21 @@ text-transform: capitalize;
 }
 
 .upload-image {
-    position: relative;
-    cursor: pointer;
+    position: absolute;
     margin-left: 23px;
+    bottom: 13px;
+    right: 21px;
+    width: 35px;
+    height: 35px;
+    background: #ffe2c9;
+    padding: 2px 6px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    cursor: pointer;
+    transition: all 0.35s;
+}
+.upload-image:hover{
+    background: #deba9b;
 }
 .upload-image input[type="file"] {
     position: absolute;
@@ -3247,6 +3288,7 @@ label.star:before {
     margin-bottom: 5px;
     border-radius: 0;
     padding: 6px 15px;
+    margin-left:22px;
 }
 .user_ID{
     display: inline-flex;
@@ -3255,6 +3297,7 @@ label.star:before {
     background: rgba(253, 126, 20, 0.48);
     height: 45px;
     font-weight: 700;
+    height: 47px;
 }
 .user_ID a{
     color: #b95400 !important;
@@ -3296,4 +3339,10 @@ label.star:before {
 }
 .google-btn:hover{
     opacity: 0.8;
+}
+label{
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    font-size: 14px;
 }

@@ -1,15 +1,19 @@
 @extends('layouts.master')
 @section('title','Invite-friends')
 @section('content')
-
-	<h1>Your Payment was successFull</h1>
-	<br>
-	<h3>Note : Please Save the Below Details for future Referance</h3><br>
-	<span>Transaction Id : <strong>{{$stripe->transactionId}}</strong></span><br>
-	<span>Amount Charged : $ .<strong>{{$stripe->amount/100}} </strong></span>
-
-	<br><br><br><br>
-	<a href="{{url('/')}}">Click here to go home</a>
+    <div class="container">
+        <div class="row justify-content-center payment_done">
+            <div class="col-12 text-center">
+                <h1>
+                    Your payment was successfull
+                    <small class="d-block">Note : Please Save the Below Details for future Referance</small>
+                </h1>
+                <p>Transaction Id : <b>{{$stripe->transactionId}}</b></p>
+                <p>Amount Charged : <b>$ {{$stripe->amount/100}}</b></p>
+                	<a href="{{url('/')}}">Click here to go home</a>
+            </div>
+        </div>
+    </div>
 @section('script')
 	<script type="text/javascript">
 		function clipFunc() {
@@ -25,3 +29,48 @@
 	</script>
 @stop
 @endsection
+
+<style>
+    .payment_done{
+        margin:50px 0;
+    }
+    .payment_done h1{
+        color: #000;
+        font-family: GT Walsheim Pro;
+        font-weight: 700;
+        font-size: 38px;
+        margin-bottom: 10px;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    .payment_done h1 small{
+        color: #2e2b2b;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.8;
+        text-align: center;
+        margin-bottom:20px;
+    }
+    .payment_done p{
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+    .payment_done a{
+        font-family: GT Walsheim Pro;
+        font-size: 14px;
+        text-transform: capitalize;
+        margin:50px auto;
+        color: #fff;
+        padding: 0 31px;
+        height: 39px;
+        border-radius: 60px;
+        display: block;
+        line-height: 39px;
+        background: #1cb3d3;
+        text-align: center;
+        border: none;
+        width:208px;
+    }
+</style>
