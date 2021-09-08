@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title','Zoom Meeting')
 @section('content')
+@php $guard = get_guard(); @endphp
 <section class="gray-wrapper">
 	<div class="container">
 		<div class="setting-wrapper">
@@ -14,8 +15,11 @@
 									<th>Id</th>
 									<th>Meeting Id</th>
 									<th>Host Id</th>
-									<th>Mentor Details</th>
-									<th>Mentee Details</th>
+									@if($guard == 'mentee')
+										<th>Mentor Details</th>
+									@else
+										<th>Mentee Details</th>
+									@endif
 									<th>Topic</th>
 									<th>Start Time</th>
 									<th>Agenda</th>
@@ -27,8 +31,11 @@
 										<td>{{$zoom->id}}</td>
 										<td>{{$zoom->meetingId}}</td>
 										<td>{{$zoom->host_id}}</td>
-										<td>@if($zoom->mentor){{$zoom->mentor->name}} ({{$zoom->mentor->email}})@else{{('N/A')}}@endif</td>
-										<td>@if($zoom->mentee){{$zoom->mentee->name}} ({{$zoom->mentee->email}})@else{{('N/A')}}@endif</td>
+										@if($guard == 'mentee')
+											<td>@if($zoom->mentor){{$zoom->mentor->name}} ({{$zoom->mentor->email}})@else{{('N/A')}}@endif</td>
+										@else
+											<td>@if($zoom->mentee){{$zoom->mentee->name}} ({{$zoom->mentee->email}})@else{{('N/A')}}@endif</td>
+										@endif
 										<td>{{$zoom->topic}}</td>
 										<td>{{$zoom->start_time}}</td>
 										<td>@if(!empty($zoom->agenda)){{$zoom->agenda}}@else{{'N/A'}}@endif</td>
