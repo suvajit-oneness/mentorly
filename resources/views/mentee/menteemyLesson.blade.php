@@ -96,7 +96,7 @@
 								</thead>
 								<tbody>
 									@foreach($lession as $key => $pur)
-									@if($key > 5)
+									@if($key > 2)
 									@php
 									$mentor = $pur->mentor;
 									$transaction = $pur->transaction_detail;
