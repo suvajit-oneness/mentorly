@@ -36,7 +36,7 @@
 											<td>@if($zoom->mentee){{$zoom->mentee->name}} ({{$zoom->mentee->email}})@else{{('N/A')}}@endif</td>
 										@endif
 										<td>{{$zoom->topic}}</td>
-										<td>{{$zoom->start_time}}</td>
+										<td>{{date('M d, Y h:i A',strtotime($zoom->start_time))}}</td>
 										<td><a href="{{$zoom->join_url}}" target="_blank" class="zoomBtn">Join</a></td>
 										<td><a href="{{route('user.zoom.meeting.cancel',$zoom->id)}}">Cancel</a></td>
 									</tr>
