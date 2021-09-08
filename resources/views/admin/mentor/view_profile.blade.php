@@ -78,7 +78,7 @@
 				</div>
 				@endif
 			</div>
-			<a href="javascript:void(0)" class="prinery-btm deepblue-btm verifiedToggle" data-currentStatus="{{$mentor->is_verified}}">@if($mentor->is_verified == 1){{('Verified')}}@else{{('Verify')}}@endif</a>
+			<a href="javascript:void(0)" class="prinery-btm deepblue-btm verifiedToggle" data-currentStatus="{{$mentor->is_verified}}">@if($mentor->is_verified == 1)<span class="text-danger">{{('Verified')}}</span>@else<span class="text-success">{{('Unverified')}}</span>@endif</a>
 		</div>
 	</div>
 </section>
@@ -96,9 +96,9 @@
                 if(data.error == false){
                     thisButton.attr('data-currentStatus',data.currentStatus);
                     if(data.currentStatus == 1){
-                        thisButton.text('Verified');
+                        thisButton.empty().append('<span class="text-danger">Verified</span>');
                     }else{
-                        thisButton.text('Verify');
+                        thisButton.empty().append('<span class="text-success">Unverified</span>');
                     }
                 }else{
                     swal('Error',data.message);
