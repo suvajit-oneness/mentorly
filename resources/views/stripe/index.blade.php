@@ -6,8 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style type="text/css">
         .panel-title {
-        display: inline;
-        font-weight: bold;
+            display: inline;
+            font-weight: bold;
         }
         .display-table {
             display: table;
@@ -179,7 +179,6 @@ $(function() {
             $form.get(0).submit();
         }
     }
-  
 });
 </script>
 </html>
