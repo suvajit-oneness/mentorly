@@ -12,8 +12,8 @@
 					<li><a href="{{route('singup.mentor')}}">Sign up as mentor</a></li>
 				</ul>
 			</div>
-            
-            <div class="col-md-12 border-bottom row m-0 mt-4 pb-4 justify-content-center flex-column">
+			
+            <!-- <div class="col-md-12 border-bottom row m-0 mt-4 pb-4 justify-content-center flex-column">
 			    <div>
 			        <a href="{{route('socialite.login',['web','facebook'])}}" class="fbook-btn">
     					<i class="fab fa-facebook-square"></i>Login with Facebook
@@ -24,7 +24,7 @@
     					<i class="fab fa-google"></i>Login with Google
     				</a>
 				</div>
-			</div>
+			</div> -->
 			<form method="post" action="{{url('/mentor/mentee/login')}}">
 				@csrf
 				<input type="hidden" name="loginType" value="mentor">
