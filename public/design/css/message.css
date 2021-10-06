@@ -186,3 +186,9 @@ img {
     height: 516px;
     overflow-y: auto;
 }
+
+@media only screen and (max-width:675px){
+    .inbox_people, .mesgs{
+        width: 100%;
+    }
+}

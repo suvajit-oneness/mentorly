@@ -384,6 +384,7 @@ header{
 .menu li {
 	display: inline-block;
 	vertical-align: middle;
+    
 }
 .menu li a {
 	display: block;
@@ -401,6 +402,7 @@ header{
 .menu-btm li {
 	display: inline-block;
 	vertical-align: middle;
+    margin-bottom: 5px;
 }
 .ham{
 max-width: 40px;
@@ -1749,13 +1751,14 @@ text-transform: capitalize;
 .mentor-comments li {
     text-align: left;
     padding: 5px;
-    max-width: 20%;
-    flex: 0 0 20%;
+    /* max-width: 20%;
+    flex: 0 0 20%; */
 }
 .mentor-comments li .box {
     background: #f6f6f6;
     border-radius: 6px;
     padding: 18px 11px;
+    margin-bottom: 15px;
 }
 .mentor-comments li .box p {
     font-size: 14px;
@@ -1866,30 +1869,8 @@ text-transform: capitalize;
     position: relative;
     padding:8px 10px 8px 15px;
 }
-.setting-list li a.active:after {
-    /*content:"";
-    position: absolute;
-    top:50%;
-    transform: translateY(-50%);
-    left:100%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 17.5px 0 17.5px 15px;
-    border-color: transparent transparent transparent #1cb5d3;
-	z-index:1;*/
-	content: "";
-    position: absolute;
-    bottom: 0;
-    /* transform: translateY(-50%); */
-    left: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 1px 0 0px 188px;
-    /* border-color: transparent transparent transparent #1cb5d3; */
-    z-index: 1;
-    border-color: #1cb3d3;
+.setting-list li a.active {
+    border-bottom: 1px solid #1cb3d3;
 }
 .settings-heading{
     color: #333;
@@ -1954,6 +1935,7 @@ text-transform: capitalize;
     right:0;
     bottom: 0;
     opacity:0;
+    width: 100%;
 }
 .file-style {
     font-size: 16px;
@@ -2520,6 +2502,9 @@ border: 1px solid #bfbfbf;
     .careerTxt{
         width: 100%;
     }
+    .google-btn, .fbook-btn{
+        width: 280px !important;
+    }
 }
 .careers h2{
     color: rgb(41, 41, 41);
@@ -2855,6 +2840,9 @@ border: 1px solid #bfbfbf;
  float: right;
  font-size: 32px;
 }
+.closeHam{
+    display: none;
+}
 
 /***** CSS Magic to Highlight Stars on Hover *****/
 
@@ -2910,11 +2898,11 @@ border: 1px solid #bfbfbf;
         max-width: 298px;
         flex: 0 0 298px;
     }
-    .mentor-comments li {
+    /* .mentor-comments li {
         max-width: 25%;
         flex: 0 0 25%;
     }
-    
+     */
 }
 
 @media(max-width:1024px) {
@@ -2936,6 +2924,15 @@ border: 1px solid #bfbfbf;
         width: 100%;
         cursor: pointer;
         display: block;
+    }
+    .closeHam{
+        display: block;
+    }
+    .closeHam i{
+        font-size: 25px;
+        color: #fff;
+        font-style: normal;
+        padding-left: 18px;
     }
     .menu-wrap {
         position: fixed;
@@ -3032,10 +3029,10 @@ border: 1px solid #bfbfbf;
     .info-list li h4 {
         font-size: 17px;
     }
-    .mentor-comments li {
+    /* .mentor-comments li {
         max-width: 33%;
         flex: 0 0 33%;
-    }
+    } */
 	.showhim:hover .showme{
 	   display: block;
 		position: relative;
@@ -3146,10 +3143,10 @@ border: 1px solid #bfbfbf;
         flex: 0 0 100%;
         padding: 0 25px;
     }
-    .mentor-comments li {
+    /* .mentor-comments li {
         max-width: 50%;
         flex: 0 0 50%;
-    }
+    } */
     .get-paid {
         text-align: center;
     }
@@ -3346,3 +3343,24 @@ label{
     font-weight: 600;
     font-size: 14px;
 }
+
+@media only screen and (max-width:430px){
+    .log-list li a{
+        border: 0 !important;
+    }
+    .twolist li a{
+        font-size: 10px;
+    }
+    .right-panel{
+        max-width: 100%;
+        padding: 10px 6px 10px;
+    }
+    .row-title span{
+        font-size: 9px;
+    }
+    .search-place input[type="text"]{
+        padding: 0 25px;
+    }
+}
+
+

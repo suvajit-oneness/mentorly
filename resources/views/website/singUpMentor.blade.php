@@ -75,9 +75,9 @@
             @endforeach
         </ul>
 
-		<ul class="mentor-comments">
+		<ul class="mentor-comments row">
 			@foreach($data->mentor as $key => $mentor)
-				<li>
+				<li class=" col-12 col-sm-6 col-md-4 col-lg-3">
 					<a href="{{route('mentor.details',base64_encode($mentor->id))}}?date={{date('Y-m-d')}}">
 						<div class="box">
 							<div class="comments-header">
