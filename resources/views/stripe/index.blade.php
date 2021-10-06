@@ -48,7 +48,7 @@
                         </div>
                     @endif
 
-                    <form role="form" action="{{ route('slot.booking.stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="pk_test_TYooMQauvdEDq54NiTphI7jx" id="payment-form">
+                    <form role="form" action="{{ route('slot.booking.stripe.post') }}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="pk_live_51IrsTnBXdwP24r7S8DG9vBviriQPkRXiabFbgO8IfBeNzPTUBK6jvdU2kajbqgZH5xmSudt0Z6rMdfve9AbuNnVj00DimdN04n" id="payment-form">
                         @csrf
 
                         <div class='form-row row'>

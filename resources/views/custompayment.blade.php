@@ -9,7 +9,7 @@
         <div class='col-md-4'>
           <form accept-charset="UTF-8" action="{{route('paypost')}}" class="require-validation"
               data-cc-on-file="false"
-              data-stripe-publishable-key="pk_test_VKqAeEhnPI0XtMu0S7Cdkxhp00w0wFPtSL"
+              data-stripe-publishable-key="pk_live_51IrsTnBXdwP24r7S8DG9vBviriQPkRXiabFbgO8IfBeNzPTUBK6jvdU2kajbqgZH5xmSudt0Z6rMdfve9AbuNnVj00DimdN04n"
               id="payment-form" method="post">
               {{ csrf_field() }}
               <div class='form-row'>

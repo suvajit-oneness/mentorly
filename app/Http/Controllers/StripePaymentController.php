@@ -47,7 +47,7 @@ class StripePaymentController extends Controller
             'amount' => 'required',
         ]);
         // \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        \Stripe\Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+        \Stripe\Stripe::setApiKey('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');
         $payment = \Stripe\Charge::create ([
             "amount" => 100 * $req->amount,
             "currency" => "usd",
