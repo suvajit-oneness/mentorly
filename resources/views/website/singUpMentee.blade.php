@@ -9,6 +9,19 @@
 				<h3>Sign up as mentee</h3>
 			</div>
 			
+			<div class="col-md-12 border-bottom row m-0 mt-4 pb-4 justify-content-center flex-column">
+			    <div>
+				    <a href="{{route('socialite.login',['web','google'])}}" class="google-btn">
+    					<i class="fab fa-google"></i>Signup with Google
+    				</a>
+				</div>
+			    <div>
+			        <a href="{{route('socialite.login',['web','facebook'])}}" class="fbook-btn">
+    					<i class="fab fa-facebook-square"></i>Signup with Facebook
+    				</a>
+			    </div>
+			</div>
+
 			<form method="post" action="{{route('registration.mentee_mentor')}}">
 				@csrf
 				<div class="form-wrapper">
