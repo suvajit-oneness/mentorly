@@ -94,12 +94,12 @@ Route::get('create_teacher_slot','CronController@teacherSlot');
 
 
 Route::get('testmail',function(){
-$data = [
-'name' => 'Rajeev',
-'address' => 'New Colony Hanuman Tola Dharahara Arrah',
-];
-$to = 'rrpit9@gmail.com';
-$template = 'email/forgot_password';
-$subject = 'Just for Testing';
-sendmail($data,$template,$to,$subject);
+	$data = [
+		'name' => 'Rajeev',
+		'address' => 'New Colony Hanuman Tola Dharahara Arrah',
+	];
+	$to = 'rrpit9@gmail.com';
+	$template = 'email/forgot_password';
+	$subject = 'Just for Testing';
+	sendmail($data,$template,$to,$subject);
 });
